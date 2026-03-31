@@ -1,0 +1,63 @@
+name: DING.AI Daily Newsletter
+
+on:
+  # Runs at 7:00 AM US Eastern (12:00 PM UTC, adjusted for EDT)
+  # Change the cron time here if you want a different send time.
+  # UTC offset guide: EST = UTC-5 (12:00 UTC = 7:00 AM EST)
+  #                   EDT = UTC-4 (11:00 UTC = 7:00 AM EDT)
+  # This uses 12:00 UTC to target 7 AM EST year-round.
+  schedule:
+    - cron: "0 12 * * *"
+
+  # Also allows manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      send_mode:
+        description: "Send mode: 'draft' saves to Beehiiv for review, 'send' sends immediately"
+        required: false
+        default: "draft"
+        type: choice
+        options:
+          - draft
+          - send
+
+jobs:
+  send-newsletter:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to commit history back to repo
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run newsletter engine
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          BEEHIIV_API_KEY: ${{ secrets.BEEHIIV_API_KEY }}
+          BEEHIIV_PUBLICATION_ID: ${{ secrets.BEEHIIV_PUBLICATION_ID }}
+          # For scheduled runs, use SEND_MODE secret (set to "send" when ready).
+          # For manual runs, use the workflow_dispatch input.
+          SEND_MODE: ${{ github.event.inputs.send_mode || secrets.SEND_MODE || 'draft' }}
+        run: python newsletter.py
+
+      - name: Commit updated history
+        run: |
+          git config user.name  "DING.AI Bot"
+          git config user.email "bot@ding.ai"
+          git add history/
+          # Only commit if something changed
+          git diff --staged --quiet || git commit -m "chore: newsletter history $(date -u '+%Y-%m-%d')"
+          git push

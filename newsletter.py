@@ -2,33 +2,37 @@
 DING.AI Newsletter Engine
 Runs via GitHub Actions daily. Requires no local machine.
 
-Dependencies:  anthropic, requests, tavily-python
+Dependencies:  anthropic, tavily-python, requests
 Environment variables (set as GitHub Secrets):
-  ANTHROPIC_API_KEY       — from platform.anthropic.com
-  TAVILY_API_KEY          — from app.tavily.com (free, 1000 searches/month)
-  BEEHIIV_API_KEY         — from Beehiiv dashboard → Settings → API
-  BEEHIIV_PUBLICATION_ID  — from Beehiiv dashboard → Settings → Publication
-  SEND_MODE               — "send" to send immediately, "draft" to review first (default: draft)
+  ANTHROPIC_API_KEY    — from platform.anthropic.com
+  TAVILY_API_KEY       — from app.tavily.com (free, 1000 searches/month)
+  GMAIL_ADDRESS        — your Gmail address (e.g. sanchitpurdue@gmail.com)
+  GMAIL_APP_PASSWORD   — Gmail App Password (Google Account → Security → App Passwords)
+  SEND_MODE            — "send" to send to all subscribers, "draft" to only save HTML (default: draft)
 """
 
 import anthropic
-import requests
 import json
 import os
+import re
+import smtplib
 import sys
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from tavily import TavilyClient
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
-ANTHROPIC_API_KEY      = os.environ.get("ANTHROPIC_API_KEY")
-TAVILY_API_KEY         = os.environ.get("TAVILY_API_KEY")
-BEEHIIV_API_KEY        = os.environ.get("BEEHIIV_API_KEY")
-BEEHIIV_PUBLICATION_ID = os.environ.get("BEEHIIV_PUBLICATION_ID")
-SEND_MODE              = os.environ.get("SEND_MODE", "draft")  # "draft" | "send"
+ANTHROPIC_API_KEY  = os.environ.get("ANTHROPIC_API_KEY")
+TAVILY_API_KEY     = os.environ.get("TAVILY_API_KEY")
+GMAIL_ADDRESS      = os.environ.get("GMAIL_ADDRESS")
+GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
+SEND_MODE          = os.environ.get("SEND_MODE", "draft")  # "draft" | "send"
 
-HISTORY_FILE = "history/newsletter_history.json"
-OUTPUT_FILE  = "history/today_newsletter.html"
+HISTORY_FILE     = "history/newsletter_history.json"
+OUTPUT_FILE      = "history/today_newsletter.html"
+SUBSCRIBERS_FILE = "subscribers.json"
 
 SECTIONS = [
     ("🚨 Top News",                    "breaking top news today"),
@@ -39,7 +43,24 @@ SECTIONS = [
     ("🏛 Society & Culture",           "society culture social trends news today"),
 ]
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# ── Subscribers ───────────────────────────────────────────────────────────────
+
+def load_subscribers() -> list:
+    """Load subscriber list from subscribers.json in the repo root."""
+    if not os.path.exists(SUBSCRIBERS_FILE):
+        print(f"⚠️  {SUBSCRIBERS_FILE} not found — no subscribers to send to.")
+        return []
+    with open(SUBSCRIBERS_FILE) as f:
+        try:
+            data = json.load(f)
+            subscribers = data if isinstance(data, list) else data.get("subscribers", [])
+            return [s for s in subscribers if "@" in str(s)]
+        except json.JSONDecodeError:
+            print(f"❌ Could not parse {SUBSCRIBERS_FILE}")
+            return []
+
+
+# ── History ───────────────────────────────────────────────────────────────────
 
 def load_history():
     if not os.path.exists(HISTORY_FILE):
@@ -53,10 +74,8 @@ def load_history():
 
 def save_history(history, new_headlines):
     today_str = date.today().isoformat()
-    # Remove entry for today if it exists (re-run safety)
     history = [e for e in history if e.get("date") != today_str]
     history.append({"date": today_str, "headlines": new_headlines})
-    # Keep only last 7 days
     cutoff = (date.today() - timedelta(days=7)).isoformat()
     history = [e for e in history if e.get("date", "") >= cutoff]
     with open(HISTORY_FILE, "w") as f:
@@ -65,7 +84,6 @@ def save_history(history, new_headlines):
 
 
 def get_recent_headlines(history):
-    """Return headlines from the last 3 days for deduplication."""
     cutoff = (date.today() - timedelta(days=3)).isoformat()
     recent = [e for e in history if e.get("date", "") >= cutoff]
     headlines = []
@@ -74,15 +92,16 @@ def get_recent_headlines(history):
     return headlines
 
 
+# ── News fetching ─────────────────────────────────────────────────────────────
+
 def search_news(tavily: TavilyClient, query: str, max_results: int = 6) -> list:
-    """Fetch recent news for a single category via Tavily."""
     try:
         results = tavily.search(
             query=query,
             max_results=max_results,
             search_depth="advanced",
             include_raw_content=False,
-            days=2,  # last 48 hours
+            days=2,
             topic="news",
         )
         return results.get("results", [])
@@ -92,7 +111,6 @@ def search_news(tavily: TavilyClient, query: str, max_results: int = 6) -> list:
 
 
 def build_news_context(articles_by_section: dict) -> str:
-    """Format search results into a clean context block for Claude."""
     context = ""
     for section_name, articles in articles_by_section.items():
         context += f"\n\n### {section_name}\n"
@@ -100,9 +118,9 @@ def build_news_context(articles_by_section: dict) -> str:
             context += "  (no results found for this section)\n"
             continue
         for a in articles:
-            title   = a.get("title", "Untitled")
-            snippet = a.get("content", a.get("snippet", ""))[:400]
-            url     = a.get("url", "")
+            title    = a.get("title", "Untitled")
+            snippet  = a.get("content", a.get("snippet", ""))[:400]
+            url      = a.get("url", "")
             pub_date = a.get("published_date", "recent")
             context += f"- **{title}** ({pub_date})\n"
             context += f"  {snippet}\n"
@@ -178,7 +196,6 @@ def generate_newsletter_html(claude_client, news_context: str, recent_headlines:
         messages=[{"role": "user", "content": prompt}],
     )
     html = message.content[0].text.strip()
-    # Strip markdown code fences if Claude wrapped it anyway
     if html.startswith("```"):
         html = "\n".join(html.split("\n")[1:])
     if html.endswith("```"):
@@ -187,67 +204,47 @@ def generate_newsletter_html(claude_client, news_context: str, recent_headlines:
 
 
 def extract_headlines_from_html(html: str) -> list:
-    """
-    Rough extraction of story headlines from the generated HTML
-    for deduplication history. Looks for the story headline div pattern.
-    """
-    import re
     pattern = r'color:#1a3a6b[^>]*>([^<]{20,})<'
     matches = re.findall(pattern, html)
     return [m.strip() for m in matches if len(m.strip()) > 20][:20]
 
 
-# ── Beehiiv integration ───────────────────────────────────────────────────────
+# ── Gmail sending ─────────────────────────────────────────────────────────────
 
-def send_via_beehiiv(html: str, send_mode: str) -> str:
+def send_via_gmail(html: str, subscribers: list) -> int:
     """
-    Create a Beehiiv post and either send it immediately or save as draft.
-    Returns the post ID.
-    send_mode: "send" → sends to all subscribers immediately
-               "draft" → saves as draft for review in Beehiiv dashboard
+    Send newsletter HTML to each subscriber via Gmail SMTP.
+    Returns the number of emails successfully sent.
     """
     today = date.today()
     subject = f"Ding! Your {today.strftime('%A')} briefing is here 🗞️"
-    preview = f"Signal Over Noise — {today.strftime('%B %d, %Y')}"
 
-    # Map SEND_MODE to Beehiiv status
-    status = "confirmed" if send_mode == "send" else "draft"
+    print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP...")
 
-    print(f"📬 Creating Beehiiv post (status: {status})...")
+    sent = 0
+    failed = []
 
-    create_resp = requests.post(
-        f"https://api.beehiiv.com/v2/publications/{BEEHIIV_PUBLICATION_ID}/posts",
-        headers={
-            "Authorization": f"Bearer {BEEHIIV_API_KEY}",
-            "Content-Type": "application/json",
-        },
-        json={
-            "subject_line": subject,
-            "preview_text": preview,
-            "body": html,
-            "status": status,
-            "audience": "all",
-            "send_at": None,  # send immediately when status=confirmed
-        },
-        timeout=30,
-    )
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
 
-    if create_resp.status_code not in (200, 201):
-        raise RuntimeError(
-            f"Beehiiv post creation failed ({create_resp.status_code}): {create_resp.text}"
-        )
+        for recipient in subscribers:
+            try:
+                msg = MIMEMultipart("alternative")
+                msg["Subject"] = subject
+                msg["From"]    = f"DING.AI <{GMAIL_ADDRESS}>"
+                msg["To"]      = recipient
+                msg.attach(MIMEText(html, "html"))
+                server.sendmail(GMAIL_ADDRESS, recipient, msg.as_string())
+                print(f"   ✅ Sent → {recipient}")
+                sent += 1
+            except Exception as e:
+                print(f"   ❌ Failed → {recipient}: {e}")
+                failed.append(recipient)
 
-    data = create_resp.json().get("data", {})
-    post_id = data.get("id", "unknown")
-    post_url = data.get("url", "")
+    if failed:
+        print(f"\n⚠️  {len(failed)} send(s) failed: {failed}")
 
-    if send_mode == "send":
-        print(f"✅ Newsletter sent via Beehiiv! Post ID: {post_id}")
-    else:
-        print(f"✅ Draft created in Beehiiv. Review at: https://app.beehiiv.com")
-        print(f"   Post ID: {post_id}")
-
-    return post_id
+    return sent
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -258,15 +255,17 @@ def main():
     print(f"{'='*60}\n")
 
     # Validate required secrets
-    missing = [k for k, v in {
+    required = {
         "ANTHROPIC_API_KEY": ANTHROPIC_API_KEY,
-        "TAVILY_API_KEY": TAVILY_API_KEY,
-        "BEEHIIV_API_KEY": BEEHIIV_API_KEY,
-        "BEEHIIV_PUBLICATION_ID": BEEHIIV_PUBLICATION_ID,
-    }.items() if not v]
+        "TAVILY_API_KEY":    TAVILY_API_KEY,
+    }
+    if SEND_MODE == "send":
+        required["GMAIL_ADDRESS"]      = GMAIL_ADDRESS
+        required["GMAIL_APP_PASSWORD"] = GMAIL_APP_PASSWORD
+
+    missing = [k for k, v in required.items() if not v]
     if missing:
         print(f"❌ Missing required environment variables: {', '.join(missing)}")
-        print("   Add these as GitHub Secrets in your repo settings.")
         sys.exit(1)
 
     # Init clients
@@ -279,7 +278,7 @@ def main():
     recent_headlines = get_recent_headlines(history)
     print(f"   Found {len(recent_headlines)} recent headlines for deduplication")
 
-    # Step 2: Fetch news for all sections
+    # Step 2: Fetch news
     print("\n🔍 Fetching news via Tavily...")
     articles_by_section = {}
     for section_name, query in SECTIONS:
@@ -287,33 +286,40 @@ def main():
         full_query = f"{query} {today_month_year}"
         print(f"   Searching: {section_name}...")
         articles_by_section[section_name] = search_news(tavily_client, full_query)
-        total = len(articles_by_section[section_name])
-        print(f"   → {total} articles found")
+        print(f"   → {len(articles_by_section[section_name])} articles found")
 
     news_context = build_news_context(articles_by_section)
 
-    # Step 3: Generate newsletter HTML
+    # Step 3: Generate newsletter
     print()
     html = generate_newsletter_html(claude_client, news_context, recent_headlines)
     print(f"   Generated {len(html):,} characters of HTML")
 
-    # Step 4: Save HTML locally in repo
+    # Step 4: Save HTML to repo
     os.makedirs("history", exist_ok=True)
     with open(OUTPUT_FILE, "w") as f:
         f.write(html)
     print(f"💾 HTML saved to {OUTPUT_FILE}")
 
-    # Step 5: Send via Beehiiv
+    # Step 5: Send or draft
     print()
-    post_id = send_via_beehiiv(html, SEND_MODE)
+    if SEND_MODE == "send":
+        subscribers = load_subscribers()
+        if not subscribers:
+            print("⚠️  No subscribers found — skipping send. Add emails to subscribers.json.")
+        else:
+            sent = send_via_gmail(html, subscribers)
+            print(f"\n✅ Sent to {sent}/{len(subscribers)} subscriber(s).")
+    else:
+        print(f"📝 SEND_MODE=draft — newsletter saved to {OUTPUT_FILE}. Not emailed.")
+        print(f"   To send for real, set SEND_MODE=send in GitHub Secrets.")
 
-    # Step 6: Update headline history
+    # Step 6: Update history
     new_headlines = extract_headlines_from_html(html)
     save_history(history, new_headlines)
 
     print(f"\n{'='*60}")
-    print(f"  ✅ Done! Beehiiv post ID: {post_id}")
-    print(f"  Mode: {SEND_MODE} | Headlines stored: {len(new_headlines)}")
+    print(f"  ✅ Done! Mode: {SEND_MODE} | Headlines stored: {len(new_headlines)}")
     print(f"{'='*60}\n")
 
 

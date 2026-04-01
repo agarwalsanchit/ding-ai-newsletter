@@ -1,9 +1,9 @@
 name: DING.AI Daily Newsletter
 
 on:
-  # Runs at 7:00 AM US Eastern (12:00 PM UTC)
+  # Runs at 7:45 AM US Eastern (12:45 PM UTC)
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "45 12 * * *
 
   # Allows manual trigger from GitHub Actions tab
   workflow_dispatch:

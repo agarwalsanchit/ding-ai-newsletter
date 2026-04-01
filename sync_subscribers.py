@@ -97,7 +97,8 @@ def merge(sheet_subs: list[dict], existing: list[dict]) -> list[dict]:
 
 
 def main():
-    if not SIGNUP_SHEET_URL := SHEET_CSV_URL:
+    SIGNUP_SHEET_URL = SHEET_CSV_URL
+    if not SIGNUP_SHEET_URL:
         print("⚠️  SIGNUP_SHEET_URL not set — skipping subscriber sync.")
         sys.exit(0)
 

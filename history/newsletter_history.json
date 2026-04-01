@@ -1,24 +1,5 @@
 [
   {
-    "date": "2026-04-01",
-    "headlines": [
-      "Trump Says U.S.&#8211;Iran War Could End in &#34;Two to Three Weeks&#34;",
-      "Unilever Freezes Global Hiring as War&#8217;s Economic Fallout Spreads",
-      "FBI Labels Michigan Synagogue Attack a Hezbollah-Inspired Act of Terrorism",
-      "Markets Post Their Worst Quarter Since 2022 &#8212; But End Q1 With a Rally",
-      "National Gas Price Hits $4 a Gallon for the First Time This Cycle",
-      "OpenFX Raises $94 Million in Fresh Funding",
-      "SpaceX Falcon 9 Booster Sets Reusability Record With 34th Launch",
-      "Europe Pours &#8364;30 Million Into AI-Driven Catalyst Discovery",
-      "NIST Launches AI Agent Standards Initiative to Tackle Interoperability and Security",
-      "Texas School Shooting: 15-Year-Old Kills Teacher, Then Takes Own Life",
-      "Eurovision Goes Global With an Asian Edition Announced for Later This Year",
-      "Rand Paul Says He&#8217;s &#34;50&#8211;50&#34; on a 2028 Presidential Run",
-      "Fox Saturday Baseball Opens to Best Ratings Since 2021",
-      "What&#8217;s Streaming in April: Euphoria Season 3, Stranger Things Spinoff, and More"
-    ]
-  },
-  {
     "date": "2026-03-31",
     "headlines": [
       "Trump Said to Accept Iran War End Without Hormuz Reopening &#8212; Markets Surge on Final Day of Worst Quarter Since 2022",
@@ -29,6 +10,22 @@
       "Self-Driving Networks Are Quietly Rewriting Enterprise IT Operations",
       "France Signals It Won&#39;t Join Iran Conflict Without a Legal Framework in Place",
       "FIFA World Cup 2026 Playoff Finals Take Center Stage Today"
+    ]
+  },
+  {
+    "date": "2026-04-01",
+    "headlines": [
+      "Pentagon Takes the Podium as U.S.&#8212;Israel Strikes on Iran Dominate Global Attention",
+      "Korean Air Declares &#34;Emergency Mode&#34; as Oil Prices Bite Into Q2",
+      "Myanmar&#39;s Military Chief Steps Down, Eyes Presidency in Political Pivot",
+      "Huawei Posts Modest 2.2% Revenue Growth as Cloud Unit Stumbles",
+      "Artisan Partners Backs Unilever&#39;s Move to Offload Its Food Division",
+      "Nigerian Capital Markets Cap a Stunning Q1 With N30 Trillion in Investor Gains",
+      "Anthropic Lands Federal Government Contract in Growing U.S. AI Procurement Push",
+      "Ten Years After AlphaGo, Its Fingerprints Are on Every Modern AI Reasoning Breakthrough",
+      "Middle East Conflict Threatens Helium Supply, Putting Chipmakers on Alert",
+      "FBI Formally Labels Michigan Synagogue Attack a Hezbollah-Inspired Act of Terrorism",
+      "South Korean Youth Self-Harm Surged 553% Over the Past Decade, Study Finds"
     ]
   }
 ]

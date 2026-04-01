@@ -17,6 +17,7 @@ import os
 import re
 import smtplib
 import sys
+import urllib.parse
 from datetime import date, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -238,6 +239,7 @@ def send_via_gmail(html: str, subscribers: list) -> int:
     """
     today = date.today()
     subject = f"Ding! Your {today.strftime('%A')} briefing is here 🗞️"
+    unsubscribe_web   = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribe.html"
     unsubscribe_email = f"mailto:{GMAIL_ADDRESS}?subject=Unsubscribe"
 
     print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP...")
@@ -267,7 +269,8 @@ def send_via_gmail(html: str, subscribers: list) -> int:
                 msg["From"]    = f"DING.AI <{GMAIL_ADDRESS}>"
                 msg["To"]      = f"{name} <{email}>"
                 # Bulk-sender headers — required by Gmail to avoid spam filtering
-                msg["List-Unsubscribe"]      = f"<{unsubscribe_email}>"
+                web_url = f"{unsubscribe_web}?email={urllib.parse.quote(email)}"
+                msg["List-Unsubscribe"]      = f"<{web_url}>, <{unsubscribe_email}>"
                 msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
                 msg["Precedence"]            = "bulk"
                 msg["X-Mailer"]              = "DING.AI Newsletter"

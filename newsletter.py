@@ -46,15 +46,26 @@ SECTIONS = [
 # ── Subscribers ───────────────────────────────────────────────────────────────
 
 def load_subscribers() -> list:
-    """Load subscriber list from subscribers.json in the repo root."""
+    """
+    Load subscriber list from subscribers.json.
+    Supports two formats:
+      ["email@example.com", ...]
+      [{"name": "Alice", "email": "alice@example.com"}, ...]
+    Always returns a list of dicts with 'name' and 'email' keys.
+    """
     if not os.path.exists(SUBSCRIBERS_FILE):
         print(f"⚠️  {SUBSCRIBERS_FILE} not found — no subscribers to send to.")
         return []
     with open(SUBSCRIBERS_FILE) as f:
         try:
             data = json.load(f)
-            subscribers = data if isinstance(data, list) else data.get("subscribers", [])
-            return [s for s in subscribers if "@" in str(s)]
+            subs = []
+            for s in data:
+                if isinstance(s, str) and "@" in s:
+                    subs.append({"name": s.split("@")[0].capitalize(), "email": s})
+                elif isinstance(s, dict) and "@" in s.get("email", ""):
+                    subs.append({"name": s.get("name", "Reader"), "email": s["email"]})
+            return subs
         except json.JSONDecodeError:
             print(f"❌ Could not parse {SUBSCRIBERS_FILE}")
             return []
@@ -214,6 +225,7 @@ def extract_headlines_from_html(html: str) -> list:
 def send_via_gmail(html: str, subscribers: list) -> int:
     """
     Send newsletter HTML to each subscriber via Gmail SMTP.
+    Each subscriber gets a personalised email addressed to their name.
     Returns the number of emails successfully sent.
     """
     today = date.today()
@@ -227,19 +239,23 @@ def send_via_gmail(html: str, subscribers: list) -> int:
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
 
-        for recipient in subscribers:
+        for sub in subscribers:
+            name  = sub.get("name", "Reader")
+            email = sub["email"]
+            # Personalise the greeting in the HTML
+            personalised = html.replace("Hi Human!", f"Hi {name}!")
             try:
                 msg = MIMEMultipart("alternative")
                 msg["Subject"] = subject
                 msg["From"]    = f"DING.AI <{GMAIL_ADDRESS}>"
-                msg["To"]      = recipient
-                msg.attach(MIMEText(html, "html"))
-                server.sendmail(GMAIL_ADDRESS, recipient, msg.as_string())
-                print(f"   ✅ Sent → {recipient}")
+                msg["To"]      = f"{name} <{email}>"
+                msg.attach(MIMEText(personalised, "html"))
+                server.sendmail(GMAIL_ADDRESS, email, msg.as_string())
+                print(f"   ✅ Sent → {name} <{email}>")
                 sent += 1
             except Exception as e:
-                print(f"   ❌ Failed → {recipient}: {e}")
-                failed.append(recipient)
+                print(f"   ❌ Failed → {name} <{email}>: {e}")
+                failed.append(email)
 
     if failed:
         print(f"\n⚠️  {len(failed)} send(s) failed: {failed}")

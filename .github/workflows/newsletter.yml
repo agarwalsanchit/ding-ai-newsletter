@@ -40,6 +40,7 @@ jobs:
 
       - name: Run newsletter engine
         env:
+          TZ: America/New_York
           ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
           TAVILY_API_KEY:     ${{ secrets.TAVILY_API_KEY }}
           GMAIL_ADDRESS:      ${{ secrets.GMAIL_ADDRESS }}

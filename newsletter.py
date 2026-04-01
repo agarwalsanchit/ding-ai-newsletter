@@ -222,26 +222,43 @@ def extract_headlines_from_html(html: str) -> list:
 
 # ── Gmail sending ─────────────────────────────────────────────────────────────
 
+def is_valid_email(email: str) -> bool:
+    """Basic email validation — catches obviously broken addresses."""
+    import re
+    pattern = r'^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$'
+    return bool(re.match(pattern, email.strip()))
+
+
 def send_via_gmail(html: str, subscribers: list) -> int:
     """
     Send newsletter HTML to each subscriber via Gmail SMTP.
     Each subscriber gets a personalised email addressed to their name.
+    Includes List-Unsubscribe and bulk-sender headers to avoid Gmail spam blocking.
     Returns the number of emails successfully sent.
     """
     today = date.today()
     subject = f"Ding! Your {today.strftime('%A')} briefing is here 🗞️"
+    unsubscribe_email = f"mailto:{GMAIL_ADDRESS}?subject=Unsubscribe"
 
     print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP...")
 
     sent = 0
     failed = []
+    skipped = []
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
 
         for sub in subscribers:
             name  = sub.get("name", "Reader")
-            email = sub["email"]
+            email = sub["email"].strip()
+
+            # Skip invalid email addresses
+            if not is_valid_email(email):
+                print(f"   ⚠️  Skipping invalid address: {email}")
+                skipped.append(email)
+                continue
+
             # Personalise the greeting in the HTML
             personalised = html.replace("Hi Human!", f"Hi {name}!")
             try:
@@ -249,6 +266,11 @@ def send_via_gmail(html: str, subscribers: list) -> int:
                 msg["Subject"] = subject
                 msg["From"]    = f"DING.AI <{GMAIL_ADDRESS}>"
                 msg["To"]      = f"{name} <{email}>"
+                # Bulk-sender headers — required by Gmail to avoid spam filtering
+                msg["List-Unsubscribe"]      = f"<{unsubscribe_email}>"
+                msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
+                msg["Precedence"]            = "bulk"
+                msg["X-Mailer"]              = "DING.AI Newsletter"
                 msg.attach(MIMEText(personalised, "html"))
                 server.sendmail(GMAIL_ADDRESS, email, msg.as_string())
                 print(f"   ✅ Sent → {name} <{email}>")
@@ -257,6 +279,8 @@ def send_via_gmail(html: str, subscribers: list) -> int:
                 print(f"   ❌ Failed → {name} <{email}>: {e}")
                 failed.append(email)
 
+    if skipped:
+        print(f"\n⚠️  {len(skipped)} skipped (invalid addresses): {skipped}")
     if failed:
         print(f"\n⚠️  {len(failed)} send(s) failed: {failed}")
 

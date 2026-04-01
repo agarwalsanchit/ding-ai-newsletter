@@ -38,6 +38,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Sync subscribers from Google Sheet
+        env:
+          SIGNUP_SHEET_URL: ${{ secrets.SIGNUP_SHEET_URL }}
+        run: python sync_subscribers.py
+
       - name: Run newsletter engine
         env:
           TZ: America/New_York

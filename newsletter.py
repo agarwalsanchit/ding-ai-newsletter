@@ -175,7 +175,7 @@ Use this exact HTML template and fill in all [PLACEHOLDERS]:
 <tr><td style="padding:28px 40px 0;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:2px solid #2d7dd2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
 <tr><td align="center" style="padding:28px 40px 8px;"><p style="font-size:14px;font-weight:700;color:#0d1b2a;margin:0;">Thanks for reading today&#39;s edition of <a href="#" style="color:#2d7dd2;text-decoration:none;">DING.AI</a> &#8212; where we cut through the noise to bring you the signal.</p></td></tr>
 <tr><td align="center" style="padding:0 40px 8px;"><p style="font-size:13px;color:#666;margin:0;line-height:1.6;">Got feedback or a story tip? Just hit reply.</p></td></tr>
-<tr><td align="center" style="padding:0 40px 36px;"><p style="font-size:11px;color:#aaa;margin:0;">&#169; 2026 DING.AI &#183; All rights reserved</p></td></tr>
+<tr><td align="center" style="padding:0 40px 36px;"><p style="font-size:11px;color:#aaa;margin:0;">&#169; 2026 DING.AI &#183; All rights reserved</p><p style="font-size:11px;color:#aaa;margin:8px 0 0;"><a href="[UNSUBSCRIBE_URL]" style="color:#aaa;text-decoration:underline;">Unsubscribe from DING.AI</a></p></td></tr>
 </table></td></tr></table></body></html>
 
 Each [SECTION] block looks like:
@@ -260,8 +260,10 @@ def send_via_gmail(html: str, subscribers: list) -> int:
                 skipped.append(email)
                 continue
 
-            # Personalise the greeting in the HTML
+            # Personalise the greeting and inject per-subscriber unsubscribe link
             personalised = html.replace("Hi Human!", f"Hi {name}!")
+            unsub_url = f"{UNSUB_FORM_BASE}?usp=pp_url&entry.1983731698={urllib.parse.quote(email)}"
+            personalised = personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
             try:
                 msg = MIMEMultipart("alternative")
                 msg["Subject"] = subject

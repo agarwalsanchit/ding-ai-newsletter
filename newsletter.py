@@ -239,8 +239,7 @@ def send_via_gmail(html: str, subscribers: list) -> int:
     """
     today = date.today()
     subject = f"Ding! Your {today.strftime('%A')} briefing is here 🗞️"
-    unsubscribe_web   = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribe.html"
-    unsubscribe_email = f"mailto:{GMAIL_ADDRESS}?subject=Unsubscribe"
+    UNSUB_FORM_BASE   = "https://docs.google.com/forms/d/e/1FAIpQLSez5n0sl54Ja8Mm1PhywTOazz9G0pjiz5DoITy8bgNFZEe40w/viewform"
 
     print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP...")
 
@@ -269,8 +268,8 @@ def send_via_gmail(html: str, subscribers: list) -> int:
                 msg["From"]    = f"DING.AI <{GMAIL_ADDRESS}>"
                 msg["To"]      = f"{name} <{email}>"
                 # Bulk-sender headers — required by Gmail to avoid spam filtering
-                web_url = f"{unsubscribe_web}?email={urllib.parse.quote(email)}"
-                msg["List-Unsubscribe"]      = f"<{web_url}>, <{unsubscribe_email}>"
+                web_url = f"{UNSUB_FORM_BASE}?usp=pp_url&entry.1983731698={urllib.parse.quote(email)}"
+                msg["List-Unsubscribe"]      = f"<{web_url}>"
                 msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
                 msg["Precedence"]            = "bulk"
                 msg["X-Mailer"]              = "DING.AI Newsletter"

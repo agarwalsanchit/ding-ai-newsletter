@@ -40,7 +40,8 @@ jobs:
 
       - name: Sync subscribers from Google Sheet
         env:
-          SIGNUP_SHEET_URL: ${{ secrets.SIGNUP_SHEET_URL }}
+          SIGNUP_SHEET_URL:     ${{ secrets.SIGNUP_SHEET_URL }}
+          UNSUBSCRIBE_SHEET_URL: ${{ secrets.UNSUBSCRIBE_SHEET_URL }}
         run: python sync_subscribers.py
 
       - name: Run newsletter engine

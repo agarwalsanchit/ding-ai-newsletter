@@ -58,7 +58,7 @@ def with_retry(fn, max_attempts: int = 3, base_delay: float = 4.0):
             last_err = e
             if attempt < max_attempts - 1:
                 wait = base_delay * (2 ** attempt)
-                print(f"   ⚠️  Attempt {attempt+1} failed: {e}. Retrying in {wait:.0f}s…")
+                print(f"  #⚠️  Attempt {attempt+1} failed: {e}. Retrying in {wait:.0f}s…")
                 time.sleep(wait)
     raise last_err
 
@@ -162,7 +162,6 @@ Write the daily "Signal Over Noise" morning briefing.
 - For each story: write a punchy headline, 2-3 sentence factual summary with source names in italics, and a "Why it matters:" line that names the actual consequence
 - Intro paragraph: 2-3 sentences teasing the biggest stories of the day, conversational and slightly witty tone
 - "Quick Hits" section: 5 crisp one-sentence bullets on notable stories that didn't make a full section
-- Subject line: ONE punchy line (max 70 chars) that previews 2-3 top topics — this will be the email subject
 - Omit any section where no good stories were found
 
 ## HTML FORMAT — CRITICAL RULES
@@ -173,7 +172,7 @@ Write the daily "Signal Over Noise" morning briefing.
 
 ## OUTPUT FORMAT
 Return a JSON object with exactly two keys:
-  "subject": "your punchy subject line here"
+  "subject": "DING! Your {today} briefing is here"
   "html": "the complete HTML email starting with <!DOCTYPE html>"
 
 Use this exact HTML template and fill in all [PLACEHOLDERS]:
@@ -249,12 +248,14 @@ def generate_newsletter(claude_client, news_context: str, recent_headlines: list
     try:
         result = json.loads(raw)
         assert "subject" in result and "html" in result
+        # Always use a consistent DING! branded subject line
+        result["subject"] = f"DING! Your {date.today().strftime('%A')} briefing is here \U0001f5de\ufe0f"
         return result
     except Exception:
         # Fallback: treat the whole thing as HTML with a default subject
         print("  ⚠️  Could not parse JSON response — using raw output as HTML")
         return {
-            "subject": f"Ding! Your {date.today().strftime('%A')} briefing is here \U0001f5de\ufe0f",
+            "subject": f"DING! Your {date.today().strftime('%A')} briefing is here \U0001f5de\ufe0f",
             "html":    raw,
         }
 
@@ -528,7 +529,7 @@ def main():
     tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 
     # Step 1: Load history
-    print("📂 Loading headline history���")
+    print("📂 Loading headline history…")
     history          = load_history()
     recent_headlines = get_recent_headlines(history)
     print(f"  Found {len(recent_headlines)} recent headlines for deduplication")

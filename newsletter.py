@@ -353,10 +353,9 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
     - 0.5 s delay between sends to stay within Gmail rate limits
     Returns the number of emails successfully sent.
     """
-    UNSUB_FORM_BASE = (
-        "https://docs.google.com/forms/d/e/"
-        "1FAIpQLSez5n0sl54Ja8Mm1PhywTOazz9G0pjiz5DoITy8bgNFZEe40w/viewform"
-    )
+    # Unsubscribe landing page (GitHub Pages). Pre-fills email via ?email= param.
+    # The page silently POSTs to Google Forms so sync_subscribers.py can remove the address.
+    UNSUB_BASE = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribed.html"
     SEND_DELAY_SECONDS = 0.5   # Gmail allows ~14 sends/s on SMTP; 0.5 s is conservative
 
     print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP…")
@@ -382,10 +381,7 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
                 continue
 
             # Personalise the greeting and inject per-subscriber unsubscribe link
-            unsub_url    = (
-                f"{UNSUB_FORM_BASE}?usp=pp_url"
-                f"&entry.1983731698={urllib.parse.quote(email)}"
-            )
+            unsub_url    = f"{UNSUB_BASE}?email={urllib.parse.quote(email)}"
             html_personalised  = html.replace("Hi [NAME]!", f"Hi {name}!")
             html_personalised  = html_personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
             html_with_preheader = inject_preheader(html_personalised, preheader)
@@ -477,11 +473,8 @@ def publish_to_archive(html: str, subject: str):
         f'</div>'
     )
     issue_html = html.replace("</body>", archive_bar + "\n</body>")
-    # Replace placeholder unsubscribe URL with generic form link in archive copy
-    unsub_generic = (
-        "https://docs.google.com/forms/d/e/"
-        "1FAIpQLSez5n0sl54Ja8Mm1PhywTOazz9G0pjiz5DoITy8bgNFZEe40w/viewform"
-    )
+    # Replace placeholder unsubscribe URL with generic unsubscribe page in archive copy
+    unsub_generic = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribed.html"
     issue_html = re.sub(r'\[UNSUBSCRIBE_URL\]', unsub_generic, issue_html)
 
     with open(issue_path, "w", encoding="utf-8") as f:
@@ -535,7 +528,7 @@ def main():
     tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 
     # Step 1: Load history
-    print("📂 Loading headline history…")
+    print("📂 Loading headline history���")
     history          = load_history()
     recent_headlines = get_recent_headlines(history)
     print(f"  Found {len(recent_headlines)} recent headlines for deduplication")

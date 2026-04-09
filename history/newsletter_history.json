@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-04-01",
-    "headlines": [
-      "Iran Issues &#34;Evacuate Within One Kilometer&#34; Warning to US Tech Campuses",
-      "Unilever&#39;s Global Hiring Freeze Puts a Corporate Face on the War&#39;s Economic Toll",
-      "Oil Above $101, Stocks Rally &#8212; But Q1 Was Still the Ugliest Quarter Since 2022",
-      "Huawei Squeezes Out 2.2% Revenue Growth Despite the Headwinds",
-      "Artemis II Blasts Off &#8212; First Humans Bound for the Moon in Over 50 Years",
-      "March&#39;s Top Robotics Moments: NVIDIA&#39;s 110-Partner Physical AI Push and a Cobot Patent War",
-      "April Fools&#39; 2026: Brands Lean Into the Fake&#8212;Real Blur &#8212; and This Year It&#39;s Genuinely Hard to Tell",
-      "&#34;Instagram Plus&#34; Quietly Surfaces &#8212; Anonymous Story Views and More Premium Features Spotted"
-    ]
-  },
-  {
     "date": "2026-04-02",
     "headlines": [
       "Iran Threatens US Tech Campuses &#8212; Oil Surges Past $101 as Conflict Escalates",
@@ -101,6 +88,21 @@
       "AI Giants Launch Charm Offensive as Public Skepticism Builds",
       "DeSantis Signs Law Allowing Florida to Label Groups as Terrorists and Expel Student Supporters",
       "Artemis II Crew Photographs a Stunning &#34;Earthset&#34; &#8212; Channeling Apollo 8"
+    ],
+    "sent": 12
+  },
+  {
+    "date": "2026-04-09",
+    "headlines": [
+      "Ceasefire Holds &#8212; Barely &#8212; as Oil Prices Jump 3% on Hormuz Doubts",
+      "UK and Norway Execute Major Anti-Submarine Operation in the North Atlantic",
+      "North Korea Wraps Three-Day Missile Blitz Featuring Cluster Warhead and &#34;Electromagnetic Weapon&#34;",
+      "CoreWeave Soars on &#36;21 Billion AI Infrastructure Deal With Meta",
+      "Stocks Jumped Wednesday on Iran Ceasefire; Thursday&#39;s Oil Spike Complicates the Picture",
+      "Anthropic&#39;s Claude Mythos Uncovers Thousands of Zero-Day Vulnerabilities &#8212; With Project Glasswing",
+      "Anthropic Taps Google and Broadcom for Custom AI Hardware Push",
+      "March Was the Most Abnormally Hot Month Ever Recorded for the Continental US",
+      "SNL Season Finale Brings Out Paul McCartney, Will Ferrell, Matt Damon &#8212; and a Lot of Olivia Rodrigo"
     ],
     "sent": 12
   }

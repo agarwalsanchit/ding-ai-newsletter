@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-02",
-    "headlines": [
-      "Iran Threatens US Tech Campuses &#8212; Oil Surges Past $101 as Conflict Escalates",
-      "Artemis II Is in Orbit &#8212; and Already Delivering Science",
-      "Stocks Jump to Open Q2 &#8212; But the War Premium in Oil Is Not Going Anywhere",
-      "SpaceX IPO Signals Musk May Be Building One Mega-Company",
-      "Blue Owl Caps Private Credit Fund Redemptions at 5% After Surge in Withdrawal Requests",
-      "Gill Pratt: Humanoid Robots&#39; Moment Has Finally Arrived",
-      "Emerging Tech Brands Can&#39;t Ignore: Samsung, Runway AI, and Prediction Markets",
-      "Hailee Steinfeld and Josh Allen Welcome a Baby Girl",
-      "ESPN&#39;s NFL Network Takeover Is Complete &#8212; Goodell Bids Farewell to Staff"
-    ]
-  },
-  {
     "date": "2026-04-04",
     "headlines": [
       "Russia&#39;s Battlefield Advance Grinds to a Complete Stop",
@@ -103,6 +89,20 @@
       "Anthropic Taps Google and Broadcom for Custom AI Hardware Push",
       "March Was the Most Abnormally Hot Month Ever Recorded for the Continental US",
       "SNL Season Finale Brings Out Paul McCartney, Will Ferrell, Matt Damon &#8212; and a Lot of Olivia Rodrigo"
+    ],
+    "sent": 12
+  },
+  {
+    "date": "2026-04-10",
+    "headlines": [
+      "Pakistan Steps Into the Impossible: Brokering a U.S.&#8211;Iran Peace Deal",
+      "Xi to Taiwan&#39;s Opposition: Independence Is a Line We Will Not Cross",
+      "UK Warns Putin Over &#34;Covert Underwater Military Operation&#34;",
+      "CPI Report and TSM Sales Land Friday &#8212; Markets Hold Their Breath",
+      "CoreWeave&#39;s $21B Meta Deal Keeps AI Infrastructure Euphoria Alive",
+      "OpenAI&#39;s Chief Scientist Says AI Is Closing In on Research Intern Territory",
+      "OpenAI Rolls Out $100&#47;Month ChatGPT Tier for Power Users and Coders",
+      "AI Use in Science Drives More Novel, Higher-Impact Research, Study Finds"
     ],
     "sent": 12
   }

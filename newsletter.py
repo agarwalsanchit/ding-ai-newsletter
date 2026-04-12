@@ -355,9 +355,30 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
         print("BREVO_API_KEY not set - aborting send.")
         return 0
 
+    UNSUB_BASE = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribed.html"
+    SHARE_URL  = "https://agarwalsanchit.github.io/ding-ai-newsletter/"
+
     sender_email = os.environ.get("GMAIL_ADDRESS", "sanchitpurdue@gmail.com")
     sent = 0
     failed_emails = []
+
+    # Build a share / referral block to inject before </body>
+    share_block = (
+        '<table width="100%" cellpadding="0" cellspacing="0" border="0" '
+        'style="max-width:600px;margin:24px auto 0;font-family:Arial,sans-serif;">'
+        '<tr><td style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);'
+        'border-radius:12px;padding:28px 24px;text-align:center;">'
+        '<p style="color:#fff;font-size:18px;font-weight:bold;margin:0 0 8px;">'
+        'Enjoying DING.AI? Share it!</p>'
+        '<p style="color:rgba(255,255,255,0.9);font-size:14px;margin:0 0 16px;">'
+        'Know someone who\'d love a daily AI briefing? Spread the word.</p>'
+        f'<a href="{SHARE_URL}" style="display:inline-block;background:#fff;'
+        'color:#764ba2;font-weight:bold;font-size:14px;padding:12px 28px;'
+        'border-radius:6px;text-decoration:none;">Share the signup link</a>'
+        f'<p style="color:rgba(255,255,255,0.7);font-size:12px;margin:12px 0 0;">'
+        f'{SHARE_URL}</p>'
+        '</td></tr></table>'
+    )
 
     for sub in subscribers:
         email = sub.get("email", "").strip()
@@ -366,23 +387,34 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
             continue
 
         unsub_url = f"{UNSUB_BASE}?email={urllib.parse.quote(email)}"
+
+        # Personalise greeting
         html_personalised = html.replace("Hi [NAME]!", f"Hi {name}!")
-        preheader_text = f"Your daily briefing from DING.AI - {date.today().strftime('%A, %B %d')}"
+        # Replace unsubscribe placeholder
+        html_personalised = html_personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
+
+        # Inject preheader
+        preheader_text = f"Your daily briefing from DING.AI \u2013 {date.today().strftime('%A, %B %d')}"
         preheader_html = (
             f'<div style="display:none;max-height:0;overflow:hidden;">'
             f'{preheader_text}&nbsp;</div>'
         )
-        html_with_preheader = html_personalised.replace("<body>", f"<body>{preheader_html}", 1)
+        html_personalised = html_personalised.replace("<body>", f"<body>{preheader_html}", 1)
+
+        # Inject share block before </body>
+        html_personalised = html_personalised.replace("</body>", f"{share_block}\n</body>", 1)
+
         text_content = (
             f"Hi {name}!\n\nYour DING.AI briefing is ready.\n"
             f"Open the HTML version for the full experience.\n\n"
+            f"Share DING.AI: {SHARE_URL}\n\n"
             f"Unsubscribe: {unsub_url}"
         )
         payload = {
             "sender": {"name": "DING.AI", "email": sender_email},
             "to": [{"email": email, "name": name}],
             "subject": subject,
-            "htmlContent": html_with_preheader,
+            "htmlContent": html_personalised,
             "textContent": text_content,
             "headers": {
                 "List-Unsubscribe": f"<{unsub_url}>",

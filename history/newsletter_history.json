@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-04-04",
-    "headlines": [
-      "Russia&#39;s Battlefield Advance Grinds to a Complete Stop",
-      "Myanmar&#39;s Junta Chief Crowns Himself President",
-      "Pakistanis &#8216;Crushed&#8217; as Fuel Prices Spike on Middle East Conflict",
-      "Pam Bondi Is Out as Attorney General",
-      "Federal Government Sues Three States Over Prediction Market Rules",
-      "SpaceX Eyes $2 Trillion&#43; Valuation in Landmark IPO Push",
-      "Stocks Post Best Week in Four Months &#8212; But Cracks Remain",
-      "AI Firms Race to Build Systems That Improve Themselves",
-      "Former AI Insiders Sound the Alarm on Jobs and Systemic Risk"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-05",
     "headlines": [
       "Springs Fire Mostly Contained as Evacuation Orders Lift Across Riverside County",
@@ -119,5 +104,19 @@
       "Masters Saturday: Augusta Is About to Become a Furnace"
     ],
     "sent": 12
+  },
+  {
+    "date": "2026-04-12",
+    "headlines": [
+      "U.S.&#8211;Iran Talks Limp Into Sunday With Hormuz in the Crosshairs",
+      "London Arrests 200+ at Palestine Action Protest in Trafalgar Square",
+      "Artemis II Splashes Down &#8212; Now What?",
+      "OpenAI Memo Leaked: Anthropic Is the Enemy Within the AI Arms Race",
+      "Tesla Heads for an Eighth Straight Weekly Loss as Investors Wait for a Catalyst",
+      "S&amp;P 500 Rebounds 3.6% Last Week but Remains in the Red for 2026",
+      "A Humanoid Robot Just Moved Into a Real Home &#8212; Not a Lab, an Actual House",
+      "Japan Bets Another $4 Billion on Domestic Chipmaker Rapidus"
+    ],
+    "sent": 13
   }
 ]

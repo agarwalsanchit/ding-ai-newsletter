@@ -16,10 +16,11 @@ import html as html_lib
 import json
 import os
 import re
-import smtplib
 import sys
 import time
 import urllib.parse
+import urllib.request
+import urllib.error
 from datetime import date, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -344,93 +345,78 @@ def is_valid_email(email: str) -> bool:
 
 
 def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
-    """
-    Send newsletter HTML to each subscriber via Gmail SMTP.
-    Includes:
-    - Per-subscriber personalisation (name + unsubscribe URL)
-    - Invisible preheader (inbox preview text)
-    - Plain-text fallback part (multipart/alternative)
-    - Bulk-sender compliance headers (List-Unsubscribe)
-    - 0.5 s delay between sends to stay within Gmail rate limits
-    Returns the number of emails successfully sent.
-    """
-    # Unsubscribe landing page (GitHub Pages). Pre-fills email via ?email= param.
-    # The page silently POSTs to Google Forms so sync_subscribers.py can remove the address.
-    UNSUB_BASE = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribed.html"
-    SEND_DELAY_SECONDS = 0.5   # Gmail allows ~14 sends/s on SMTP; 0.5 s is conservative
+    """Send newsletter to all subscribers via Brevo transactional email API."""
+    if not subscribers:
+        print("No subscribers to send to.")
+        return 0
 
-    print(f"📬 Sending to {len(subscribers)} subscriber(s) via Gmail SMTP…")
+    brevo_api_key = os.environ.get("BREVO_API_KEY", "")
+    if not brevo_api_key:
+        print("BREVO_API_KEY not set - aborting send.")
+        return 0
 
-    # Pre-compute preheader and plain-text from the base HTML (before personalisation)
-    preheader  = extract_preheader(html)
-    plain_base = html_to_text(html)
+    sender_email = os.environ.get("GMAIL_ADDRESS", "sanchitpurdue@gmail.com")
+    sent = 0
+    failed_emails = []
 
-    sent    = 0
-    failed  = []
-    skipped = []
+    for sub in subscribers:
+        email = sub.get("email", "").strip()
+        name = sub.get("name", "Subscriber").strip() or "Subscriber"
+        if not email:
+            continue
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+        unsub_url = f"{UNSUB_BASE}?email={urllib.parse.quote(email)}"
+        html_personalised = html.replace("Hi [NAME]!", f"Hi {name}!")
+        preheader_text = f"Your daily briefing from DING.AI - {date.today().strftime('%A, %B %d')}"
+        preheader_html = (
+            f'<div style="display:none;max-height:0;overflow:hidden;">'
+            f'{preheader_text}&nbsp;</div>'
+        )
+        html_with_preheader = html_personalised.replace("<body>", f"<body>{preheader_html}", 1)
+        text_content = (
+            f"Hi {name}!\n\nYour DING.AI briefing is ready.\n"
+            f"Open the HTML version for the full experience.\n\n"
+            f"Unsubscribe: {unsub_url}"
+        )
+        payload = {
+            "sender": {"name": "DING.AI", "email": sender_email},
+            "to": [{"email": email, "name": name}],
+            "subject": subject,
+            "htmlContent": html_with_preheader,
+            "textContent": text_content,
+            "headers": {
+                "List-Unsubscribe": f"<{unsub_url}>",
+                "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+            },
+        }
+        req = urllib.request.Request(
+            "https://api.brevo.com/v3/smtp/email",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "api-key": brevo_api_key,
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                status = getattr(resp, "status", resp.getcode())
+                if status in (200, 201):
+                    print(f"  [OK] Sent to {email}")
+                    sent += 1
+                else:
+                    print(f"  [FAIL] {email}: HTTP {status}")
+                    failed_emails.append(email)
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")[:200]
+            print(f"  [FAIL] {email}: {exc.code} {body}")
+            failed_emails.append(email)
+        except Exception as exc:
+            print(f"  [FAIL] {email}: {exc}")
+            failed_emails.append(email)
 
-        for idx, sub in enumerate(subscribers):
-            name  = sub.get("name", "Reader")
-            email = sub["email"].strip()
-
-            if not is_valid_email(email):
-                print(f"  ⚠️  Skipping invalid address: {email}")
-                skipped.append(email)
-                continue
-
-            # Personalise the greeting and inject per-subscriber unsubscribe link
-            unsub_url    = f"{UNSUB_BASE}?email={urllib.parse.quote(email)}"
-            html_personalised  = html.replace("Hi [NAME]!", f"Hi {name}!")
-            html_personalised  = html_personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
-            html_with_preheader = inject_preheader(html_personalised, preheader)
-
-            # Build plain-text version
-            text_personalised = plain_base.replace("Hi [NAME]!", f"Hi {name}!")
-            text_personalised = text_personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
-            text_personalised += (
-                f"\n\n{'─' * 40}\n"
-                f"© 2026 DING.AI. Signal over noise, every morning.\n"
-                f"Unsubscribe: {unsub_url}\n"
-            )
-
-            try:
-                msg              = MIMEMultipart("alternative")
-                msg["Subject"]   = subject
-                msg["From"]      = f"DING.AI <{GMAIL_ADDRESS}>"
-                msg["To"]        = f"{name} <{email}>"
-
-                # Bulk-sender headers — required for Gmail deliverability
-                msg["List-Unsubscribe"]      = f"<{unsub_url}>"
-                msg["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
-                msg["Precedence"]            = "bulk"
-                msg["X-Mailer"]              = "DING.AI Newsletter"
-
-                # Plain text FIRST (RFC 2046: last part wins for display)
-                msg.attach(MIMEText(text_personalised, "plain", "utf-8"))
-                msg.attach(MIMEText(html_with_preheader, "html", "utf-8"))
-
-                server.sendmail(GMAIL_ADDRESS, email, msg.as_string())
-                print(f"  ✅ Sent → {name} <{email}>")
-                sent += 1
-
-                # Rate-limit: small pause between sends (skip after last one)
-                if idx < len(subscribers) - 1:
-                    time.sleep(SEND_DELAY_SECONDS)
-
-            except Exception as e:
-                print(f"  ❌ Failed → {name} <{email}>: {e}")
-                failed.append(email)
-
-    if skipped:
-        print(f"\n⚠️  {len(skipped)} skipped (invalid): {skipped}")
-    if failed:
-        print(f"\n⚠️  {len(failed)} failed: {failed}")
-        # Notify admin of failures
-        _notify_admin_of_failures(failed, subject)
-
+    print(f"\nBrevo send complete: {sent} sent, {len(failed_emails)} failed.")
     return sent
 
 

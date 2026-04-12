@@ -187,9 +187,37 @@ Use this exact HTML template and fill in all [PLACEHOLDERS]:
 [SECTIONS]
 [QUICK_HITS]
 <tr><td style="padding:28px 40px 0;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:2px solid #2d7dd2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
-<tr><td align="center" style="padding:28px 40px 8px;"><p style="font-size:14px;font-weight:700;color:#0d1b2a;margin:0;">Thanks for reading <a href="https://agarwalsanchit.github.io/ding-ai-newsletter/" style="color:#2d7dd2;text-decoration:none;">DING.AI</a> &#8212; signal over noise, every morning.</p></td></tr>
-<tr><td align="center" style="padding:0 40px 8px;"><p style="font-size:13px;color:#666;margin:0;line-height:1.6;">Got feedback or a story tip? Just hit reply. Forward this to a friend who&#39;d enjoy it.</p></td></tr>
-<tr><td align="center" style="padding:0 40px 36px;"><p style="font-size:11px;color:#aaa;margin:0;">&#169; 2026 DING.AI &#183; All rights reserved</p><p style="font-size:11px;color:#aaa;margin:8px 0 0;"><a href="[UNSUBSCRIBE_URL]" style="color:#aaa;text-decoration:underline;">Unsubscribe from DING.AI</a></p></td></tr>
+<tr><td style="padding:0 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #667eea;margin-top:24px;">
+<tr><td style="padding:28px 0 0;text-align:center;">
+<p style="font-size:16px;color:#333;font-weight:bold;margin:0 0 6px;font-family:Arial,sans-serif;">Thanks for reading DING&#8203;.AI &#8212; signal over noise, every morning.</p>
+<p style="font-size:14px;color:#666;margin:0 0 20px;font-family:Arial,sans-serif;">Got feedback or a story tip? Just hit reply. Forward this to a friend who'd enjoy it.</p>
+</td></tr>
+<tr><td align="center" style="padding:0 0 24px;">
+<!--[if mso]>
+<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td bgcolor="#764ba2" style="padding:24px;text-align:center;">
+<![endif]-->
+<div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);background-color:#764ba2;border-radius:10px;padding:24px;text-align:center;">
+<p style="color:#ffffff;font-size:17px;font-weight:bold;margin:0 0 6px;font-family:Arial,sans-serif;">Enjoying DING&#8203;.AI? Share it!</p>
+<p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0 0 16px;font-family:Arial,sans-serif;">Know someone who'd love a daily AI briefing? Spread the word.</p>
+<!--[if mso]>
+<table cellpadding="0" cellspacing="0" border="0" align="center"><tr><td bgcolor="#ffffff" style="padding:10px 24px;text-align:center;">
+<![endif]-->
+<a href="https://agarwalsanchit.github.io/ding-ai-newsletter/" style="display:inline-block;background:#ffffff;color:#764ba2;font-weight:bold;font-size:14px;padding:10px 24px;border-radius:5px;text-decoration:none;font-family:Arial,sans-serif;mso-padding-alt:10px 24px;">Share the signup link</a>
+<!--[if mso]>
+</td></tr></table>
+<![endif]-->
+</div>
+<!--[if mso]>
+</td></tr></table>
+<![endif]-->
+</td></tr>
+<tr><td style="padding:0 0 16px;text-align:center;">
+<p style="font-size:12px;color:#999;margin:0 0 4px;font-family:Arial,sans-serif;">&#169; 2026 DING&#8203;.AI &#183; All rights reserved</p>
+<p style="font-size:12px;margin:0;font-family:Arial,sans-serif;"><a href="[UNSUBSCRIBE_URL]" style="color:#999;text-decoration:underline;">Unsubscribe</a></p>
+</td></tr>
+</table>
+</td></tr>
 </table></td></tr></table></body></html>
 
 Each [SECTION] block:
@@ -362,24 +390,6 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
     sent = 0
     failed_emails = []
 
-    # Build a share / referral block to inject before </body>
-    share_block = (
-        '<table width="100%" cellpadding="0" cellspacing="0" border="0" '
-        'style="max-width:600px;margin:24px auto 0;font-family:Arial,sans-serif;">'
-        '<tr><td style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);'
-        'border-radius:12px;padding:28px 24px;text-align:center;">'
-        '<p style="color:#fff;font-size:18px;font-weight:bold;margin:0 0 8px;">'
-        'Enjoying DING.AI? Share it!</p>'
-        '<p style="color:rgba(255,255,255,0.9);font-size:14px;margin:0 0 16px;">'
-        'Know someone who\'d love a daily AI briefing? Spread the word.</p>'
-        f'<a href="{SHARE_URL}" style="display:inline-block;background:#fff;'
-        'color:#764ba2;font-weight:bold;font-size:14px;padding:12px 28px;'
-        'border-radius:6px;text-decoration:none;">Share the signup link</a>'
-        f'<p style="color:rgba(255,255,255,0.7);font-size:12px;margin:12px 0 0;">'
-        f'{SHARE_URL}</p>'
-        '</td></tr></table>'
-    )
-
     for sub in subscribers:
         email = sub.get("email", "").strip()
         name = sub.get("name", "Subscriber").strip() or "Subscriber"
@@ -394,7 +404,7 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
         html_personalised = html_personalised.replace("[UNSUBSCRIBE_URL]", unsub_url)
 
         # Inject preheader
-        preheader_text = f"Your daily briefing from DING.AI \u2013 {date.today().strftime('%A, %B %d')}"
+        preheader_text = f"Your daily briefing from DING&#8203;.AI \u2013 {date.today().strftime('%A, %B %d')}"
         preheader_html = (
             f'<div style="display:none;max-height:0;overflow:hidden;">'
             f'{preheader_text}&nbsp;</div>'
@@ -402,7 +412,6 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
         html_personalised = html_personalised.replace("<body>", f"<body>{preheader_html}", 1)
 
         # Inject share block before </body>
-        html_personalised = html_personalised.replace("</body>", f"{share_block}\n</body>", 1)
 
         text_content = (
             f"Hi {name}!\n\nYour DING.AI briefing is ready.\n"

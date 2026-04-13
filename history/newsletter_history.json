@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-04-05",
-    "headlines": [
-      "Springs Fire Mostly Contained as Evacuation Orders Lift Across Riverside County",
-      "Vehicle Plows Into Lao New Year Crowd in Louisiana, Multiple Casualties Reported",
-      "France Condemns China After Execution of French Citizen on Death Row for 15 Years",
-      "Iran Beefs Up Defenses and Reportedly Recruits Children as Ground War Fears Grow",
-      "Trump Moves to Privatize TSA Airport Security Operations",
-      "Magnificent 7 Set to Dominate Q1 Earnings Season &#8212; and Set the Tone for Markets",
-      "Stifel Picks Rivian Over Tesla After Q1 Delivery Numbers Disappoint",
-      "Former Crypto Miners Are Quietly Becoming AI Data Center Operators",
-      "AI in Biotech Is Moving Fast &#8212; and the Drug Discovery Race Is Getting Very Real",
-      "NCAA Championship Monday Looms &#8212; UConn&#39;s Dynasty Quest Meets Illinois and Arizona",
-      "Canada&#39;s Artemis II Astronaut Gives a Thumbs-Up to &#8216;Project Hail Mary&#39; Film Starring Ryan Gosling"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-06",
     "headlines": [
       "Pakistan Steps Into the US&#8211;Iran Breach &#8212; and Washington May Be Listening",
@@ -116,6 +99,20 @@
       "S&amp;P 500 Rebounds 3.6% Last Week but Remains in the Red for 2026",
       "A Humanoid Robot Just Moved Into a Real Home &#8212; Not a Lab, an Actual House",
       "Japan Bets Another $4 Billion on Domestic Chipmaker Rapidus"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-13",
+    "headlines": [
+      "Magyar Scores a Landslide &#8212; Orb&#225;n Era Ends in Hungary",
+      "Iran Calls US Hormuz Restrictions &#34;Piracy&#34; as Talks Limp On",
+      "AI Is Everywhere in Business &#8212; And Still Trips Over Simple Tasks",
+      "A Humanoid Robot Moves Into a Real Home &#8212; Mass Production Has Begun",
+      "S&amp;P 500 Posts Best Week in Months &#8212; Iran Truce Hopes and Oil Drop Drive Rally",
+      "Africa&#8217;s Agrochemical Market Eyes $14.6 Billion by 2030",
+      "London Arrests 200+ at Palestine Action Protest &#8212; Civil Liberties Debate Intensifies",
+      "&#34;Euphoria&#34; Season 3 Keeps Fezco Alive &#8212; Here&#8217;s How"
     ],
     "sent": 13
   }

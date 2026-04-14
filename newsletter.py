@@ -203,7 +203,7 @@ Use this exact HTML template and fill in all [PLACEHOLDERS]:
 <!--[if mso]>
 <table cellpadding="0" cellspacing="0" border="0" align="center"><tr><td bgcolor="#ffffff" style="padding:10px 24px;text-align:center;">
 <![endif]-->
-<a href="https://agarwalsanchit.github.io/ding-ai-newsletter/" style="display:inline-block;background:#ffffff;color:#764ba2;font-weight:bold;font-size:14px;padding:10px 24px;border-radius:5px;text-decoration:none;font-family:Arial,sans-serif;mso-padding-alt:10px 24px;">Share the signup link</a>
+<a href="https://agarwalsanchit.github.io/ding-ai-newsletter/#share" style="display:inline-block;background:#ffffff;color:#764ba2;font-weight:bold;font-size:14px;padding:10px 24px;border-radius:5px;text-decoration:none;font-family:Arial,sans-serif;mso-padding-alt:10px 24px;">Share the signup link</a>
 <!--[if mso]>
 </td></tr></table>
 <![endif]-->

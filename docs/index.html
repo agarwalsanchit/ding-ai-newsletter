@@ -230,6 +230,15 @@
     }
     footer a { color: var(--blue); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
+  
+    /* Share row */
+    .share-row { max-width: 640px; margin: 12px auto 0; padding: 18px 20px 4px; text-align: center; }
+    .share-row .share-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mid); margin-bottom: 10px; }
+    .share-row .share-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .share-row .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 0.86rem; font-family: inherit; background: #fff; color: var(--navy); border: 1px solid var(--border); border-radius: 999px; cursor: pointer; text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+    .share-row .share-btn:hover { background: #f6f8fb; border-color: var(--blue); color: var(--blue); }
+    .share-row .share-status { min-height: 18px; font-size: 0.8rem; color: var(--mid); margin-top: 10px; }
+  
   </style>
 </head>
 <body>
@@ -245,6 +254,22 @@
   </div>
   <div class="subscribe-note">Delivered to your inbox every weekday morning</div>
 </header>
+
+<section id="share" class="share-row" aria-label="Share DING.AI">
+  <div class="share-label">Share DING.AI</div>
+  <div class="share-grid">
+    <button type="button" class="share-btn" data-share="copy">Copy link</button>
+    <a class="share-btn" data-share="twitter" href="#" target="_blank" rel="noopener">X / Twitter</a>
+    <a class="share-btn" data-share="linkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="share-btn" data-share="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+    <button type="button" class="share-btn" data-share="instagram">Instagram</button>
+    <button type="button" class="share-btn" data-share="substack">Substack</button>
+    <a class="share-btn" data-share="email" href="#">Email</a>
+    <button type="button" class="share-btn" data-share="native" hidden>Share…</button>
+  </div>
+  <div class="share-status" id="share-status" role="status" aria-live="polite"></div>
+</section>
+
 
 <div class="stats-bar" id="stats-bar" style="display:none;">
   <div class="stat-item">
@@ -419,6 +444,41 @@
     .catch(() => {
       // No index yet — keep the empty state
     });
+
+  // Share row wiring
+  (function(){
+    var SUBSCRIBE_URL = 'https://agarwalsanchit.github.io/ding-ai-newsletter/';
+    var MESSAGE = "Social media is noise. You should use AI to get your news everyday that matters. Subscribe here for free —";
+    var row = document.getElementById('share');
+    if (!row) return;
+    var statusEl = document.getElementById('share-status');
+    function say(msg){ statusEl.textContent = msg; setTimeout(function(){ if (statusEl.textContent===msg) statusEl.textContent=''; }, 3500); }
+    async function copy(text){
+      try { await navigator.clipboard.writeText(text); return true; }
+      catch(e){
+        var ta=document.createElement('textarea'); ta.value=text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch(_){}
+        ta.remove(); return true;
+      }
+    }
+    var enc = encodeURIComponent;
+    var full = MESSAGE + ' ' + SUBSCRIBE_URL;
+    row.querySelector('[data-share="twitter"]').href  = 'https://twitter.com/intent/tweet?text=' + enc(MESSAGE) + '&url=' + enc(SUBSCRIBE_URL);
+    row.querySelector('[data-share="linkedin"]').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + enc(SUBSCRIBE_URL);
+    row.querySelector('[data-share="whatsapp"]').href = 'https://wa.me/?text=' + enc(full);
+    row.querySelector('[data-share="email"]').href    = 'mailto:?subject=' + enc('Thought you would like DING.AI') + '&body=' + enc(full);
+    row.querySelector('[data-share="copy"]').addEventListener('click', async function(e){ e.preventDefault(); await copy(full); say('Link copied to clipboard.'); });
+    row.querySelector('[data-share="instagram"]').addEventListener('click', async function(e){ e.preventDefault(); await copy(full); say('Caption copied — paste it into your story or post.'); window.open('https://www.instagram.com/', '_blank', 'noopener'); });
+    row.querySelector('[data-share="substack"]').addEventListener('click', async function(e){ e.preventDefault(); await copy(full); say('Message copied — paste it into your Substack Note.'); window.open('https://substack.com/notes', '_blank', 'noopener'); });
+    var nativeBtn = row.querySelector('[data-share="native"]');
+    if (navigator.share) {
+      nativeBtn.hidden = false;
+      nativeBtn.addEventListener('click', async function(e){ e.preventDefault(); try { await navigator.share({ title:'DING.AI', text: MESSAGE, url: SUBSCRIBE_URL }); } catch(_){} });
+    }
+    if (location.hash === '#share') setTimeout(function(){ row.scrollIntoView({behavior:'smooth', block:'center'}); }, 50);
+  })();
+
 </script>
 
 </body>

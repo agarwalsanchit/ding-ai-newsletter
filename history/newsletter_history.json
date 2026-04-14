@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-06",
-    "headlines": [
-      "Pakistan Steps Into the US&#8211;Iran Breach &#8212; and Washington May Be Listening",
-      "China&#39;s Offshore Aviation Warning Zones Raise New Alarm Bells",
-      "Explosives Found Near Critical Serbia&#8211;Hungary Gas Pipeline",
-      "US Stock Futures Nudge Higher on Ceasefire Hopes",
-      "OpenAI and SpaceX IPO Outlook Clouds Over Despite Strong Q1 Start",
-      "The &#34;$1.8 Billion AI Company&#34; Story Is More Complicated Than the Viral Post Suggested",
-      "Former Crypto Miners Are Becoming AI&#39;s Newest Data Center Landlords",
-      "College Student Takes Down a Botnet &#8212; Alone",
-      "At Least 26 Killed in Three Coordinated Weekend Attacks in Nigeria",
-      "Italy&#39;s Meloni Celebrates Capture of Top Organized Crime Fugitive at Resort Raid"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-07",
     "headlines": [
       "Trump&#39;s Iran Ultimatum Hits Its Deadline &#8212; With No Deal in Sight",
@@ -113,6 +97,18 @@
       "Africa&#8217;s Agrochemical Market Eyes $14.6 Billion by 2030",
       "London Arrests 200+ at Palestine Action Protest &#8212; Civil Liberties Debate Intensifies",
       "&#34;Euphoria&#34; Season 3 Keeps Fezco Alive &#8212; Here&#8217;s How"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-14",
+    "headlines": [
+      "Trump Orders Hormuz Blockade &#8212; Iran Calls It &#34;Piracy&#34; as Drone Hits Nahariya",
+      "Magyar Wins Hungary &#8212; Thousands Celebrate the End of the Orb&#225;n Era",
+      "Futures Climb as Traders Bet on De-Escalation &#8212; Earnings Season Kicks Off",
+      "Fire Breaks Out at BYD Parking Garage in Shenzhen",
+      "AI Is Everywhere in Business &#8212; And Still Flunks the Basics, Stanford Finds",
+      "California&#39;s First AI-Run Retail Store Opens &#8212; No Humans Required"
     ],
     "sent": 13
   }

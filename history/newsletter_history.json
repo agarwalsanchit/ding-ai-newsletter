@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-07",
-    "headlines": [
-      "Trump&#39;s Iran Ultimatum Hits Its Deadline &#8212; With No Deal in Sight",
-      "UN Pushes Watered-Down Hormuz Resolution as Russia and China Hold the Cards",
-      "Iran, Hezbollah &amp; Houthis Coordinate Simultaneous Strikes on Israel",
-      "AI Deals Supercharge VC Funding to $267B in Q1 &#8212; But the Skies Are Darkening",
-      "Tesla Price Targets Slashed After Dismal Q1 Deliveries",
-      "Air India CEO Quits as Airline Struggles With Persistent Losses",
-      "Artemis II Crew Sends Back Stunning &#34;Earthset&#34; Photo from Lunar Orbit",
-      "AI vs. Human: RSAC 2026 Opens With Cybersecurity&#39;s Big Identity Crisis",
-      "School Districts Move to Bar Students Without Legal Status",
-      "Colin Kaepernick to Release Memoir &#8216;The Perilous Fight&#8217; This September"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-08",
     "headlines": [
       "US and Iran Agree to Two-Week Ceasefire Tied to Hormuz Reopening",
@@ -109,6 +93,20 @@
       "Fire Breaks Out at BYD Parking Garage in Shenzhen",
       "AI Is Everywhere in Business &#8212; And Still Flunks the Basics, Stanford Finds",
       "California&#39;s First AI-Run Retail Store Opens &#8212; No Humans Required"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-15",
+    "headlines": [
+      "OpenAI Fires Back With GPT-5.4-Cyber &#8212; The AI Cybersecurity War Is On",
+      "Stanford&#39;s 2026 AI Index: The US&#8211;China Gap Has Shrunk to Just 2.7%",
+      "ASML Lifts 2026 Forecast as AI Chip Demand Floods Its Order Books",
+      "Markets Climb on Iran De-Escalation Hopes &#8212; But the Hormuz Fuse Is Still Lit",
+      "IDF Shares Altered Image of Killed Journalist &#8212; Press Groups Demand Accountability",
+      "Peru&#39;s Election Cliffhanger: Fujimori Leads but a Runoff Looms",
+      "&#34;Beef&#34; Season 2 Pits Gen Z Against Millennials &#8212; Culture War, the Series",
+      "Time&#39;s 100 Most Influential People of 2026 Is Out &#8212; See Who Made the Cut"
     ],
     "sent": 13
   }

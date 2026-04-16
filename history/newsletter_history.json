@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-08",
-    "headlines": [
-      "US and Iran Agree to Two-Week Ceasefire Tied to Hormuz Reopening",
-      "Iran, Hezbollah &amp; Houthis Struck Israel in Coordinated Attack &#8212; New Details Emerge",
-      "GM Recalls 270,000-Plus Chevy Malibus Over Rearview Camera Failure",
-      "Delta CEO Heads to &#34;Squawk Box&#34; as Airlines Nurse War-Driven Losses",
-      "Anthropic&#39;s Claude Mythos Uncovers Thousands of Zero-Day Vulnerabilities",
-      "AI Giants Launch Charm Offensive as Public Skepticism Builds",
-      "DeSantis Signs Law Allowing Florida to Label Groups as Terrorists and Expel Student Supporters",
-      "Artemis II Crew Photographs a Stunning &#34;Earthset&#34; &#8212; Channeling Apollo 8"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-09",
     "headlines": [
       "Ceasefire Holds &#8212; Barely &#8212; as Oil Prices Jump 3% on Hormuz Doubts",
@@ -107,6 +93,18 @@
       "Peru&#39;s Election Cliffhanger: Fujimori Leads but a Runoff Looms",
       "&#34;Beef&#34; Season 2 Pits Gen Z Against Millennials &#8212; Culture War, the Series",
       "Time&#39;s 100 Most Influential People of 2026 Is Out &#8212; See Who Made the Cut"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-16",
+    "headlines": [
+      "Iran-US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Could Still Blow the Whole Thing Up",
+      "Israel&#8217;s Lebanon Ceasefire Talks Stall &#8212; Cabinet Meets, Leaves Empty-Handed",
+      "TSMC Beats Q1 Targets, Guides Higher &#8212; Then Watches Its Stock Fall Anyway",
+      "S&amp;P 500 Near All&#8209;Time High as Iran De&#8209;Escalation Hopes Lift Sentiment",
+      "Forbes AI 50: The Era of AI &#34;Independence&#34; Is Here &#8212; Raw Power Is Out, Real Results Are In",
+      "Google DeepMind Ships Gemini Robotics&#8209;ER 1.6 &#8212; Autonomous Systems Get a New On&#8209;Ramp"
     ],
     "sent": 13
   }

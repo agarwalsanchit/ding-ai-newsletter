@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-04-09",
-    "headlines": [
-      "Ceasefire Holds &#8212; Barely &#8212; as Oil Prices Jump 3% on Hormuz Doubts",
-      "UK and Norway Execute Major Anti-Submarine Operation in the North Atlantic",
-      "North Korea Wraps Three-Day Missile Blitz Featuring Cluster Warhead and &#34;Electromagnetic Weapon&#34;",
-      "CoreWeave Soars on &#36;21 Billion AI Infrastructure Deal With Meta",
-      "Stocks Jumped Wednesday on Iran Ceasefire; Thursday&#39;s Oil Spike Complicates the Picture",
-      "Anthropic&#39;s Claude Mythos Uncovers Thousands of Zero-Day Vulnerabilities &#8212; With Project Glasswing",
-      "Anthropic Taps Google and Broadcom for Custom AI Hardware Push",
-      "March Was the Most Abnormally Hot Month Ever Recorded for the Continental US",
-      "SNL Season Finale Brings Out Paul McCartney, Will Ferrell, Matt Damon &#8212; and a Lot of Olivia Rodrigo"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-10",
     "headlines": [
       "Pakistan Steps Into the Impossible: Brokering a U.S.&#8211;Iran Peace Deal",
@@ -105,6 +90,22 @@
       "S&amp;P 500 Near All&#8209;Time High as Iran De&#8209;Escalation Hopes Lift Sentiment",
       "Forbes AI 50: The Era of AI &#34;Independence&#34; Is Here &#8212; Raw Power Is Out, Real Results Are In",
       "Google DeepMind Ships Gemini Robotics&#8209;ER 1.6 &#8212; Autonomous Systems Get a New On&#8209;Ramp"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-17",
+    "headlines": [
+      "Iran&#8211;US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Still Loom",
+      "Pentagon Briefing: Israel Still Operating in Southern Lebanon",
+      "Jury Declares Ticketmaster&#8211;Live Nation an Illegal Monopoly",
+      "S&amp;P 500 Near Records as Wall Street Wades Deeper Into Earnings",
+      "IMF &amp; World Bank Gather Under a Cloud of Gloom",
+      "AI Is Becoming a Scientist: Self-Driving Labs Are Here",
+      "Forbes AI 50 Declares the Era of AI &#34;Independence&#34; &#8212; Raw Power Is Out, Real Results Are In",
+      "School Dropout Bets Big: Factory AI Targets $1.5B Valuation",
+      "Spain Opens a &#34;Straightforward&#34; Path to Migrant Regularization",
+      "Sudan&#8217;s Hunger Crisis in One Image: A Two-Month-Old Fighting Malnutrition"
     ],
     "sent": 13
   }

@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-10",
-    "headlines": [
-      "Pakistan Steps Into the Impossible: Brokering a U.S.&#8211;Iran Peace Deal",
-      "Xi to Taiwan&#39;s Opposition: Independence Is a Line We Will Not Cross",
-      "UK Warns Putin Over &#34;Covert Underwater Military Operation&#34;",
-      "CPI Report and TSM Sales Land Friday &#8212; Markets Hold Their Breath",
-      "CoreWeave&#39;s $21B Meta Deal Keeps AI Infrastructure Euphoria Alive",
-      "OpenAI&#39;s Chief Scientist Says AI Is Closing In on Research Intern Territory",
-      "OpenAI Rolls Out $100&#47;Month ChatGPT Tier for Power Users and Coders",
-      "AI Use in Science Drives More Novel, Higher-Impact Research, Study Finds"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-11",
     "headlines": [
       "US Begins Hormuz Minesweeping as Fragile Ceasefire Teeters",
@@ -106,6 +92,19 @@
       "School Dropout Bets Big: Factory AI Targets $1.5B Valuation",
       "Spain Opens a &#34;Straightforward&#34; Path to Migrant Regularization",
       "Sudan&#8217;s Hunger Crisis in One Image: A Two-Month-Old Fighting Malnutrition"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-18",
+    "headlines": [
+      "Hormuz Whiplash: Iran Flips From &#34;Open&#34; to &#34;Strict Control&#34; Overnight",
+      "Israel&#8211;Lebanon Ceasefire Holds Overnight &#8212; Barely",
+      "Trump Touts Israel&#8211;Lebanon Deal; Second Iran Talks Could Come This Weekend",
+      "S&amp;P 500 and Nasdaq Hit Records &#8212; Then the Weekend Threw a Wrench In It",
+      "Jury Declares Ticketmaster&#8211;Live Nation an Illegal Monopoly",
+      "Anti-AI Backlash Goes Mainstream &#8212; and Turns Violent",
+      "Anthropic&#8217;s Opus 4.7 Gets Sharper Vision; OpenAI&#8217;s &#34;Spud&#34; Still in the Oven"
     ],
     "sent": 13
   }

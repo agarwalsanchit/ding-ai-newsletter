@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-11",
-    "headlines": [
-      "US Begins Hormuz Minesweeping as Fragile Ceasefire Teeters",
-      "Israel Strikes South Lebanon; Iran Calls Peace Talks &#34;Unreasonable&#34;",
-      "Xi Warns Taiwan&#39;s Opposition: Independence Is Non-Negotiable",
-      "Artemis II Crew Splashes Down Safely, Closing a Historic Chapter",
-      "Tesla&#39;s Supervised Self-Driving Gets Its First European Green Light &#8212; in the Netherlands",
-      "Nexstar&#8211;Tegna Merger Blocked Again as Media Consolidation Battle Drags On",
-      "Gold Miners Shine as Ceasefire Anxiety Keeps Safe-Haven Demand Elevated",
-      "Masters Saturday: Augusta Is About to Become a Furnace"
-    ],
-    "sent": 12
-  },
-  {
     "date": "2026-04-12",
     "headlines": [
       "U.S.&#8211;Iran Talks Limp Into Sunday With Hormuz in the Crosshairs",
@@ -105,6 +91,20 @@
       "Jury Declares Ticketmaster&#8211;Live Nation an Illegal Monopoly",
       "Anti-AI Backlash Goes Mainstream &#8212; and Turns Violent",
       "Anthropic&#8217;s Opus 4.7 Gets Sharper Vision; OpenAI&#8217;s &#34;Spud&#34; Still in the Oven"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-19",
+    "headlines": [
+      "US and Iran Head Back to the Table &#8212; Ceasefire Clock Is Ticking",
+      "Hormuz Whiplash Continues: Iran Says &#34;Strict Control,&#34; Markets Brace",
+      "Records on Friday, Uncertainty on Sunday &#8212; Tesla Earnings Loom Large",
+      "Oil Stocks Whipsawed as Energy Sector Tries to Find Its Footing",
+      "A Robot Just Beat Every Human in a Half-Marathon &#8212; And It Wasn&#8217;t Even Close",
+      "Americans Are Firing Dr. Google and Hiring AI Instead",
+      "Perovskite Solar Hits 26.61% Certified Efficiency &#8212; A New Record",
+      "Ben Shelton Wins Munich Open, Adds Clay Credibility Before Roland Garros"
     ],
     "sent": 13
   }

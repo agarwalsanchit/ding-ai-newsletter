@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-12",
-    "headlines": [
-      "U.S.&#8211;Iran Talks Limp Into Sunday With Hormuz in the Crosshairs",
-      "London Arrests 200+ at Palestine Action Protest in Trafalgar Square",
-      "Artemis II Splashes Down &#8212; Now What?",
-      "OpenAI Memo Leaked: Anthropic Is the Enemy Within the AI Arms Race",
-      "Tesla Heads for an Eighth Straight Weekly Loss as Investors Wait for a Catalyst",
-      "S&amp;P 500 Rebounds 3.6% Last Week but Remains in the Red for 2026",
-      "A Humanoid Robot Just Moved Into a Real Home &#8212; Not a Lab, an Actual House",
-      "Japan Bets Another $4 Billion on Domestic Chipmaker Rapidus"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-13",
     "headlines": [
       "Magyar Scores a Landslide &#8212; Orb&#225;n Era Ends in Hungary",
@@ -105,6 +91,20 @@
       "Americans Are Firing Dr. Google and Hiring AI Instead",
       "Perovskite Solar Hits 26.61% Certified Efficiency &#8212; A New Record",
       "Ben Shelton Wins Munich Open, Adds Clay Credibility Before Roland Garros"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-20",
+    "headlines": [
+      "Hormuz Standoff: Trump Leans In as U.S.&#8212;Iran Talks Hit a Wall",
+      "Israel&#8212;Lebanon: Ceasefire Holds, Direct Talks Now on the Calendar",
+      "Tesla Earnings Today: Turnaround Story or Rebuilding Year?",
+      "S&amp;P 500 Pushes Into Earnings Season at Record Highs",
+      "AI Swarms Could Quietly Hijack Democracy, Researchers Warn",
+      "Blue Origin&#39;s New Glenn Sticks the Booster Landing &#8212; Satellite Doesn&#39;t Make It",
+      "FBI Director Kash Patel Sues",
+      "Trucking Companies Are Dodging Safety Rules With a Simple Name Change"
     ],
     "sent": 13
   }

@@ -112,6 +112,38 @@ Common times (all UTC):
 
 ---
 
+## Editor Overrides — Steering the News
+
+You can tell the pipeline to cover specific topics or include specific articles
+(with fact-checking) in the next edition. This is an **Overrides** tab in the
+same Google Sheet as your subscribers.
+
+### Sheet setup (one-time)
+
+1. Open the same Google Sheet used for subscribers.
+2. Add a new tab called **Overrides** with these columns (exact names, first row):
+   - `Topic` — e.g. "IPL 2026 playoffs"
+   - `URL` — optional, a specific article to include
+   - `Strength` — `hard` (must include) or `soft` (nudge)
+   - `Section` — optional, e.g. `🎾 Sports & Entertainment`
+   - `Run Date` — optional `YYYY-MM-DD`; blank = active every run until you clear the row
+   - `Notes` — optional free-text hint (e.g. "focus on KKR's qualifier chances")
+3. **File → Share → Publish to web** → pick the **Overrides** tab → **Comma-separated values (.csv)** → Publish. Copy the URL.
+4. Add a new GitHub Secret: `OVERRIDES_SHEET_URL` = that CSV link.
+
+A sample is at `docs/overrides_tab_template.csv`.
+
+### How it behaves
+
+- **Hard + Topic** → dedicated Tavily search on the topic; one item guaranteed in the newsletter, bypasses the 7-day dedup.
+- **Hard + URL** → the article is fetched, Claude extracts 3–5 key factual claims, each claim is cross-referenced against Tavily, and the rendered item includes a short "Fact check:" line summarizing what's corroborated.
+- **Soft + Topic** → added as a hint; included only if substantive news turns up.
+
+Leave the tab empty for business as usual. To pull an item after the run, just
+delete the row (or set `Run Date` to a past date).
+
+---
+
 ## Checking Run Logs
 
 GitHub → **Actions** tab → click any run → expand the `Run newsletter engine` step.

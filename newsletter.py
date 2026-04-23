@@ -26,6 +26,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from tavily import TavilyClient
 
+from overrides import fetch_and_process_overrides
+
 # ── Config ───────────────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY  = os.environ.get("ANTHROPIC_API_KEY")
 TAVILY_API_KEY     = os.environ.get("TAVILY_API_KEY")
@@ -156,10 +158,14 @@ Write the daily "Signal Over Noise" morning briefing.
 
 ## RECENT HEADLINES (last 3 days — DO NOT duplicate unless major new development)
 {recent_headlines}
+{override_context}
 
 ## INSTRUCTIONS
-- Write 2-3 stories per section, using ONLY stories from the news provided above
+- Write 2-3 stories per section, using ONLY stories from the news or editorial overrides provided above
 - If a story overlaps with recent headlines, skip it unless there is a significant new development
+- EXCEPTION: Hard editorial overrides MUST be included, even if they overlap with recent headlines
+- For hard URL overrides, include a short "Fact check:" line (styled like Why-it-matters) summarizing which key claims are corroborated vs. unverified, based on the fact-check evidence provided
+- Place hard overrides in the editor's preferred section if specified; otherwise pick the best-fitting section
 - For each story: write a punchy headline, 2-3 sentence factual summary with source names in italics, and a "Why it matters:" line that names the actual consequence
 - Intro paragraph: 2-3 sentences teasing the biggest stories of the day, conversational and slightly witty tone
 - "Quick Hits" section: 5 crisp one-sentence bullets on notable stories that didn't make a full section
@@ -244,7 +250,7 @@ Each [SECTION] block:
 Return ONLY the JSON object. No markdown fences. No explanation outside the JSON."""
 
 
-def generate_newsletter(claude_client, news_context: str, recent_headlines: list) -> dict:
+def generate_newsletter(claude_client, news_context: str, recent_headlines: list, override_context: str = "") -> dict:
     """Returns dict with 'subject' and 'html' keys."""
     today_str    = date.today().strftime("%A, %B %d, %Y")
     recent_str   = json.dumps(recent_headlines, indent=2) if recent_headlines else "None — first edition!"
@@ -252,6 +258,7 @@ def generate_newsletter(claude_client, news_context: str, recent_headlines: list
         today=today_str,
         news_context=news_context,
         recent_headlines=recent_str,
+        override_context=override_context or "",
     )
 
     print("🤖 Calling Claude API to generate newsletter…")
@@ -573,9 +580,15 @@ def main():
 
     news_context = build_news_context(articles_by_section)
 
+    # Step 2b: Process editor overrides (topics/URLs from the Overrides sheet)
+    print("\n📝 Checking for editor overrides…")
+    override_context = fetch_and_process_overrides(claude_client, tavily_client)
+    if override_context:
+        print(f"  Override context built ({len(override_context):,} chars)")
+
     # Step 3: Generate newsletter
     print()
-    result  = generate_newsletter(claude_client, news_context, recent_headlines)
+    result  = generate_newsletter(claude_client, news_context, recent_headlines, override_context)
     html    = result["html"]
     subject = result["subject"]
     print(f"  Subject: {subject}")

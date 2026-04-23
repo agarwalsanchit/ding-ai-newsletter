@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-15",
-    "headlines": [
-      "OpenAI Fires Back With GPT-5.4-Cyber &#8212; The AI Cybersecurity War Is On",
-      "Stanford&#39;s 2026 AI Index: The US&#8211;China Gap Has Shrunk to Just 2.7%",
-      "ASML Lifts 2026 Forecast as AI Chip Demand Floods Its Order Books",
-      "Markets Climb on Iran De-Escalation Hopes &#8212; But the Hormuz Fuse Is Still Lit",
-      "IDF Shares Altered Image of Killed Journalist &#8212; Press Groups Demand Accountability",
-      "Peru&#39;s Election Cliffhanger: Fujimori Leads but a Runoff Looms",
-      "&#34;Beef&#34; Season 2 Pits Gen Z Against Millennials &#8212; Culture War, the Series",
-      "Time&#39;s 100 Most Influential People of 2026 Is Out &#8212; See Who Made the Cut"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-16",
     "headlines": [
       "Iran-US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Could Still Blow the Whole Thing Up",
@@ -112,6 +98,22 @@
       "Palantir&#8217;s Manifesto Is Making London Nervous",
       "Bulgaria&#8217;s Pro-Russian Former President Wins in a Landslide",
       "Czech Students Hit the Streets Over Public Media Funding"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-23",
+    "headlines": [
+      "Iran Seizes Two Ships in the Strait of Hormuz as Ceasefire Extends",
+      "Europe&#39;s NATO Workarounds Quietly Take Shape",
+      "West Bengal Erupts on Polling Day as Rival Parties Clash",
+      "Markets Ride a Ceasefire Bounce &#8212; Then Oil Crashes the Party",
+      "Boeing CEO Says 2026 Free Cash Flow Target Is &#34;On Track&#34;",
+      "OpenAI vs. Anthropic: The Brand Battle Goes Mainstream",
+      "UK Businesses Graduate From AI Experiments to Real Results",
+      "Scientists Pinpoint Interstellar Comet&#39;s Lonely Origins at the Milky Way&#39;s Edge",
+      "Wildfires Tear Through Georgia and Florida, Destroying Over 50 Homes",
+      "West Virginia Chemical Leak Kills 2, Sends 30 to Hospital"
     ],
     "sent": 13
   }

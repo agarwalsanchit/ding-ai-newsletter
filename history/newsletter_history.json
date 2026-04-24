@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-04-16",
-    "headlines": [
-      "Iran-US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Could Still Blow the Whole Thing Up",
-      "Israel&#8217;s Lebanon Ceasefire Talks Stall &#8212; Cabinet Meets, Leaves Empty-Handed",
-      "TSMC Beats Q1 Targets, Guides Higher &#8212; Then Watches Its Stock Fall Anyway",
-      "S&amp;P 500 Near All&#8209;Time High as Iran De&#8209;Escalation Hopes Lift Sentiment",
-      "Forbes AI 50: The Era of AI &#34;Independence&#34; Is Here &#8212; Raw Power Is Out, Real Results Are In",
-      "Google DeepMind Ships Gemini Robotics&#8209;ER 1.6 &#8212; Autonomous Systems Get a New On&#8209;Ramp"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-17",
     "headlines": [
       "Iran&#8211;US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Still Loom",
@@ -114,6 +102,22 @@
       "Scientists Pinpoint Interstellar Comet&#39;s Lonely Origins at the Milky Way&#39;s Edge",
       "Wildfires Tear Through Georgia and Florida, Destroying Over 50 Homes",
       "West Virginia Chemical Leak Kills 2, Sends 30 to Hospital"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-24",
+    "headlines": [
+      "Pentagon Steps to the Podium on the Iran War",
+      "Ukraine Strikes Deep: Drones Hit Russian Oil Pumping Stations in Nizhny Novgorod and Samara",
+      "West Bengal Boils Over on Polling Day",
+      "Markets Stay Bullish Despite the War &#8212; Earnings Season Is Doing the Heavy Lifting",
+      "Trump Eyes a Spirit Airlines Bailout &#8212; at the &#34;Right Price&#34;",
+      "OpenAI Drops GPT-5.5 &#8212; Its Sharpest Model Yet",
+      "DeepSeek Breaks Its Silence &#8212; and Open-Sources a Major New Model",
+      "AI Is Reshaping Cancer Research &#8212; The Hype Phase Is Over",
+      "Alcaraz Out of Roland-Garros &#8212; No Three-Peat for the King of Clay",
+      "Celtics Look to Bounce Back in Philly After Shaky Game 2"
     ],
     "sent": 13
   }

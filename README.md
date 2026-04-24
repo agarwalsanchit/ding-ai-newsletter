@@ -112,6 +112,28 @@ Common times (all UTC):
 
 ---
 
+## Deliverability — DMARC & the Sender Address
+
+**If you set the From address to `something@gmail.com` and send via Brevo, Gmail will spam-folder or reject the email for new subscribers.** Since February 2024, `gmail.com` publishes a strict DMARC policy (`p=reject`) that tells receiving mail servers: "if a message claims to be from @gmail.com but wasn't sent by Google, reject it." Brevo's servers are not Google's, so DMARC fails and the mail is dropped or quarantined. Existing subscribers who have previously engaged with the sender may get grace; brand-new inboxes usually won't.
+
+### The fix
+
+Use a custom domain as the sender:
+
+1. Verify your domain in Brevo: **Senders & IP → Domains → Add a new domain**. Brevo will give you a few DNS records (SPF, DKIM, and DMARC) to add at your registrar.
+2. Once verified, add two GitHub secrets:
+   - `BREVO_SENDER_EMAIL` → e.g. `newsletter@yourdomain.com`
+   - `BREVO_SENDER_NAME` → e.g. `DING.AI`
+3. `GMAIL_ADDRESS` is still used as the Reply-To header (so replies still land in your Gmail) and for admin failure alerts.
+
+If `BREVO_SENDER_EMAIL` is missing, the code falls back to `GMAIL_ADDRESS` but prints a loud DMARC warning in the run log.
+
+### Admin failure alerts
+
+When Brevo returns an error for any recipient, the workflow sends a failure summary to `GMAIL_ADDRESS` via Gmail SMTP (using `GMAIL_APP_PASSWORD`). The alert lists each failed address with Brevo's error code/message.
+
+---
+
 ## Checking Run Logs
 
 GitHub → **Actions** tab → click any run → expand the `Run newsletter engine` step.

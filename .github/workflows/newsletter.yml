@@ -53,6 +53,8 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          BREVO_SENDER_EMAIL: ${{ secrets.BREVO_SENDER_EMAIL }}
+          BREVO_SENDER_NAME: ${{ secrets.BREVO_SENDER_NAME }}
           # For scheduled runs, uses SEND_MODE secret.
           # For manual runs, uses the workflow_dispatch input.
           SEND_MODE: ${{ github.event.inputs.send_mode || secrets.SEND_MODE || 'draft' }}

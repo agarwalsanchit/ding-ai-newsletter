@@ -10,14 +10,36 @@ import io
 import json
 import os
 import sys
+import time
 import urllib.request
 
 SHEET_CSV_URL = os.environ.get("SIGNUP_SHEET_URL", "")
 UNSUBSCRIBE_SHEET_URL = os.environ.get("UNSUBSCRIBE_SHEET_URL", "")
 SUBSCRIBERS_FILE = "subscribers.json"
 
+
+def _cache_bust(url: str) -> str:
+    """Append a timestamp query param so Google's CDN can't serve a stale CSV.
+
+    The ?output=csv publish endpoint caches aggressively; adding a fresh query
+    string forces a miss and returns the live sheet contents.
+    """
+    if not url:
+        return url
+    sep = "&" if "?" in url else "?"
+    return f"{url}{sep}_ts={int(time.time())}"
+
+
 def fetch_csv(url: str) -> list[dict]:
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    url = _cache_bust(url)
+    req = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent":    "Mozilla/5.0",
+            "Cache-Control": "no-cache",
+            "Pragma":        "no-cache",
+        },
+    )
     with urllib.request.urlopen(req, timeout=15) as resp:
         content = resp.read().decode("utf-8-sig")
         reader = csv.DictReader(io.StringIO(content))
@@ -41,14 +63,19 @@ def parse_subscribers(rows: list[dict]) -> list[dict]:
         return []
     print(f"  Email column: '{email_col}'" + (f" | Name column: '{name_col}'" if name_col else " | No name column"))
     subs = []
-    for row in rows:
+    dropped = 0
+    for idx, row in enumerate(rows, 1):
         email = row.get(email_col, "").strip().lower()
         if not email or "@" not in email:
+            dropped += 1
+            print(f"    ✗ Row {idx}: dropped (invalid or empty email '{email}')")
             continue
         name = row.get(name_col, "").strip() if name_col else ""
         if not name:
             name = email.split("@")[0].replace(".", " ").replace("_", " ").title()
         subs.append({"name": name, "email": email})
+    if dropped:
+        print(f"  Dropped {dropped} row(s) with invalid/missing email")
     return subs
 
 def parse_unsubscribes(rows: list[dict]) -> set:

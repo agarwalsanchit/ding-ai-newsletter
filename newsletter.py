@@ -4,11 +4,17 @@ Runs via GitHub Actions daily. Requires no local machine.
 
 Dependencies:  anthropic, tavily-python, requests
 Environment variables (set as GitHub Secrets):
-  ANTHROPIC_API_KEY   — from platform.anthropic.com
-  TAVILY_API_KEY      — from app.tavily.com (free, 1000 searches/month)
-  GMAIL_ADDRESS       — your Gmail address (e.g. sanchitpurdue@gmail.com)
-  GMAIL_APP_PASSWORD  — Gmail App Password (Google Account → Security → App Passwords)
-  SEND_MODE           — "send" to send to all subscribers, "draft" to only save HTML (default: draft)
+  ANTHROPIC_API_KEY    — from platform.anthropic.com
+  TAVILY_API_KEY       — from app.tavily.com (free, 1000 searches/month)
+  BREVO_API_KEY        — from app.brevo.com → SMTP & API
+  BREVO_SENDER_EMAIL   — verified sender address for Brevo (MUST pass DMARC,
+                         e.g. newsletter@yourdomain.com). Falls back to
+                         GMAIL_ADDRESS with a loud warning — do not use a
+                         @gmail.com address in production.
+  BREVO_SENDER_NAME    — display name shown in the From line (default: "DING.AI")
+  GMAIL_ADDRESS        — your Gmail address (used for Reply-To + failure alerts)
+  GMAIL_APP_PASSWORD   — Gmail App Password, only used for admin failure alerts
+  SEND_MODE            — "send" to send to all subscribers, "draft" to only save HTML
 """
 
 import anthropic
@@ -16,6 +22,7 @@ import html as html_lib
 import json
 import os
 import re
+import smtplib
 import sys
 import time
 import urllib.parse
@@ -25,6 +32,19 @@ from datetime import date, timedelta
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from tavily import TavilyClient
+
+# Public-domain senders with strict DMARC policies. Using one of these in the
+# From header while sending via Brevo fails DMARC alignment — Gmail in
+# particular will reject or spam-folder mail purporting to be @gmail.com that
+# doesn't come from Google's servers (since Feb 2024 bulk-sender rules). Use a
+# verified custom domain for the From address.
+DMARC_REJECT_DOMAINS = {
+    "gmail.com", "googlemail.com",
+    "yahoo.com", "ymail.com", "rocketmail.com",
+    "aol.com", "aim.com",
+    "outlook.com", "hotmail.com", "live.com", "msn.com",
+    "icloud.com", "me.com", "mac.com",
+}
 
 # ── Config ───────────────────────────────────────────────────────────────────
 ANTHROPIC_API_KEY  = os.environ.get("ANTHROPIC_API_KEY")
@@ -372,28 +392,69 @@ def is_valid_email(email: str) -> bool:
     return bool(re.match(pattern, email.strip()))
 
 
-def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
-    """Send newsletter to all subscribers via Brevo transactional email API."""
+def _resolve_sender() -> tuple[str, str]:
+    """Return (sender_email, sender_name) for Brevo, warning loudly if the
+    configured From address is a public-domain DMARC-reject sender."""
+    sender_email = (os.environ.get("BREVO_SENDER_EMAIL") or "").strip().lower()
+    sender_name  = (os.environ.get("BREVO_SENDER_NAME") or "DING.AI").strip() or "DING.AI"
+
+    if not sender_email:
+        sender_email = (os.environ.get("GMAIL_ADDRESS") or "sanchitpurdue@gmail.com").strip().lower()
+        print(
+            "  ⚠️  BREVO_SENDER_EMAIL not set — falling back to GMAIL_ADDRESS "
+            f"({sender_email}). See below for why this matters."
+        )
+
+    domain = sender_email.rsplit("@", 1)[-1] if "@" in sender_email else ""
+    if domain in DMARC_REJECT_DOMAINS:
+        print(
+            "\n  ⚠️  DMARC WARNING: sender is "
+            f"@{domain}, which enforces strict DMARC. Sending via Brevo from a\n"
+            f"     @{domain} address will fail DMARC alignment and many\n"
+            "     recipients (especially brand-new ones with no prior sender\n"
+            "     reputation) will see mail spam-foldered or rejected outright.\n"
+            "     Fix: verify a custom domain in Brevo and set BREVO_SENDER_EMAIL\n"
+            "     to e.g. newsletter@<yourdomain>.com.\n"
+        )
+    return sender_email, sender_name
+
+
+def send_via_gmail(html: str, subject: str, subscribers: list) -> tuple[int, list]:
+    """Send newsletter to all subscribers via Brevo transactional email API.
+
+    Returns (sent_count, failed_records) where failed_records is a list of
+    {email, reason} dicts for downstream admin notification.
+    """
     if not subscribers:
         print("No subscribers to send to.")
-        return 0
+        return 0, []
 
     brevo_api_key = os.environ.get("BREVO_API_KEY", "")
     if not brevo_api_key:
-        print("BREVO_API_KEY not set - aborting send.")
-        return 0
+        print("BREVO_API_KEY not set — aborting send.")
+        return 0, [{"email": s.get("email", ""), "reason": "BREVO_API_KEY not set"} for s in subscribers]
 
     UNSUB_BASE = "https://agarwalsanchit.github.io/ding-ai-newsletter/unsubscribed.html"
     SHARE_URL  = "https://agarwalsanchit.github.io/ding-ai-newsletter/"
 
-    sender_email = os.environ.get("GMAIL_ADDRESS", "sanchitpurdue@gmail.com")
+    sender_email, sender_name = _resolve_sender()
+    reply_to_email = (os.environ.get("GMAIL_ADDRESS") or sender_email).strip().lower()
+
+    print(f"  Sender: {sender_name} <{sender_email}> | Reply-To: {reply_to_email}")
+    print(f"  Dispatching to {len(subscribers)} recipient(s)…")
+
     sent = 0
-    failed_emails = []
+    failed: list = []
 
     for sub in subscribers:
         email = sub.get("email", "").strip()
         name = sub.get("name", "Subscriber").strip() or "Subscriber"
         if not email:
+            continue
+        if not is_valid_email(email):
+            reason = "invalid email format (skipped pre-send)"
+            print(f"  [SKIP] {email}: {reason}")
+            failed.append({"email": email, "reason": reason})
             continue
 
         unsub_url = f"{UNSUB_BASE}?email={urllib.parse.quote(email)}"
@@ -411,8 +472,6 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
         )
         html_personalised = html_personalised.replace("<body>", f"<body>{preheader_html}", 1)
 
-        # Inject share block before </body>
-
         text_content = (
             f"Hi {name}!\n\nYour DING.AI briefing is ready.\n"
             f"Open the HTML version for the full experience.\n\n"
@@ -420,13 +479,14 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
             f"Unsubscribe: {unsub_url}"
         )
         payload = {
-            "sender": {"name": "DING.AI", "email": sender_email},
-            "to": [{"email": email, "name": name}],
-            "subject": subject,
+            "sender":      {"name": sender_name, "email": sender_email},
+            "replyTo":     {"email": reply_to_email, "name": sender_name},
+            "to":          [{"email": email, "name": name}],
+            "subject":     subject,
             "htmlContent": html_personalised,
             "textContent": text_content,
             "headers": {
-                "List-Unsubscribe": f"<{unsub_url}>",
+                "List-Unsubscribe":      f"<{unsub_url}>",
                 "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
             },
         }
@@ -434,9 +494,9 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
             "https://api.brevo.com/v3/smtp/email",
             data=json.dumps(payload).encode("utf-8"),
             headers={
-                "api-key": brevo_api_key,
+                "api-key":      brevo_api_key,
                 "Content-Type": "application/json",
-                "Accept": "application/json",
+                "Accept":       "application/json",
             },
             method="POST",
         )
@@ -447,39 +507,63 @@ def send_via_gmail(html: str, subject: str, subscribers: list) -> int:
                     print(f"  [OK] Sent to {email}")
                     sent += 1
                 else:
-                    print(f"  [FAIL] {email}: HTTP {status}")
-                    failed_emails.append(email)
+                    reason = f"HTTP {status}"
+                    print(f"  [FAIL] {email}: {reason}")
+                    failed.append({"email": email, "reason": reason})
         except urllib.error.HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace")[:200]
-            print(f"  [FAIL] {email}: {exc.code} {body}")
-            failed_emails.append(email)
+            body = exc.read().decode("utf-8", errors="replace")[:300]
+            # Brevo returns JSON error bodies like {"code":"invalid_parameter","message":"..."}
+            reason = f"HTTP {exc.code}: {body.strip()}"
+            print(f"  [FAIL] {email}: {reason}")
+            failed.append({"email": email, "reason": reason})
         except Exception as exc:
-            print(f"  [FAIL] {email}: {exc}")
-            failed_emails.append(email)
+            reason = f"{type(exc).__name__}: {exc}"
+            print(f"  [FAIL] {email}: {reason}")
+            failed.append({"email": email, "reason": reason})
 
-    print(f"\nBrevo send complete: {sent} sent, {len(failed_emails)} failed.")
-    return sent
+    print(f"\nBrevo send complete: {sent} sent, {len(failed)} failed.")
+    if failed:
+        print("  Failure breakdown:")
+        for f in failed:
+            print(f"    - {f['email']}: {f['reason'][:160]}")
+    return sent, failed
 
 
-def _notify_admin_of_failures(failed_emails: list, subject: str):
-    """Send a plain-text failure alert to the newsletter owner."""
-    if not GMAIL_ADDRESS or not GMAIL_APP_PASSWORD:
+def _notify_admin_of_failures(failed: list, subject: str):
+    """Send a plain-text failure alert to the newsletter owner.
+
+    `failed` is a list of {email, reason} dicts (new format) OR a list of
+    bare email strings (legacy format) — both are accepted.
+    """
+    if not failed:
         return
+    if not GMAIL_ADDRESS or not GMAIL_APP_PASSWORD:
+        print("  (GMAIL_ADDRESS/GMAIL_APP_PASSWORD not set — skipping admin alert)")
+        return
+
+    # Normalize records
+    rows = []
+    for item in failed:
+        if isinstance(item, dict):
+            rows.append((item.get("email", ""), item.get("reason", "unknown")))
+        else:
+            rows.append((str(item), "unknown"))
+
     try:
         msg            = MIMEMultipart("alternative")
         msg["Subject"] = f"[DING.AI] ⚠️ Send failures for: {subject}"
         msg["From"]    = GMAIL_ADDRESS
         msg["To"]      = GMAIL_ADDRESS
         body = (
-            f"The following addresses failed during today's send:\n\n"
-            + "\n".join(f"  - {e}" for e in failed_emails)
-            + "\n\nCheck your Gmail Sent folder for more details."
+            f"{len(rows)} address(es) failed during today's send:\n\n"
+            + "\n".join(f"  - {e} — {r}" for e, r in rows)
+            + "\n\nCheck the GitHub Actions run log for the full trace."
         )
         msg.attach(MIMEText(body, "plain"))
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
             server.sendmail(GMAIL_ADDRESS, GMAIL_ADDRESS, msg.as_string())
-        print("  📧 Failure alert sent to admin.")
+        print(f"  📧 Failure alert sent to admin ({len(rows)} failure(s)).")
     except Exception as e:
         print(f"  (Could not send failure alert: {e})")
 
@@ -596,8 +680,13 @@ def main():
         if not subscribers:
             print("⚠️  No subscribers found — skipping send.")
         else:
-            sent_count = send_via_gmail(html, subject, subscribers)
+            print(f"📬 Dispatching to {len(subscribers)} subscriber(s):")
+            for s in subscribers:
+                print(f"    - {s.get('name','?')} <{s.get('email','')}>")
+            sent_count, failed = send_via_gmail(html, subject, subscribers)
             print(f"\n✅ Sent to {sent_count}/{len(subscribers)} subscriber(s).")
+            if failed:
+                _notify_admin_of_failures(failed, subject)
     else:
         print(f"📝 SEND_MODE=draft — newsletter saved to {OUTPUT_FILE}. Not emailed.")
         print(f"   To send for real, set SEND_MODE=send in GitHub Secrets.")

@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-17",
-    "headlines": [
-      "Iran&#8211;US Talks Edge Forward &#8212; But &#34;Large Gaps&#34; Still Loom",
-      "Pentagon Briefing: Israel Still Operating in Southern Lebanon",
-      "Jury Declares Ticketmaster&#8211;Live Nation an Illegal Monopoly",
-      "S&amp;P 500 Near Records as Wall Street Wades Deeper Into Earnings",
-      "IMF &amp; World Bank Gather Under a Cloud of Gloom",
-      "AI Is Becoming a Scientist: Self-Driving Labs Are Here",
-      "Forbes AI 50 Declares the Era of AI &#34;Independence&#34; &#8212; Raw Power Is Out, Real Results Are In",
-      "School Dropout Bets Big: Factory AI Targets $1.5B Valuation",
-      "Spain Opens a &#34;Straightforward&#34; Path to Migrant Regularization",
-      "Sudan&#8217;s Hunger Crisis in One Image: A Two-Month-Old Fighting Malnutrition"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-18",
     "headlines": [
       "Hormuz Whiplash: Iran Flips From &#34;Open&#34; to &#34;Strict Control&#34; Overnight",
@@ -116,6 +100,22 @@
       "OpenAI Drops GPT&#8209;5.5 &#8212; Then DeepSeek Shows Up Uninvited to the Party",
       "Chip Stocks Are on a Historic Run &#8212; and AI Is Burning the Fuel",
       "AI Crosses a Real Threshold in Cancer Research"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-25",
+    "headlines": [
+      "Trump Fumes at NATO Allies Over Iran &#8212; And Carl Bildt Fires Back",
+      "Russia Sends Oil to Cuba as Caribbean Lifeline Resumes",
+      "China and Thailand Agree to Joint Front Against Cyber-Scam Networks",
+      "DOJ Closes Powell Probe &#8212; Fed Chair&#8217;s Independence Survives the Siege",
+      "Analysts Raise Amazon Price Targets Ahead of Q1 Earnings Drop",
+      "China Slams the Door on US Tech Investment Over Security Fears",
+      "DeepSeek Surfaces With a New Model &#8212; Right as GPT&#8209;5.5 Takes Its Victory Lap",
+      "Cancer Research Enters Its AI Era &#8212; AACR 2026 Makes the Case",
+      "York City&#8217;s Extraordinary Promotion Drama &#8212; The Comeback of the Season",
+      "Buffalo Bills Make Their Move: T.J. Parker Lands at No. 35 After Day-One Trade Frenzy"
     ],
     "sent": 13
   }

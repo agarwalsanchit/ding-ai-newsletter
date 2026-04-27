@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-19",
-    "headlines": [
-      "US and Iran Head Back to the Table &#8212; Ceasefire Clock Is Ticking",
-      "Hormuz Whiplash Continues: Iran Says &#34;Strict Control,&#34; Markets Brace",
-      "Records on Friday, Uncertainty on Sunday &#8212; Tesla Earnings Loom Large",
-      "Oil Stocks Whipsawed as Energy Sector Tries to Find Its Footing",
-      "A Robot Just Beat Every Human in a Half-Marathon &#8212; And It Wasn&#8217;t Even Close",
-      "Americans Are Firing Dr. Google and Hiring AI Instead",
-      "Perovskite Solar Hits 26.61% Certified Efficiency &#8212; A New Record",
-      "Ben Shelton Wins Munich Open, Adds Clay Credibility Before Roland Garros"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-20",
     "headlines": [
       "Hormuz Standoff: Trump Leans In as U.S.&#8212;Iran Talks Hit a Wall",
@@ -118,6 +104,22 @@
       "AI Learns to Talk Chemistry &#8212; and Chemists Are Listening",
       "Wiesberger Wins China Open &#8212; First European Title Since Returning From LIV",
       "Madrid Open Heats Up as Griekspoor Knocks Out Musetti"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-27",
+    "headlines": [
+      "Bennett and Lapid Formalize Alliance &#8212; With Netanyahu Squarely in Their Sights",
+      "Shooting at the White House Correspondents&#8217; Dinner &#8212; New Details Emerge",
+      "EU and US Launch Critical Minerals Partnership to Outflank China",
+      "China Blocks Meta&#8217;s Acquisition of AI Startup Manus",
+      "Microsoft Trims OpenAI Revenue Share &#8212; The Partnership Quietly Shifts",
+      "US State Department Warns World About DeepSeek&#8217;s Alleged AI Data Theft",
+      "S&amp;P 500&#8217;s Best Month Since 2020 &#8212; and the Doubters Are Getting Louder",
+      "China&#8217;s Industrial Profits Surge 15.5% &#8212; Even as the Oil Shock Bites",
+      "Kevin Durant Sits Again &#8212; Rockets Face Elimination in Game 4 Against the Lakers",
+      "Madrid Open Rolls On: Blockx vs. Auger-Aliassime Takes Center Court"
     ],
     "sent": 13
   }

@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-20",
-    "headlines": [
-      "Hormuz Standoff: Trump Leans In as U.S.&#8212;Iran Talks Hit a Wall",
-      "Israel&#8212;Lebanon: Ceasefire Holds, Direct Talks Now on the Calendar",
-      "Tesla Earnings Today: Turnaround Story or Rebuilding Year?",
-      "S&amp;P 500 Pushes Into Earnings Season at Record Highs",
-      "AI Swarms Could Quietly Hijack Democracy, Researchers Warn",
-      "Blue Origin&#39;s New Glenn Sticks the Booster Landing &#8212; Satellite Doesn&#39;t Make It",
-      "FBI Director Kash Patel Sues",
-      "Trucking Companies Are Dodging Safety Rules With a Simple Name Change"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-21",
     "headlines": [
       "Europe Meets in Luxembourg as Middle East Crises Bite at Home",
@@ -120,6 +106,22 @@
       "China&#8217;s Industrial Profits Surge 15.5% &#8212; Even as the Oil Shock Bites",
       "Kevin Durant Sits Again &#8212; Rockets Face Elimination in Game 4 Against the Lakers",
       "Madrid Open Rolls On: Blockx vs. Auger-Aliassime Takes Center Court"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-28",
+    "headlines": [
+      "Iran&#8217;s Hormuz Gambit Rattles Diplomats and Oil Markets Alike",
+      "Ukrainian Teenagers Face Charges for Alleged Russian-Directed Sabotage",
+      "Somali Pirates Strike Again &#8212; Second Vessel Seized in Days",
+      "Megacap Earnings Day: Records Fade as Tech Stocks Pull Back",
+      "Australia Moves to Tax Big Tech Over Local News Standoff",
+      "The AI Brain Drain: Big Tech&#8217;s Best Are Walking Out the Door",
+      "Is OpenAI Losing the Race It Started?",
+      "AI Is Lowering the Moral Bar for Financial Crime",
+      "Kenya&#8217;s Sawe Shatters the Two-Hour Marathon Barrier",
+      "Babar Azam Fires a Century as PSL 2026 Heats Up"
     ],
     "sent": 13
   }

@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-21",
-    "headlines": [
-      "Europe Meets in Luxembourg as Middle East Crises Bite at Home",
-      "Nigeria Says It Foiled a Coup &#8212; Six Now Face Treason Charges",
-      "Israel&#8212;Lebanon: Direct Talks Now on the Calendar",
-      "Amazon Goes All-In on Anthropic: Up to $25 Billion on the Table",
-      "Kevin Warsh Takes the Hot Seat: Fed Chair Confirmation Hearing Opens",
-      "Thales Q1 Sales Surge Nearly 10% as Defense Spending Keeps Climbing",
-      "92% of Enterprises Can&#8217;t See the AI Agents Working Inside Their Own Systems",
-      "AI Swarms Could Quietly Hijack Democracy &#8212; And Nobody Would Notice",
-      "Ovechkin Gets His Ovation &#8212; A Possible Final Bow in Washington",
-      "South Korean Police Move to Arrest HYBE Founder Bang Si-hyuk"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-22",
     "headlines": [
       "Japan Opens the Arms Bazaar &#8212; A Postwar Taboo Falls",
@@ -122,6 +106,20 @@
       "AI Is Lowering the Moral Bar for Financial Crime",
       "Kenya&#8217;s Sawe Shatters the Two-Hour Marathon Barrier",
       "Babar Azam Fires a Century as PSL 2026 Heats Up"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-29",
+    "headlines": [
+      "The Iran War&#8217;s Billion-Dollar Bill Lands on Capitol Hill",
+      "Ukrainian Teens Caught in Russia&#8217;s Shadow War",
+      "Markets Flinch Before the Fed and Big Tech&#8217;s Report Cards",
+      "Australia Draws a Line: Pay for News or Pay a Levy",
+      "The Pentagon Goes Venture Capitalist",
+      "Beijing Grounds the Drones &#8212; All of Them",
+      "Beeple Brings a Kim Jong Un Robot to Berlin&#8217;s Neue Nationalgalerie",
+      "South Sudan Plane Crash Kills All 14 on Board"
     ],
     "sent": 13
   }

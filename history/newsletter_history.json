@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-04-22",
-    "headlines": [
-      "Japan Opens the Arms Bazaar &#8212; A Postwar Taboo Falls",
-      "Israel&#8212;Lebanon Talks Take Shape in Washington",
-      "Sudan&#8217;s Invisible War Enters Year Four",
-      "Powell to Trump: This Chair Is Not for Sale",
-      "AI Optimism and Earnings Keep Wall Street From Flinching",
-      "Thales Keeps Printing: Defense Deliveries Surge in Q1",
-      "OpenAI Ships a Privacy Filter &#8212; And Open-Weights It",
-      "AI Is Running Inside Your Enterprise &#8212; And Nobody&#8217;s Watching",
-      "Palantir&#8217;s Manifesto Is Making London Nervous",
-      "Bulgaria&#8217;s Pro-Russian Former President Wins in a Landslide",
-      "Czech Students Hit the Streets Over Public Media Funding"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-23",
     "headlines": [
       "Iran Seizes Two Ships in the Strait of Hormuz as Ceasefire Extends",
@@ -120,6 +103,21 @@
       "Beijing Grounds the Drones &#8212; All of Them",
       "Beeple Brings a Kim Jong Un Robot to Berlin&#8217;s Neue Nationalgalerie",
       "South Sudan Plane Crash Kills All 14 on Board"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-04-30",
+    "headlines": [
+      "DOJ Charges Sinaloa Governor With Cartel Ties &#8212; A Major Escalation",
+      "Iran Holds the Line as U.S. Naval Blockade Drags On",
+      "International Press Demands Access to Gaza as Reporting Ban Continues",
+      "Samsung Chips Post 50-Fold Profit Surge &#8212; Then Warn It&#8217;s About to Get Worse",
+      "Meta&#8217;s Revenue Growth Hits a 5-Year High &#8212; but AI Spending Spooks Investors",
+      "Adidas Holds Targets but Flashes Amber on Global Volatility",
+      "OpenAI Faces Lawsuit From Families of Canadian Mass Shooting Victims",
+      "Scout AI Raises $100 Million to Build Military-Grade AI Models",
+      "Australia Opens the Door: Research Councils Allow AI in Grant Applications"
     ],
     "sent": 13
   }

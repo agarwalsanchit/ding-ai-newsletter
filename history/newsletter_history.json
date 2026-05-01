@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-23",
-    "headlines": [
-      "Iran Seizes Two Ships in the Strait of Hormuz as Ceasefire Extends",
-      "Europe&#39;s NATO Workarounds Quietly Take Shape",
-      "West Bengal Erupts on Polling Day as Rival Parties Clash",
-      "Markets Ride a Ceasefire Bounce &#8212; Then Oil Crashes the Party",
-      "Boeing CEO Says 2026 Free Cash Flow Target Is &#34;On Track&#34;",
-      "OpenAI vs. Anthropic: The Brand Battle Goes Mainstream",
-      "UK Businesses Graduate From AI Experiments to Real Results",
-      "Scientists Pinpoint Interstellar Comet&#39;s Lonely Origins at the Milky Way&#39;s Edge",
-      "Wildfires Tear Through Georgia and Florida, Destroying Over 50 Homes",
-      "West Virginia Chemical Leak Kills 2, Sends 30 to Hospital"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-24",
     "headlines": [
       "Trump Fumes at NATO as US&#8211;Iran Peace Talks Edge Forward",
@@ -118,6 +102,23 @@
       "OpenAI Faces Lawsuit From Families of Canadian Mass Shooting Victims",
       "Scout AI Raises $100 Million to Build Military-Grade AI Models",
       "Australia Opens the Door: Research Councils Allow AI in Grant Applications"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-01",
+    "headlines": [
+      "London Stabbing of Jewish Men Declared a Terrorist Attack",
+      "Mexico&#8217;s Drug War Spills Into US Courtrooms &#8212; 10 Officials Indicted",
+      "King Charles Urges Congress: Match the Post-9/11 Resolve on Ukraine",
+      "Inflation Jumps, Economy Grew in Q1 &#8212; The Good-News-Bad-News Edition",
+      "Dow Surges 700 Points to Close April at Record Highs",
+      "AstraZeneca Shares Slide After US Panel Rejects Breast Cancer Drug",
+      "The AI Model Too Dangerous to Release: Anthropic&#8217;s &#8216;Mythos&#8217; Stays Locked Up",
+      "OpenAI Hit With Lawsuits From Families of Canadian Mass Shooting Victims",
+      "Study: AI Knows the Answers But Doesn&#8217;t Understand the Questions",
+      "Teens Turn to Influencers for News &#8212; and Are Suspicious of All of It",
+      "College Closures Accelerate as Financial Pressures Mount"
     ],
     "sent": 13
   }

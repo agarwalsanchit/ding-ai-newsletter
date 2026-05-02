@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-24",
-    "headlines": [
-      "Trump Fumes at NATO as US&#8211;Iran Peace Talks Edge Forward",
-      "Markets Hit Records Even as Iran War Blocks 20% of Global Oil Supply",
-      "Bulgaria&#39;s Pro-Russian Ex-President Wins Election in a Landslide",
-      "Meta Cuts 10% of Workforce to Double Down on AI",
-      "Trump Signals US Could Buy Spirit Airlines at the &#34;Right Price&#34;",
-      "OpenAI Drops GPT&#8209;5.5 &#8212; Then DeepSeek Shows Up Uninvited to the Party",
-      "Chip Stocks Are on a Historic Run &#8212; and AI Is Burning the Fuel",
-      "AI Crosses a Real Threshold in Cancer Research"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-25",
     "headlines": [
       "Trump Fumes at NATO Allies Over Iran &#8212; And Carl Bildt Fires Back",
@@ -119,6 +105,23 @@
       "Study: AI Knows the Answers But Doesn&#8217;t Understand the Questions",
       "Teens Turn to Influencers for News &#8212; and Are Suspicious of All of It",
       "College Closures Accelerate as Financial Pressures Mount"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-02",
+    "headlines": [
+      "Iran War Sends California Gas Past $6 &#8212; and Tehran Shoots at Drones Over Its Own Capital",
+      "Turkmenistan Cracks Open the Door &#8212; Just a Little",
+      "Trump Greenlights Major New Canada&#8211;U.S. Oil Pipeline",
+      "S&amp;P 500 and Nasdaq Set New Records as Apple Leads the Charge",
+      "History Says 5% Gains Is the Ceiling for Stocks in 2026",
+      "Adyen Snaps Up Loyalty Platform Talon.One for &#8364;750 Million",
+      "Pentagon Signs AI Deals With Seven Tech Companies for Classified Systems",
+      "AI Is Flooding Academic Publishing &#8212; and the Quality Is Dropping",
+      "Nearly Every U.S. State Has Piloted AI &#8212; But Nobody&#8217;s Sure It&#8217;s Working",
+      "May Day 2026: Workers March Worldwide Amid Economic Anxiety",
+      "Global Math Gains for Girls Are Slipping, New Data Warns"
     ],
     "sent": 13
   }

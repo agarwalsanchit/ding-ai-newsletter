@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-25",
-    "headlines": [
-      "Trump Fumes at NATO Allies Over Iran &#8212; And Carl Bildt Fires Back",
-      "Russia Sends Oil to Cuba as Caribbean Lifeline Resumes",
-      "China and Thailand Agree to Joint Front Against Cyber-Scam Networks",
-      "DOJ Closes Powell Probe &#8212; Fed Chair&#8217;s Independence Survives the Siege",
-      "Analysts Raise Amazon Price Targets Ahead of Q1 Earnings Drop",
-      "China Slams the Door on US Tech Investment Over Security Fears",
-      "DeepSeek Surfaces With a New Model &#8212; Right as GPT&#8209;5.5 Takes Its Victory Lap",
-      "Cancer Research Enters Its AI Era &#8212; AACR 2026 Makes the Case",
-      "York City&#8217;s Extraordinary Promotion Drama &#8212; The Comeback of the Season",
-      "Buffalo Bills Make Their Move: T.J. Parker Lands at No. 35 After Day-One Trade Frenzy"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-26",
     "headlines": [
       "Bennett and Lapid Bury the Hatchet &#8212; and Point It at Netanyahu",
@@ -122,6 +106,23 @@
       "Nearly Every U.S. State Has Piloted AI &#8212; But Nobody&#8217;s Sure It&#8217;s Working",
       "May Day 2026: Workers March Worldwide Amid Economic Anxiety",
       "Global Math Gains for Girls Are Slipping, New Data Warns"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-03",
+    "headlines": [
+      "Mexican Governor Steps Down Amid U.S. Cartel Allegations",
+      "Israeli Raid in West Bank Kills One Palestinian, Wounds Four",
+      "Starmer Pushes for Harder Line on Gaza Protests After Antisemitic Attacks",
+      "Greg Abel Takes the Berkshire Wheel &#8212; With Buffett Watching",
+      "Iran War Keeps California Gas Above $6 as Oil Hits a Four-Year High",
+      "Cboe Plans to Cut 20% of Its Workforce",
+      "Pentagon Signs AI Deals With Seven Tech Firms for Classified Systems",
+      "Humanoid Robots Are Moving From Lab to Factory Floor &#8212; Fast",
+      "Nearly Every U.S. State Has Piloted AI &#8212; But Results Remain Murky",
+      "Met Gala Week Arrives &#8212; New York Is Already Buzzing",
+      "Madrid Open Heats Up as Andreeva Advances in Doubles"
     ],
     "sent": 13
   }

@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-04-26",
-    "headlines": [
-      "Bennett and Lapid Bury the Hatchet &#8212; and Point It at Netanyahu",
-      "Shots Fired Outside the White House Correspondents&#39; Dinner &#8212; Suspect Charged",
-      "Russia&#39;s Drone Barrage Over Ukraine &#8212; and the Moment One Was Shot Down",
-      "IEA Chief Sounds the Alarm&#58; Hormuz Crisis Is the &#34;Biggest Energy Security Threat in History&#34;",
-      "Amazon&#39;s Q1 Earnings Drop This Week &#8212; and Analysts Are Already Raising the Bar",
-      "ChatGPT 5.5 Is Out &#8212; And the Rivals Didn&#39;t Wait for the Applause to Die Down",
-      "AI Learns to Talk Chemistry &#8212; and Chemists Are Listening",
-      "Wiesberger Wins China Open &#8212; First European Title Since Returning From LIV",
-      "Madrid Open Heats Up as Griekspoor Knocks Out Musetti"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-27",
     "headlines": [
       "Bennett and Lapid Formalize Alliance &#8212; With Netanyahu Squarely in Their Sights",
@@ -123,6 +108,24 @@
       "Nearly Every U.S. State Has Piloted AI &#8212; But Results Remain Murky",
       "Met Gala Week Arrives &#8212; New York Is Already Buzzing",
       "Madrid Open Heats Up as Andreeva Advances in Doubles"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-04",
+    "headlines": [
+      "Iran Claims Hit on U.S. Warship &#8212; Markets Retreat, Tensions Spike",
+      "Russia Lost Ground in Ukraine in April &#8212; a First Since the Kursk Incursion",
+      "Japan and Australia Lock Arms on Energy, Defense, and Critical Minerals",
+      "Wall Street Hit Records Last Week &#8212; Then Iran Ruined Monday Morning",
+      "Middle Market Lenders Enter May in a Fog of Policy Uncertainty",
+      "A 22-Year-Old Dropout Reverse-Engineered the World&#8217;s Scariest AI",
+      "The March Toward AGI: Transformers, Superpowers, and What Happens to Workers",
+      "New Mexico Takes Meta to Trial Phase Two &#8212; Seeking Child Safety Mandates on Algorithms",
+      "Man United Stuns Liverpool 3&#8211;2, Books a Return to the Champions League",
+      "Bonmat&#237; Returns, Barcelona Reaches Sixth Straight Women&#8217;s Champions League Final",
+      "Australia&#8217;s Antisemitism Inquiry Opens as Witnesses Describe Surge Before Bondi Attack",
+      "Senegal&#8217;s Biennale of Dance Erupts in Color at Ecole des Sables"
     ],
     "sent": 13
   }

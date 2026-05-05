@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-27",
-    "headlines": [
-      "Bennett and Lapid Formalize Alliance &#8212; With Netanyahu Squarely in Their Sights",
-      "Shooting at the White House Correspondents&#8217; Dinner &#8212; New Details Emerge",
-      "EU and US Launch Critical Minerals Partnership to Outflank China",
-      "China Blocks Meta&#8217;s Acquisition of AI Startup Manus",
-      "Microsoft Trims OpenAI Revenue Share &#8212; The Partnership Quietly Shifts",
-      "US State Department Warns World About DeepSeek&#8217;s Alleged AI Data Theft",
-      "S&amp;P 500&#8217;s Best Month Since 2020 &#8212; and the Doubters Are Getting Louder",
-      "China&#8217;s Industrial Profits Surge 15.5% &#8212; Even as the Oil Shock Bites",
-      "Kevin Durant Sits Again &#8212; Rockets Face Elimination in Game 4 Against the Lakers",
-      "Madrid Open Rolls On: Blockx vs. Auger-Aliassime Takes Center Court"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-28",
     "headlines": [
       "Iran&#8217;s Hormuz Gambit Rattles Diplomats and Oil Markets Alike",
@@ -126,6 +110,20 @@
       "Bonmat&#237; Returns, Barcelona Reaches Sixth Straight Women&#8217;s Champions League Final",
       "Australia&#8217;s Antisemitism Inquiry Opens as Witnesses Describe Surge Before Bondi Attack",
       "Senegal&#8217;s Biennale of Dance Erupts in Color at Ecole des Sables"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-05",
+    "headlines": [
+      "Russia Bombs Ukraine&#8217;s Energy Grid &#8212; During Truce Talks",
+      "Alberta Gathers Enough Signatures to Trigger a Separation Referendum",
+      "Armenia Hosts Historic EU Summit, Pivoting Hard Away From Moscow",
+      "Hormuz Tensions Ease &#8212; Slightly &#8212; as Markets Stabilize and Oil Pulls Back",
+      "Palantir Beats but Slips; AMD Steps Into the Spotlight Today",
+      "Sewage Surveillance Catches Drug-Resistant &#8216;Candida Auris&#8217; Before It Reaches Hospital Wards",
+      "White House May Vet New AI Models Before They Go Public",
+      "Met Gala 2026: Beyonc&#233; Co-Chairs, Stars Flood the Steps"
     ],
     "sent": 13
   }

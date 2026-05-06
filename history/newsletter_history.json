@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-04-28",
-    "headlines": [
-      "Iran&#8217;s Hormuz Gambit Rattles Diplomats and Oil Markets Alike",
-      "Ukrainian Teenagers Face Charges for Alleged Russian-Directed Sabotage",
-      "Somali Pirates Strike Again &#8212; Second Vessel Seized in Days",
-      "Megacap Earnings Day: Records Fade as Tech Stocks Pull Back",
-      "Australia Moves to Tax Big Tech Over Local News Standoff",
-      "The AI Brain Drain: Big Tech&#8217;s Best Are Walking Out the Door",
-      "Is OpenAI Losing the Race It Started?",
-      "AI Is Lowering the Moral Bar for Financial Crime",
-      "Kenya&#8217;s Sawe Shatters the Two-Hour Marathon Barrier",
-      "Babar Azam Fires a Century as PSL 2026 Heats Up"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-29",
     "headlines": [
       "The Iran War&#8217;s Billion-Dollar Bill Lands on Capitol Hill",
@@ -124,6 +108,23 @@
       "Sewage Surveillance Catches Drug-Resistant &#8216;Candida Auris&#8217; Before It Reaches Hospital Wards",
       "White House May Vet New AI Models Before They Go Public",
       "Met Gala 2026: Beyonc&#233; Co-Chairs, Stars Flood the Steps"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-06",
+    "headlines": [
+      "Russia Bombs Ukraine on the Eve of Its Own Announced Ceasefire",
+      "Armenia Pivots West, Hosting Historic EU Summit",
+      "Gaza&#8217;s &#34;Board of Peace&#34; Meets as Conditions Deteriorate",
+      "U.S. Corporate Profits Are the Strongest in Two Decades &#8212; Markets Take Notice",
+      "Gas Price Spike Is Hitting Lower-Income Americans Hardest",
+      "Private Payrolls Beat in April; Uber Touts Long-Term Buildout",
+      "White House Moves to Vet Frontier AI Models Before Public Release",
+      "SoundHound Launches OASYS &#8212; An AI Platform That Builds Its Own AI Agents",
+      "A 22-Year-Old Raises $60 Million to Automate a &#34;Sneaky Big&#34; Enterprise Market",
+      "Trump&#8217;s Indiana Primary Wins Cement His Iron Grip on the GOP",
+      "Immigration Crackdown Is Reshaping U.S. Higher Education"
     ],
     "sent": 13
   }

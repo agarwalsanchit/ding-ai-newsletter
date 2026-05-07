@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-04-29",
-    "headlines": [
-      "The Iran War&#8217;s Billion-Dollar Bill Lands on Capitol Hill",
-      "Ukrainian Teens Caught in Russia&#8217;s Shadow War",
-      "Markets Flinch Before the Fed and Big Tech&#8217;s Report Cards",
-      "Australia Draws a Line: Pay for News or Pay a Levy",
-      "The Pentagon Goes Venture Capitalist",
-      "Beijing Grounds the Drones &#8212; All of Them",
-      "Beeple Brings a Kim Jong Un Robot to Berlin&#8217;s Neue Nationalgalerie",
-      "South Sudan Plane Crash Kills All 14 on Board"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-04-30",
     "headlines": [
       "DOJ Charges Sinaloa Governor With Cartel Ties &#8212; A Major Escalation",
@@ -125,6 +111,22 @@
       "A 22-Year-Old Raises $60 Million to Automate a &#34;Sneaky Big&#34; Enterprise Market",
       "Trump&#8217;s Indiana Primary Wins Cement His Iron Grip on the GOP",
       "Immigration Crackdown Is Reshaping U.S. Higher Education"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-07",
+    "headlines": [
+      "Zelenskyy Calls Russian Barrage Before &#34;Ceasefire&#34; &#34;Absolute Cynicism&#34;",
+      "Drones &#8212; Possibly Russian &#8212; Strike Near Latvian Oil Facilities",
+      "U.S. and Iran Inch Toward a Deal Amid Strategy Shift",
+      "S&amp;P 500 Charges Toward Record Highs on Stunning Profit Season",
+      "Gas Price Spike Is Squeezing Lower-Income Households Hardest",
+      "Emirates CEO: Jet Fuel Costs &#34;Well Hedged&#34; Through 2029",
+      "SpaceX&#8217;s Colossus Supercomputer Opens to Anthropic for AI Training",
+      "FDA Under RFK Jr.: Big Announcements, Little Rulemaking",
+      "Ted Turner, CNN Founder and Broadcasting Pioneer, Dies at 87",
+      "BLACKPINK Reunites at the 2026 Met Gala in a Moment Fans Didn&#8217;t See Coming"
     ],
     "sent": 13
   }

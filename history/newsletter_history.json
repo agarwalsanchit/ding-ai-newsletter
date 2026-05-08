@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-04-30",
-    "headlines": [
-      "DOJ Charges Sinaloa Governor With Cartel Ties &#8212; A Major Escalation",
-      "Iran Holds the Line as U.S. Naval Blockade Drags On",
-      "International Press Demands Access to Gaza as Reporting Ban Continues",
-      "Samsung Chips Post 50-Fold Profit Surge &#8212; Then Warn It&#8217;s About to Get Worse",
-      "Meta&#8217;s Revenue Growth Hits a 5-Year High &#8212; but AI Spending Spooks Investors",
-      "Adidas Holds Targets but Flashes Amber on Global Volatility",
-      "OpenAI Faces Lawsuit From Families of Canadian Mass Shooting Victims",
-      "Scout AI Raises $100 Million to Build Military-Grade AI Models",
-      "Australia Opens the Door: Research Councils Allow AI in Grant Applications"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-01",
     "headlines": [
       "London Stabbing of Jewish Men Declared a Terrorist Attack",
@@ -127,6 +112,18 @@
       "FDA Under RFK Jr.: Big Announcements, Little Rulemaking",
       "Ted Turner, CNN Founder and Broadcasting Pioneer, Dies at 87",
       "BLACKPINK Reunites at the 2026 Met Gala in a Moment Fans Didn&#8217;t See Coming"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-08",
+    "headlines": [
+      "Iran Seizes Cargo Ship in Strait of Hormuz &#8212; Right as Nuke Talks Heat Up",
+      "Turkey Unveils ICBM Concept, Signals New Defense Ambitions",
+      "Spain Prepares Evacuations as Hantavirus-Hit Cruise Ship Approaches Canary Islands",
+      "Stocks Open Higher as Strong Jobs Report and Iran Deal Hopes Converge",
+      "Pentagon Opens UFO Files &#8212; and Tells the Public to Make Up Its Own Mind",
+      "Anthropic Says AI May Be Recursively Improving Itself &#8212; and Thinks the World Should Know"
     ],
     "sent": 13
   }

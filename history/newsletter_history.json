@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-05-01",
-    "headlines": [
-      "London Stabbing of Jewish Men Declared a Terrorist Attack",
-      "Mexico&#8217;s Drug War Spills Into US Courtrooms &#8212; 10 Officials Indicted",
-      "King Charles Urges Congress: Match the Post-9/11 Resolve on Ukraine",
-      "Inflation Jumps, Economy Grew in Q1 &#8212; The Good-News-Bad-News Edition",
-      "Dow Surges 700 Points to Close April at Record Highs",
-      "AstraZeneca Shares Slide After US Panel Rejects Breast Cancer Drug",
-      "The AI Model Too Dangerous to Release: Anthropic&#8217;s &#8216;Mythos&#8217; Stays Locked Up",
-      "OpenAI Hit With Lawsuits From Families of Canadian Mass Shooting Victims",
-      "Study: AI Knows the Answers But Doesn&#8217;t Understand the Questions",
-      "Teens Turn to Influencers for News &#8212; and Are Suspicious of All of It",
-      "College Closures Accelerate as Financial Pressures Mount"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-02",
     "headlines": [
       "Iran War Sends California Gas Past $6 &#8212; and Tehran Shoots at Drones Over Its Own Capital",
@@ -124,6 +107,22 @@
       "Stocks Open Higher as Strong Jobs Report and Iran Deal Hopes Converge",
       "Pentagon Opens UFO Files &#8212; and Tells the Public to Make Up Its Own Mind",
       "Anthropic Says AI May Be Recursively Improving Itself &#8212; and Thinks the World Should Know"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-09",
+    "headlines": [
+      "Iran Deal Hopes and Strait Tensions Send Markets and Diplomats into Overdrive",
+      "IDF Strikes 85-Plus Hezbollah Sites as Middle East Pressure Mounts",
+      "U.K. Prime Minister Vows to Fight On After Bruising Local Elections",
+      "Jobs Beat and Iran Deal Hopes Propel Stocks to Fresh Records",
+      "Trump DOJ Settles Meatpacking Antitrust Case in Grocery Price Push",
+      "Canvas Cyberattack Disrupts Thousands of Schools Ahead of Finals",
+      "White House AI Policy Is a Tug-of-War &#8212; and It&#8217;s Starting to Show",
+      "French Prosecutors Seek Charges Against Elon Musk and X Over Child Abuse Images",
+      "Vingegaard Begins Grand Tour Triple Quest as Giro d&#8217;Italia Kicks Off in Bulgaria",
+      "WNBA Season Set to Light Up Prime Video Starting May 14"
     ],
     "sent": 13
   }

@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-05-02",
-    "headlines": [
-      "Iran War Sends California Gas Past $6 &#8212; and Tehran Shoots at Drones Over Its Own Capital",
-      "Turkmenistan Cracks Open the Door &#8212; Just a Little",
-      "Trump Greenlights Major New Canada&#8211;U.S. Oil Pipeline",
-      "S&amp;P 500 and Nasdaq Set New Records as Apple Leads the Charge",
-      "History Says 5% Gains Is the Ceiling for Stocks in 2026",
-      "Adyen Snaps Up Loyalty Platform Talon.One for &#8364;750 Million",
-      "Pentagon Signs AI Deals With Seven Tech Companies for Classified Systems",
-      "AI Is Flooding Academic Publishing &#8212; and the Quality Is Dropping",
-      "Nearly Every U.S. State Has Piloted AI &#8212; But Nobody&#8217;s Sure It&#8217;s Working",
-      "May Day 2026: Workers March Worldwide Amid Economic Anxiety",
-      "Global Math Gains for Girls Are Slipping, New Data Warns"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-03",
     "headlines": [
       "Mexican Governor Steps Down Amid U.S. Cartel Allegations",
@@ -123,6 +106,22 @@
       "French Prosecutors Seek Charges Against Elon Musk and X Over Child Abuse Images",
       "Vingegaard Begins Grand Tour Triple Quest as Giro d&#8217;Italia Kicks Off in Bulgaria",
       "WNBA Season Set to Light Up Prime Video Starting May 14"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-10",
+    "headlines": [
+      "Pakistan Suicide Attack Kills 14 as Taliban Splinter Group Claims Responsibility",
+      "British Military Ship Catches Fire After Being Hit Off Qatar Coast",
+      "Putin Says Russia&#8217;s War in Ukraine Is &#34;Coming to an End&#34;",
+      "S&amp;P 500 and Nasdaq Post Sixth Straight Week of Gains on Jobs Beat",
+      "Trump Heads to China This Week as Trade and Iran Talks Dominate Market Outlook",
+      "Canvas Cyberattack Leaves Millions of Students Without Access as Finals Begin",
+      "AI Could Give Gulf Coast Residents Earlier Hurricane Warnings, Researchers Say",
+      "White House AI Policy Remains a Tug-of-War Between Regulation and Laissez-Faire",
+      "Cannes 2026 Gets Underway &#8212; Here Are the Films Worth Watching",
+      "Kristin Smart&#8217;s Remains Not Found in Search of Convicted Killer&#8217;s Family Home"
     ],
     "sent": 13
   }

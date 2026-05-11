@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-05-03",
-    "headlines": [
-      "Mexican Governor Steps Down Amid U.S. Cartel Allegations",
-      "Israeli Raid in West Bank Kills One Palestinian, Wounds Four",
-      "Starmer Pushes for Harder Line on Gaza Protests After Antisemitic Attacks",
-      "Greg Abel Takes the Berkshire Wheel &#8212; With Buffett Watching",
-      "Iran War Keeps California Gas Above $6 as Oil Hits a Four-Year High",
-      "Cboe Plans to Cut 20% of Its Workforce",
-      "Pentagon Signs AI Deals With Seven Tech Firms for Classified Systems",
-      "Humanoid Robots Are Moving From Lab to Factory Floor &#8212; Fast",
-      "Nearly Every U.S. State Has Piloted AI &#8212; But Results Remain Murky",
-      "Met Gala Week Arrives &#8212; New York Is Already Buzzing",
-      "Madrid Open Heats Up as Andreeva Advances in Doubles"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-04",
     "headlines": [
       "Iran Claims Hit on U.S. Warship &#8212; Markets Retreat, Tensions Spike",
@@ -122,6 +105,21 @@
       "White House AI Policy Remains a Tug-of-War Between Regulation and Laissez-Faire",
       "Cannes 2026 Gets Underway &#8212; Here Are the Films Worth Watching",
       "Kristin Smart&#8217;s Remains Not Found in Search of Convicted Killer&#8217;s Family Home"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-11",
+    "headlines": [
+      "US-Brokered Ukraine Ceasefire on the Brink as Both Sides Trade Blame",
+      "EU Sanctions Russia Over Mass Abduction of Ukrainian Children",
+      "Asia Braces for Second Wave of Energy Shocks as Iran War Drags On",
+      "S&amp;P 500 and Nasdaq Set Fresh Records &#8212; Even as Iran Deal Hope Fades",
+      "Wall Street Veteran Raises S&amp;P 500 Target to 8,250 as &#8216;Melt-Up&#8217; Narrative Takes Hold",
+      "Hackers Are Now Using AI to Find and Exploit Vulnerabilities &#8212; at Scale",
+      "AI Is Remaking Legal Work &#8212; and the Rest of White-Collar Professions Are Watching",
+      "Arsenal Stay in Control of Premier League Title Race With Late Drama at West Ham",
+      "Cannes 2026 Gets Underway on the French Riviera"
     ],
     "sent": 13
   }

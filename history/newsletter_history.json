@@ -1,23 +1,5 @@
 [
   {
-    "date": "2026-05-04",
-    "headlines": [
-      "Iran Claims Hit on U.S. Warship &#8212; Markets Retreat, Tensions Spike",
-      "Russia Lost Ground in Ukraine in April &#8212; a First Since the Kursk Incursion",
-      "Japan and Australia Lock Arms on Energy, Defense, and Critical Minerals",
-      "Wall Street Hit Records Last Week &#8212; Then Iran Ruined Monday Morning",
-      "Middle Market Lenders Enter May in a Fog of Policy Uncertainty",
-      "A 22-Year-Old Dropout Reverse-Engineered the World&#8217;s Scariest AI",
-      "The March Toward AGI: Transformers, Superpowers, and What Happens to Workers",
-      "New Mexico Takes Meta to Trial Phase Two &#8212; Seeking Child Safety Mandates on Algorithms",
-      "Man United Stuns Liverpool 3&#8211;2, Books a Return to the Champions League",
-      "Bonmat&#237; Returns, Barcelona Reaches Sixth Straight Women&#8217;s Champions League Final",
-      "Australia&#8217;s Antisemitism Inquiry Opens as Witnesses Describe Surge Before Bondi Attack",
-      "Senegal&#8217;s Biennale of Dance Erupts in Color at Ecole des Sables"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-05",
     "headlines": [
       "Russia Bombs Ukraine&#8217;s Energy Grid &#8212; During Truce Talks",
@@ -120,6 +102,20 @@
       "AI Is Remaking Legal Work &#8212; and the Rest of White-Collar Professions Are Watching",
       "Arsenal Stay in Control of Premier League Title Race With Late Drama at West Ham",
       "Cannes 2026 Gets Underway on the French Riviera"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-12",
+    "headlines": [
+      "Ukraine Ceasefire Teeters as Russia and Kyiv Trade Blame",
+      "Iran&#8212;US Impasse Deepens Ahead of Trump&#8217;s China Trip",
+      "April CPI Hits 3.8% &#8212; Highest Since May 2023",
+      "eBay Swats Away GameStop&#8217;s $56 Billion Takeover Bid",
+      "Spring Housing Market Is Officially a Bust",
+      "AI VC Funding in Q1 2026 Surpassed All of 2025 &#8212; in a Single Quarter",
+      "Hackers Cut a Deal on Stolen Canvas Data as Finals Season Burns",
+      "AI Startup Targets the $300B Unfilled Prescription Problem"
     ],
     "sent": 13
   }

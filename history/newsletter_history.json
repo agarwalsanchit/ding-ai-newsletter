@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-05-05",
-    "headlines": [
-      "Russia Bombs Ukraine&#8217;s Energy Grid &#8212; During Truce Talks",
-      "Alberta Gathers Enough Signatures to Trigger a Separation Referendum",
-      "Armenia Hosts Historic EU Summit, Pivoting Hard Away From Moscow",
-      "Hormuz Tensions Ease &#8212; Slightly &#8212; as Markets Stabilize and Oil Pulls Back",
-      "Palantir Beats but Slips; AMD Steps Into the Spotlight Today",
-      "Sewage Surveillance Catches Drug-Resistant &#8216;Candida Auris&#8217; Before It Reaches Hospital Wards",
-      "White House May Vet New AI Models Before They Go Public",
-      "Met Gala 2026: Beyonc&#233; Co-Chairs, Stars Flood the Steps"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-06",
     "headlines": [
       "Russia Bombs Ukraine on the Eve of Its Own Announced Ceasefire",
@@ -116,6 +102,18 @@
       "AI VC Funding in Q1 2026 Surpassed All of 2025 &#8212; in a Single Quarter",
       "Hackers Cut a Deal on Stolen Canvas Data as Finals Season Burns",
       "AI Startup Targets the $300B Unfilled Prescription Problem"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-13",
+    "headlines": [
+      "Trump and Xi Meet in Beijing as Trade, Taiwan, and Iran All Land on the Table",
+      "Rickshaw Bomb Kills 9 in Pakistan Bazaar as Regional Violence Grinds On",
+      "Producer Prices Spike 6%, Heaping More Pain on a 3.8% CPI Already Stung by Iran War Energy Costs",
+      "eBay Sends GameStop&#8217;s $56 Billion Takeover Bid Back to the Bargain Bin",
+      "AI VC Funding in Q1 2026 Alone Eclipsed Every Dollar Invested in All of 2025",
+      "Hackers Strike a Deal to Delete Stolen Canvas Data as Students Exhale &#8212; Barely"
     ],
     "sent": 13
   }

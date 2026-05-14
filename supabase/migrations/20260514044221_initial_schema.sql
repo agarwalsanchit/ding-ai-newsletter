@@ -6,12 +6,14 @@
 -- ---------------------------------------------------------------------------
 -- 5.1  sources
 -- Static config table: one row per Tavily topic. Rarely changes at runtime.
--- RESTRICT on delete: you should never silently lose a topic config that
--- articles still point to. Explicitly remove articles first.
+-- UUID PK — topic is UNIQUE but kept as a natural label, not the PK, so the
+-- FK in articles is a tight 16-byte uuid rather than a variable-length string.
+-- RESTRICT on delete: require explicit cleanup before removing a topic config
+-- that articles still point to.
 -- ---------------------------------------------------------------------------
 CREATE TABLE sources (
-    source_url    text        PRIMARY KEY,  -- Tavily query string; unique identifier (topic names may collide)
-    topic         text        NOT NULL,
+    id            uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
+    topic         text        NOT NULL UNIQUE,  -- one config per topic name
     tavily_query  text        NOT NULL,
     -- Optional allowlist of domains passed to Tavily (e.g. '{reuters.com,apnews.com}').
     -- NULL means no domain filter.
@@ -29,24 +31,24 @@ CREATE TABLE sources (
 -- ---------------------------------------------------------------------------
 CREATE TABLE articles (
     id                     uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
-    source_url             text        NOT NULL REFERENCES sources(source_url) ON DELETE RESTRICT,
+    source_id              uuid        NOT NULL REFERENCES sources(id) ON DELETE RESTRICT,
 
     -- Python-derived, never written by Claude (DESIGN.md Rule 3.1 + 3.5).
     -- Arrays because one AI article may merge multiple Tavily inputs.
+    -- URL is the dedup key — Tavily returns no separate article ID (verified
+    -- in task 2.0), so no tavily_ids column; add one via migration if needed.
     source_urls            text[]      NOT NULL DEFAULT '{}',
 
-    -- Tavily returns no stable per-article ID; URL is the dedup key.
-    -- Kept as a separate column in case Tavily adds IDs later.
-    tavily_ids             text[]      NOT NULL DEFAULT '{}',
-
-    -- Copied from sources.topic at insert time so queries never need a join
-    -- just to filter by topic.
+    -- Denormalized from sources.topic for query speed — avoids a join on the
+    -- hot path "get all pending articles for topic X".
     topic                  text        NOT NULL,
 
     -- From Tavily's published_date — NOT from Claude.
     article_date           date        NOT NULL,
 
-    -- Claude-generated fields
+    -- Claude-generated fields. Nullable at insert time (row is created after
+    -- fetch, before Claude has processed it). The partial CHECK below enforces
+    -- that all three are present once processed_at is set.
     title                  text,
     balanced_summary       text,
     why_it_matters         text,
@@ -76,7 +78,26 @@ CREATE TABLE articles (
 
     fetched_at             timestamptz NOT NULL DEFAULT now(),
     processed_at           timestamptz,
-    reviewed_at            timestamptz  -- NULL until human or auto-approval occurs
+    reviewed_at            timestamptz,  -- NULL until human or auto-approval occurs
+
+    -- Once processed, all Claude-generated text fields must be present.
+    -- Catches partial writes where a Sonnet call half-succeeds.
+    CHECK (processed_at IS NULL OR (
+        title IS NOT NULL AND
+        balanced_summary IS NOT NULL AND
+        why_it_matters IS NOT NULL
+    )),
+
+    -- Decision F: auto_approved requires all three confidence scores = 5.
+    -- Enforces the invariant at the DB level so a Python bug can't silently
+    -- publish a low-confidence article via auto-approval.
+    CHECK (
+        status != 'auto_approved' OR (
+            ai_confidence_factual  = 5 AND
+            ai_confidence_on_topic = 5 AND
+            ai_confidence_source   = 5
+        )
+    )
 );
 
 CREATE INDEX articles_status_idx       ON articles (status);
@@ -104,9 +125,13 @@ CREATE TABLE approved_articles (
     score_urgency    smallint    NOT NULL CHECK (score_urgency    BETWEEN 1 AND 5),
     score_interest   smallint    NOT NULL CHECK (score_interest   BETWEEN 1 AND 5),
 
-    -- Computed at insert: importance×2 + urgency + interest (Decision H).
-    -- Stored, not computed at query time, so a formula change is one UPDATE.
-    rank_score       numeric     NOT NULL,
+    -- Generated column: importance×2 + urgency + interest (Decision H).
+    -- Computed by Postgres at write time — formula lives in one place.
+    -- GENERATED ALWAYS prevents direct writes; if the formula changes,
+    -- ALTER TABLE recomputes it across all rows.
+    rank_score       numeric     GENERATED ALWAYS AS (
+                         score_importance * 2 + score_urgency + score_interest
+                     ) STORED,
 
     source_urls      text[]      NOT NULL DEFAULT '{}',
 
@@ -114,16 +139,13 @@ CREATE TABLE approved_articles (
     approved_by      text        NOT NULL CHECK (approved_by IN ('human', 'ai_auto')),
 
     -- NULL until the newsletter/PWA consumer marks it published.
-    published_at     timestamptz,
-
-    -- Redundant with article_date but denormalised for fast daily archive
-    -- queries (SELECT * FROM approved_articles WHERE archived_for_date = $1).
-    archived_for_date date       NOT NULL
+    published_at     timestamptz
 );
 
-CREATE INDEX approved_articles_article_date_idx      ON approved_articles (article_date);
-CREATE INDEX approved_articles_rank_score_idx        ON approved_articles (rank_score DESC);
-CREATE INDEX approved_articles_archived_for_date_idx ON approved_articles (archived_for_date);
+-- article_date is already indexed and fast for daily archive queries
+-- (WHERE article_date = $1). No separate archived_for_date column needed.
+CREATE INDEX approved_articles_article_date_idx ON approved_articles (article_date);
+CREATE INDEX approved_articles_rank_score_idx   ON approved_articles (rank_score DESC);
 
 -- ---------------------------------------------------------------------------
 -- 5.4  translations
@@ -208,3 +230,6 @@ CREATE TABLE processing_log (
     error_message  text,
     called_at      timestamptz   NOT NULL DEFAULT now()
 );
+
+-- Most common query pattern: "show calls from last N days / yesterday's spend"
+CREATE INDEX processing_log_called_at_idx ON processing_log (called_at DESC);

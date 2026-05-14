@@ -12,18 +12,18 @@ client = create_client(
 
 # Insert
 inserted = client.table("sources").insert({
-    "source_url": "https://test.example.com/query",
     "topic": "Test Topic",
     "tavily_query": "test query",
     "domain_filter": ["example.com"],
     "active": False,
 }).execute()
 print("Inserted:", inserted.data)
+source_id = inserted.data[0]["id"]
 
 # Read back
-fetched = client.table("sources").select("*").eq("source_url", "https://test.example.com/query").execute()
+fetched = client.table("sources").select("*").eq("id", source_id).execute()
 print("Fetched:", fetched.data)
 
 # Clean up
-client.table("sources").delete().eq("source_url", "https://test.example.com/query").execute()
+client.table("sources").delete().eq("id", source_id).execute()
 print("Cleaned up.")

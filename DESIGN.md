@@ -139,9 +139,8 @@ One row per Tavily topic configuration. Static config table; rarely changes.
 
 ```
 sources
-- source_url    text, primary key — the Tavily query string; unique identifier.
-                Topic names may collide; source_url does not.
-- topic         text, display label (e.g. "Business & Finance")
+- id            uuid, primary key
+- topic         text, UNIQUE — one config per topic name
 - tavily_query  text, the query string sent to Tavily
 - domain_filter text[], optional allowlist of domains (e.g. ["reuters.com"])
 - active        boolean, default true
@@ -156,17 +155,13 @@ articles
 
 \- id                       uuid, primary key
 
-\- source\_url               text, FK → sources.source\_url
+\- source\_id                uuid, FK → sources.id
 
 \- source\_urls              text\[\], URLs from matched Tavily inputs (written
 
                                    by Python, NOT by Claude)
 
-\- tavily\_ids               text\[\], Tavily identifiers from matched inputs
-
-                                   (written by Python, NOT by Claude)
-
-\- topic                    text, from sources.topic — NOT from Claude (rule 3.1)
+\- topic                    text, denormalized from sources.topic — NOT from Claude (rule 3.1)
 
 \- article\_date             date, from Tavily's published\_date — NOT from Claude
 
@@ -202,9 +197,10 @@ articles
 
 Notes:
 
-- source\_urls and tavily\_ids are arrays because per-event deduplication may merge multiple Tavily inputs into one summary (see Rule 3.5: Claude returns source\_indices, Python derives URLs/IDs).  
-- auto\_rejected means Claude flagged the article as a duplicate of recent coverage — kept for telemetry, not displayed.  
-- auto\_approved means all three AI confidence scores were 5 and the article was not a duplicate.
+- source\_urls is an array because per-event deduplication may merge multiple Tavily inputs into one summary (Rule 3.5: Claude returns source\_indices, Python derives URLs). Tavily returns no stable per-article ID (verified task 2.0); URL is the dedup key.
+- auto\_rejected means Claude flagged the article as a duplicate of recent coverage — kept for telemetry, not displayed.
+- auto\_approved means all three AI confidence scores were 5 and the article was not a duplicate. Enforced by a DB CHECK constraint.
+- A partial CHECK constraint enforces that title, balanced\_summary, and why\_it\_matters are all non-null once processed\_at is set.
 
 ### 5.3 approved\_articles
 
@@ -232,7 +228,7 @@ approved\_articles
 
 \- score\_interest     smallint
 
-\- rank\_score         numeric, computed: importance × 2 \+ urgency \+ interest
+\- rank\_score         numeric, GENERATED ALWAYS AS (importance × 2 \+ urgency \+ interest) STORED
 
 \- source\_urls        text\[\]
 
@@ -242,9 +238,7 @@ approved\_articles
 
 \- published\_at       timestamptz, when this became visible to readers
 
-\- archived\_for\_date  date, indexed for daily archive queries
-
-rank\_score is computed at insert time, not at query time. If the ranking formula changes (Decision H), a single SQL update backfills it.
+rank\_score is a Postgres generated column — computed automatically at write time, formula lives in the schema. No archived\_for\_date column; article\_date is indexed directly.
 
 ### 5.4 translations
 

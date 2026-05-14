@@ -137,22 +137,16 @@ Postgres on Supabase. Six tables.
 
 One row per Tavily topic configuration. Static config table; rarely changes.
 
+```
 sources
-
-~~\- id              uuid, primary key~~
-
-\- topic           text, e.g. "Business & Finance"
-
-\- tavily\_query    text, the query string sent to Tavily
-
-\- domain\_filter   text\[\], optional list of domains (e.g. \["reuters.com"\])
-
-\- active          boolean, default true
-
-\- created\_at      timestamptz
-
-\+ source\_urls    text\[\], URLs from matched Tavily inputs — serves as both source link  
-                AND dedup key (Tavily returns no separate ID; URL is the unique handle)
+- source_url    text, primary key — the Tavily query string; unique identifier.
+                Topic names may collide; source_url does not.
+- topic         text, display label (e.g. "Business & Finance")
+- tavily_query  text, the query string sent to Tavily
+- domain_filter text[], optional allowlist of domains (e.g. ["reuters.com"])
+- active        boolean, default true
+- created_at    timestamptz
+```
 
 ### 5.2 articles
 
@@ -162,7 +156,7 @@ articles
 
 \- id                       uuid, primary key
 
-\- source\_id                uuid, FK → sources.id
+\- source\_url               text, FK → sources.source\_url
 
 \- source\_urls              text\[\], URLs from matched Tavily inputs (written
 

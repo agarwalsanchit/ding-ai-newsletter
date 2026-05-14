@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-05-06",
-    "headlines": [
-      "Russia Bombs Ukraine on the Eve of Its Own Announced Ceasefire",
-      "Armenia Pivots West, Hosting Historic EU Summit",
-      "Gaza&#8217;s &#34;Board of Peace&#34; Meets as Conditions Deteriorate",
-      "U.S. Corporate Profits Are the Strongest in Two Decades &#8212; Markets Take Notice",
-      "Gas Price Spike Is Hitting Lower-Income Americans Hardest",
-      "Private Payrolls Beat in April; Uber Touts Long-Term Buildout",
-      "White House Moves to Vet Frontier AI Models Before Public Release",
-      "SoundHound Launches OASYS &#8212; An AI Platform That Builds Its Own AI Agents",
-      "A 22-Year-Old Raises $60 Million to Automate a &#34;Sneaky Big&#34; Enterprise Market",
-      "Trump&#8217;s Indiana Primary Wins Cement His Iron Grip on the GOP",
-      "Immigration Crackdown Is Reshaping U.S. Higher Education"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-07",
     "headlines": [
       "Zelenskyy Calls Russian Barrage Before &#34;Ceasefire&#34; &#34;Absolute Cynicism&#34;",
@@ -114,6 +97,21 @@
       "eBay Sends GameStop&#8217;s $56 Billion Takeover Bid Back to the Bargain Bin",
       "AI VC Funding in Q1 2026 Alone Eclipsed Every Dollar Invested in All of 2025",
       "Hackers Strike a Deal to Delete Stolen Canvas Data as Students Exhale &#8212; Barely"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-14",
+    "headlines": [
+      "Trump&#8212;Xi Summit: Hormuz, Iran, and a Weapons Rumor Change the Stakes",
+      "Hungary Breaks With Orb&#225;n&#39;s Russia Softness, Summons Ambassador After Drone Strike",
+      "US Aid Cuts Leave Somalia Exposed as Deadly Drought Deepens",
+      "AI Shatters Every Cybersecurity Benchmark &#8212; and Palo Alto Says Autonomous Attacks Are Weeks Away",
+      "Google I/O 2026: Gemini Gets Bigger, Smarter Glasses Are Coming, and Android Gets a Full AI Overhaul",
+      "Rents Fall for the 33rd Straight Month &#8212; and Relief Isn&#39;t Done Yet",
+      "Anthropic Hits $30B Run-Rate as AI&#39;s Biggest Players Outgrow What Venture Can Fund",
+      "Higher Ed&#39;s Center Is Collapsing &#8212; and AI Is Widening the Gulf",
+      "Taylor Swift, Beyonc&#233;, and Chaka Khan Join the National Recording Registry"
     ],
     "sent": 13
   }

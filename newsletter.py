@@ -33,10 +33,14 @@ from datetime import date, datetime, timedelta, timezone
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import parsedate_to_datetime
+from dotenv import load_dotenv
 from supabase import create_client
 from tavily import TavilyClient
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+
+load_dotenv("supabase.env")  # SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL
+load_dotenv()                # .env — ANTHROPIC_API_KEY, TAVILY_API_KEY, etc.
 
 # Public-domain senders with strict DMARC policies. Using one of these in the
 # From header while sending via Brevo fails DMARC alignment — Gmail in

@@ -601,6 +601,19 @@ Within-topic ranking (just reader\_interest) remains available via the column. F
 
 Validate empirically on first 50 approved articles. If the formula consistently surfaces wrong things, recompute with different weights — backfilling rank\_score is a single SQL UPDATE.
 
+### Decision I — Build PWA on seeded data pre-Yellowstone
+
+The original Phase 2 plan finished the AI pipeline (tasks 2.4-2.12) before 
+any frontend work. We're inverting this: build the UI against manually 
+seeded approved_articles before Yellowstone, then resume backend work after.
+
+Rationale: motivation compounds when there's something visual to show; 
+schema feedback from UI work surfaces design problems before further 
+backend investment; demonstrability for beta testers earlier.
+
+Tradeoff accepted: tasks 2.4-2.12 slip 2-3 weeks; some UI decisions will 
+need revision once real AI-generated content flows through.
+
 ---
 
 ## 8\. Human review

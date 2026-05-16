@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-05-08",
-    "headlines": [
-      "Iran Seizes Cargo Ship in Strait of Hormuz &#8212; Right as Nuke Talks Heat Up",
-      "Turkey Unveils ICBM Concept, Signals New Defense Ambitions",
-      "Spain Prepares Evacuations as Hantavirus-Hit Cruise Ship Approaches Canary Islands",
-      "Stocks Open Higher as Strong Jobs Report and Iran Deal Hopes Converge",
-      "Pentagon Opens UFO Files &#8212; and Tells the Public to Make Up Its Own Mind",
-      "Anthropic Says AI May Be Recursively Improving Itself &#8212; and Thinks the World Should Know"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-09",
     "headlines": [
       "Iran Deal Hopes and Strait Tensions Send Markets and Diplomats into Overdrive",
@@ -111,6 +99,21 @@
       "Floating AI Data Centers: The Ocean Is the New Server Room",
       "India Raises Fuel Prices as Global Energy Crisis Bites",
       "Cuba&#8217;s Art Scene Is Fading &#8212; and Its Artists Are Taking to the Streets"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-16",
+    "headlines": [
+      "Israel Says It Killed the Commander Behind October 7",
+      "Xi Jinping to Make U.S. State Visit This Fall",
+      "Iran War Fractures BRICS &#8212; Again",
+      "Oil Fears Wipe Out the Week&#39;s Market Gains in Friday Selloff",
+      "India Raises Fuel Prices as Energy Crisis Squeezes Emerging Economies",
+      "$4 Billion Bet on Self-Improving AI Draws Top Researchers",
+      "&#34;AI Integrators&#34; Storm Capitol Hill, Seeking a Seat at the Policy Table",
+      "Hearts One Point From Making Scottish Football History",
+      "PGA Championship Round Three: Scheffler Chasing, McIlroy in the Hunt"
     ],
     "sent": 13
   }

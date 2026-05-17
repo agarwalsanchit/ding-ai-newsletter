@@ -20,7 +20,7 @@ export default function Card({ children }: { children: ReactNode }) {
         style={{
           width: '100%',
           maxWidth: '640px',
-          padding: '80px 24px 0',
+          padding: '48px 24px 0',
         }}
       >
         {children}

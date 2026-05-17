@@ -83,22 +83,6 @@ export default function ArticleCard({ article }: { article: ApprovedArticle }) {
         {article.why_it_matters}
       </p>
 
-      {/* Tap to read more — Sitting 6 hook, absolute at bottom safe-area aware */}
-      <p
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          fontFamily: 'var(--font-sans)',
-          fontSize: '13px',
-          color: 'var(--subtle)',
-          paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)',
-        }}
-      >
-        Tap to read more
-      </p>
     </Card>
   );
 }

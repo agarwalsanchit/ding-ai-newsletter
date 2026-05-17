@@ -80,7 +80,7 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
             display: 'flex',
             flexWrap: 'wrap',
             gap: '8px',
-            marginBottom: '48px',
+            marginBottom: '0',
           }}
         >
           {brief.topic_chips.map((chip) => (
@@ -102,14 +102,25 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
         </div>
       )}
 
-      {/* Swipe up affordance */}
-      <div style={{ textAlign: 'center', color: 'var(--subtle)' }}>
+      {/* Swipe up affordance — absolute at bottom, safe-area aware */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)',
+          color: 'var(--subtle)',
+        }}
+      >
         <svg
           width="20"
           height="12"
           viewBox="0 0 20 12"
           fill="none"
-          style={{ display: 'block', margin: '0 auto' }}
         >
           <path
             d="M2 10L10 2L18 10"

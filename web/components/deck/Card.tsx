@@ -4,6 +4,7 @@ export default function Card({ children }: { children: ReactNode }) {
   return (
     <div
       style={{
+        position: 'relative',
         height: '100dvh',
         width: '100%',
         overflow: 'hidden',
@@ -12,14 +13,14 @@ export default function Card({ children }: { children: ReactNode }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
       }}
     >
       <div
         style={{
           width: '100%',
           maxWidth: '640px',
-          padding: '0 24px',
+          padding: '80px 24px 0',
         }}
       >
         {children}

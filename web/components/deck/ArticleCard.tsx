@@ -56,42 +56,45 @@ export default function ArticleCard({ article }: { article: ApprovedArticle }) {
         {article.title}
       </h2>
 
-      {/* Summary — truncated to fit one screen on iPhone 14 (260 chars) */}
+      {/* Summary */}
       <p
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: '16px',
-          lineHeight: 1.55,
+          fontSize: '15px',
+          lineHeight: 1.5,
           color: 'var(--text)',
-          marginBottom: '20px',
+          marginBottom: '16px',
         }}
       >
-        {article.balanced_summary.length > 260
-          ? article.balanced_summary.slice(0, 260).trimEnd() + '\u2026'
-          : article.balanced_summary}
+        {article.balanced_summary}
       </p>
 
       {/* Why it matters */}
       <p
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: '16px',
+          fontSize: '15px',
           fontStyle: 'italic',
-          lineHeight: 1.55,
+          lineHeight: 1.5,
           color: 'var(--text)',
-          marginBottom: '32px',
         }}
       >
         <span>Why it matters:</span>{' '}
         {article.why_it_matters}
       </p>
 
-      {/* Tap to read more — Sitting 6 hook */}
+      {/* Tap to read more — Sitting 6 hook, absolute at bottom safe-area aware */}
       <p
         style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          textAlign: 'center',
           fontFamily: 'var(--font-sans)',
           fontSize: '13px',
           color: 'var(--subtle)',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)',
         }}
       >
         Tap to read more

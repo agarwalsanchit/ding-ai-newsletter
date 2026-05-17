@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-/* Dark mode is the default */
+/* Dark is the brand default — applies regardless of system preference */
 :root {
+  color-scheme: dark;
   --bg:      #0E0E0E;
   --surface: #1A1A1A;
   --text:    #ECECEC;
@@ -11,8 +12,10 @@
   --divider: #2A2A2A;
 }
 
+/* Light only when user has explicitly set system to light */
 @media (prefers-color-scheme: light) {
   :root {
+    color-scheme: light;
     --bg:      #FFFFFF;
     --surface: #FAFAFA;
     --text:    #0E0E0E;

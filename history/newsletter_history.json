@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-05-09",
-    "headlines": [
-      "Iran Deal Hopes and Strait Tensions Send Markets and Diplomats into Overdrive",
-      "IDF Strikes 85-Plus Hezbollah Sites as Middle East Pressure Mounts",
-      "U.K. Prime Minister Vows to Fight On After Bruising Local Elections",
-      "Jobs Beat and Iran Deal Hopes Propel Stocks to Fresh Records",
-      "Trump DOJ Settles Meatpacking Antitrust Case in Grocery Price Push",
-      "Canvas Cyberattack Disrupts Thousands of Schools Ahead of Finals",
-      "White House AI Policy Is a Tug-of-War &#8212; and It&#8217;s Starting to Show",
-      "French Prosecutors Seek Charges Against Elon Musk and X Over Child Abuse Images",
-      "Vingegaard Begins Grand Tour Triple Quest as Giro d&#8217;Italia Kicks Off in Bulgaria",
-      "WNBA Season Set to Light Up Prime Video Starting May 14"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-10",
     "headlines": [
       "Pakistan Suicide Attack Kills 14 as Taliban Splinter Group Claims Responsibility",
@@ -114,6 +98,21 @@
       "&#34;AI Integrators&#34; Storm Capitol Hill, Seeking a Seat at the Policy Table",
       "Hearts One Point From Making Scottish Football History",
       "PGA Championship Round Three: Scheffler Chasing, McIlroy in the Hunt"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-17",
+    "headlines": [
+      "Putin Heads to Beijing Days After Trump, as Xi Plays Both Sides",
+      "Israel Says It Killed the Commander Behind October 7 &#8212; New Details Emerge",
+      "Russia&#8217;s Economy Is Straining &#8212; But Putin Is Spinning the Numbers",
+      "A $4 Billion Bet on AI That Builds Itself &#8212; And Top Researchers Are Signing On",
+      "Ukraine&#8217;s Garage-Built Robot Army Is Rewriting the Rules of Warfare",
+      "Oil Jitters Knock Global Markets Off Record Highs",
+      "Pershing Square Swaps Alphabet for Microsoft as Big Money Rotates in Big Tech",
+      "Hearts Are One Point From Shattering 41 Years of Scottish Football History",
+      "John Travolta Gets a Surprise Honorary Palm&#233; d&#8217;Or at Cannes"
     ],
     "sent": 13
   }

@@ -29,4 +29,17 @@ export type ApprovedArticle = {
 
   // Nullable: set when article is published to newsletter / PWA
   published_at: string | null;
+
+  // Extended summary for article detail view (nullable)
+  detail_summary: string | null;
+};
+
+export type DailyBrief = {
+  id: string;
+  brief_date: string;
+  editorial_opener: string;
+  brief_body: string;
+  transition_line: string;
+  topic_chips: string[];
+  approved_at: string | null;
 };

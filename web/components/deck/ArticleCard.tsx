@@ -46,7 +46,7 @@ export default function ArticleCard({ article }: { article: ApprovedArticle }) {
       <h2
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: 'clamp(22px, 5vw, 28px)',
+          fontSize: 'clamp(20px, 5vw, 26px)',
           fontWeight: 600,
           lineHeight: 1.15,
           letterSpacing: '-0.02em',
@@ -56,7 +56,7 @@ export default function ArticleCard({ article }: { article: ApprovedArticle }) {
         {article.title}
       </h2>
 
-      {/* Summary */}
+      {/* Summary — truncated to fit one screen on iPhone 14 (260 chars) */}
       <p
         style={{
           fontFamily: 'var(--font-sans)',
@@ -66,7 +66,9 @@ export default function ArticleCard({ article }: { article: ApprovedArticle }) {
           marginBottom: '20px',
         }}
       >
-        {article.balanced_summary}
+        {article.balanced_summary.length > 260
+          ? article.balanced_summary.slice(0, 260).trimEnd() + '\u2026'
+          : article.balanced_summary}
       </p>
 
       {/* Why it matters */}

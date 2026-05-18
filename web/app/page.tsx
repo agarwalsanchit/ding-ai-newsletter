@@ -5,14 +5,13 @@ import Deck from '@/components/deck/Deck';
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const today = new Date().toISOString().split('T')[0];
-
-  // Fetch today's brief (null if not yet generated)
+  // Fetch today's brief, falling back to the most recently generated one
   const { data: briefData } = await supabase
     .from('daily_briefs')
     .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
-    .eq('brief_date', today)
     .not('approved_at', 'is', null)
+    .order('brief_date', { ascending: false })
+    .limit(1)
     .maybeSingle();
 
   const brief = briefData as DailyBrief | null;

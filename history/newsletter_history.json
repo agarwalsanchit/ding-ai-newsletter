@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-05-10",
-    "headlines": [
-      "Pakistan Suicide Attack Kills 14 as Taliban Splinter Group Claims Responsibility",
-      "British Military Ship Catches Fire After Being Hit Off Qatar Coast",
-      "Putin Says Russia&#8217;s War in Ukraine Is &#34;Coming to an End&#34;",
-      "S&amp;P 500 and Nasdaq Post Sixth Straight Week of Gains on Jobs Beat",
-      "Trump Heads to China This Week as Trade and Iran Talks Dominate Market Outlook",
-      "Canvas Cyberattack Leaves Millions of Students Without Access as Finals Begin",
-      "AI Could Give Gulf Coast Residents Earlier Hurricane Warnings, Researchers Say",
-      "White House AI Policy Remains a Tug-of-War Between Regulation and Laissez-Faire",
-      "Cannes 2026 Gets Underway &#8212; Here Are the Films Worth Watching",
-      "Kristin Smart&#8217;s Remains Not Found in Search of Convicted Killer&#8217;s Family Home"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-11",
     "headlines": [
       "US-Brokered Ukraine Ceasefire on the Brink as Both Sides Trade Blame",
@@ -113,6 +97,22 @@
       "Pershing Square Swaps Alphabet for Microsoft as Big Money Rotates in Big Tech",
       "Hearts Are One Point From Shattering 41 Years of Scottish Football History",
       "John Travolta Gets a Surprise Honorary Palm&#233; d&#8217;Or at Cannes"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-18",
+    "headlines": [
+      "WHO Declares Global Emergency as Ebola Spreads Across Congo and Uganda",
+      "Turkish Flotilla Hours From Israel as Netanyahu Convenes Security Talks",
+      "Robert Gates: Iran Controls Hormuz and China&#39;s Taiwan Window May Be Narrowing",
+      "NextEra to Swallow Dominion Energy in $67 Billion Mega-Deal",
+      "Futures Slip as Oil Climbs and Trump Warns Iran &#8212; Again",
+      "$4 Billion Bet on Self-Improving AI Lands Top Researchers",
+      "AI Cyberattackers Are Getting Better, Faster &#8212; and the Gap Is Widening",
+      "OpenAI Open-Sources Symphony, a New Standard for Autonomous Coding Agents",
+      "Modena Car Attack Reignites Italy&#39;s Migration and Integration Debate",
+      "More Than 80 Children Missing After Militant Attacks on Nigerian Schools"
     ],
     "sent": 13
   }

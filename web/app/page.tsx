@@ -16,11 +16,14 @@ export default async function HomePage() {
 
   const brief = briefData as DailyBrief | null;
 
-  // Fetch top 10 approved articles by rank_score
+  // Fetch top 10 approved articles for the same date as the brief.
+  // Filter by article_date (not published_at) so the deck shows today's
+  // approved articles regardless of whether the email has been sent yet.
+  const deckDate = brief?.brief_date ?? new Date().toISOString().slice(0, 10);
   const { data: articlesData, error: articlesError } = await supabase
     .from('approved_articles')
     .select('*')
-    .not('published_at', 'is', null)
+    .eq('article_date', deckDate)
     .order('rank_score', { ascending: false })
     .limit(10);
 

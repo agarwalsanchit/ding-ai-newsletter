@@ -50,11 +50,11 @@ export default function Deck({ brief, articles }: DeckProps) {
     }),
     center: {
       y: 0,
-      transition: { type: 'tween', duration: 0.38, ease: [0.25, 0.1, 0.25, 1] },
+      transition: { type: 'tween' as const, duration: 0.38, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number] },
     },
     exit: (dir: number) => ({
       y: dir > 0 ? '-100%' : '100%',
-      transition: { type: 'tween', duration: 0.15, ease: 'easeIn' },
+      transition: { type: 'tween' as const, duration: 0.15, ease: 'easeIn' as const },
     }),
   };
 

@@ -756,6 +756,288 @@ def publish_to_archive(html: str, subject: str):
     print(f"📋 Archive index updated ({len(index)} issues)")
 
 
+# ── Approved-article newsletter generation (task 2.11) ───────────────────────
+APPROVED_NEWSLETTER_PROMPT = """You are the DING.AI newsletter layout engine. Today is {today}.
+
+The content below has already been written and fact-checked by our AI pipeline.
+Your job is ONLY layout and formatting — do NOT rewrite, summarize, or alter the
+content. Use the provided text verbatim (titles, summaries, why_it_matters).
+
+## TODAY'S BRIEF (intro)
+{brief_body}
+
+## APPROVED ARTICLES (ordered by rank, most important first)
+These are human-reviewed. Use them for the main section stories.
+{articles_context}
+
+## QUICK HITS CANDIDATES (AI-verified, high-confidence, not human-reviewed)
+These did not go through human review but have high AI confidence scores.
+Use ONLY for Quick Hits one-sentence bullets — never as full section articles.
+{quick_hits_context}
+
+## INSTRUCTIONS
+- Use the brief_body as the intro paragraph (after "Hi [NAME]!")
+- Lay out APPROVED ARTICLES as full section stories with title, summary, and why_it_matters
+- Group approved articles under their topic as section headers
+- Create a "Quick Hits" section using the QUICK HITS CANDIDATES: pick the 5 most
+  interesting ones and write one crisp sentence each (use their balanced_summary as source)
+- If there are no Quick Hits candidates, omit the Quick Hits section entirely
+- Do not add, invent, or editorialize any content
+
+## HTML FORMAT — CRITICAL RULES
+- Use ONLY inline styles. Zero CSS classes. Zero <style> blocks.
+- Table-based layout (not divs) for all structural elements
+- All special characters as HTML entities (& → &amp;, quotes → &#34;, em dash → &#8212;)
+
+## OUTPUT FORMAT
+Return a JSON object with exactly two keys:
+  "subject": "DING! Your {today_short} briefing is here"
+  "html": "the complete HTML email starting with <!DOCTYPE html>"
+
+Use this exact HTML template and fill in all [PLACEHOLDERS]:
+
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;padding:0;background-color:#eef1f8;font-family:Arial,Helvetica,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eef1f8;"><tr><td align="center" style="padding:24px 12px;"><table width="640" cellpadding="0" cellspacing="0" border="0" style="max-width:640px;width:100%;background-color:#ffffff;border-radius:4px;">
+<tr><td align="center" style="padding:36px 40px 4px;"><div style="font-size:34px;font-weight:900;letter-spacing:1px;color:#0d1b2a;font-family:Georgia,serif;">DING<span style="color:#2d7dd2;">.AI</span></div></td></tr>
+<tr><td align="center" style="padding:0 40px 6px;"><div style="font-size:13px;color:#666;font-style:italic;letter-spacing:0.5px;">Signal Over Noise</div></td></tr>
+<tr><td align="center" style="padding:0 40px 16px;"><div style="font-size:12px;color:#999;letter-spacing:0.5px;">{today}</div></td></tr>
+<tr><td style="padding:0 40px;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:2px solid #2d7dd2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td style="padding:28px 40px 20px;"><div style="font-size:17px;font-weight:700;color:#0d1b2a;margin-bottom:12px;">Hi [NAME]!</div><p style="font-size:15px;color:#444;line-height:1.75;margin:0;">[INTRO]</p></td></tr>
+[SECTIONS]
+[QUICK_HITS]
+<tr><td style="padding:28px 40px 0;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:2px solid #2d7dd2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+<tr><td style="padding:0 24px;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:2px solid #667eea;margin-top:24px;">
+<tr><td style="padding:28px 0 0;text-align:center;">
+<p style="font-size:16px;color:#333;font-weight:bold;margin:0 0 6px;font-family:Arial,sans-serif;">Thanks for reading DING&#8203;.AI &#8212; signal over noise, every morning.</p>
+<p style="font-size:14px;color:#666;margin:0 0 20px;font-family:Arial,sans-serif;">Got feedback or a story tip? Just hit reply. Forward this to a friend who'd enjoy it.</p>
+</td></tr>
+<tr><td align="center" style="padding:0 0 24px;">
+<div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);background-color:#764ba2;border-radius:10px;padding:24px;text-align:center;">
+<p style="color:#ffffff;font-size:17px;font-weight:bold;margin:0 0 6px;font-family:Arial,sans-serif;">Enjoying DING&#8203;.AI? Share it!</p>
+<p style="color:rgba(255,255,255,0.85);font-size:13px;margin:0 0 16px;font-family:Arial,sans-serif;">Know someone who'd love a daily AI briefing? Spread the word.</p>
+<a href="https://agarwalsanchit.github.io/ding-ai-newsletter/#share" style="display:inline-block;background:#ffffff;color:#764ba2;font-weight:bold;font-size:14px;padding:10px 24px;border-radius:5px;text-decoration:none;font-family:Arial,sans-serif;mso-padding-alt:10px 24px;">Share the signup link</a>
+</div>
+</td></tr>
+<tr><td style="padding:0 0 16px;text-align:center;">
+<p style="font-size:12px;color:#999;margin:0 0 4px;font-family:Arial,sans-serif;">&#169; 2026 DING&#8203;.AI &#183; All rights reserved</p>
+<p style="font-size:12px;margin:0;font-family:Arial,sans-serif;"><a href="[UNSUBSCRIBE_URL]" style="color:#999;text-decoration:underline;">Unsubscribe</a></p>
+</td></tr>
+</table>
+</td></tr>
+</table></td></tr></table></body></html>
+
+Each [SECTION] block:
+<tr><td style="padding:4px 40px 0;"><div style="font-size:20px;font-weight:700;color:#d4622a;margin-bottom:20px;">[EMOJI] [Section Title]</div>
+<div style="margin-bottom:26px;">
+  <div style="font-size:15px;font-weight:700;color:#1a3a6b;line-height:1.45;margin-bottom:10px;">[Story Headline]</div>
+  <p style="font-size:14px;color:#333;line-height:1.75;margin:0 0 8px;">[Summary. <em>([Sources])</em>]</p>
+  <p style="font-size:13.5px;color:#8899aa;line-height:1.65;margin:4px 0 0;"><strong style="color:#8899aa;">Why it matters:</strong> [Consequence]</p>
+</div>
+</td></tr>
+<tr><td style="padding:20px 40px 0;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #e8ecf2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+
+[QUICK_HITS] block:
+<tr><td style="padding:4px 40px 0;"><div style="font-size:20px;font-weight:700;color:#d4622a;margin-bottom:16px;">&#9889; Quick Hits</div>
+<ul style="margin:0;padding:0 0 0 18px;color:#444;font-size:14px;line-height:1.85;">
+  <li style="margin-bottom:6px;">[One-sentence hit 1]</li>
+  <li style="margin-bottom:6px;">[One-sentence hit 2]</li>
+  <li style="margin-bottom:6px;">[One-sentence hit 3]</li>
+  <li style="margin-bottom:6px;">[One-sentence hit 4]</li>
+  <li style="margin-bottom:0;">[One-sentence hit 5]</li>
+</ul></td></tr>
+<tr><td style="padding:20px 40px 0;"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-top:1px solid #e8ecf2;font-size:0;line-height:0;">&nbsp;</td></tr></table></td></tr>
+
+Return ONLY the JSON object. No markdown fences. No explanation outside the JSON."""
+
+
+def generate_newsletter_from_approved(db, claude_client, today_str: str, send_mode: str = "draft"):
+    """Generate newsletter HTML from pre-approved articles in the database.
+
+    Returns dict with 'subject' and 'html' keys, or None if not enough approved
+    articles exist (caller should fall back to generate_newsletter()).
+    """
+    # Step 1: Read approved articles for today, ordered by rank_score DESC
+    try:
+        result = (
+            db.table("approved_articles")
+            .select(
+                "id, topic, title, balanced_summary, why_it_matters, "
+                "score_importance, score_urgency, score_interest, "
+                "rank_score, source_urls, article_date"
+            )
+            .eq("article_date", today_str)
+            .is_("published_at", "null")
+            .order("rank_score", desc=True)
+            .limit(10)
+            .execute()
+        )
+        articles = result.data
+    except Exception as exc:
+        logging.warning("Could not fetch approved_articles: %s", exc)
+        return None
+
+    # Step 2: Require at least 3 full-section-worthy articles (scored by pipeline)
+    if len(articles) < 3:
+        logging.info(
+            "Only %d approved articles for %s — falling back to generate_newsletter().",
+            len(articles), today_str,
+        )
+        return None
+
+    # Step 3: Fetch approved brief (if any)
+    brief_body = ""
+    try:
+        brief_result = (
+            db.table("daily_briefs")
+            .select("brief_body")
+            .eq("brief_date", today_str)
+            .not_.is_("approved_at", "null")
+            .execute()
+        )
+        if brief_result.data:
+            brief_body = brief_result.data[0].get("brief_body", "")
+    except Exception as exc:
+        logging.warning("Could not fetch daily_briefs: %s", exc)
+
+    if not brief_body:
+        brief_body = "Here is your daily briefing from DING.AI — signal over noise, every morning."
+
+    # Step 4: Split approved articles into full-section vs. quick-hits-eligible.
+    # Articles with score_importance < 2 OR score_interest < 2 are not worth a
+    # full section write-up — demote them to Quick Hits alongside pending candidates.
+    full_articles   = [a for a in articles if (a.get("score_importance") or 0) >= 2 and (a.get("score_interest") or 0) >= 2]
+    demoted_articles = [a for a in articles if a not in full_articles]
+
+    articles_context = ""
+    for i, a in enumerate(full_articles):
+        urls_str = ", ".join(a.get("source_urls") or [])
+        articles_context += (
+            f"[{i+1}] Topic: {a['topic']}\n"
+            f"     Title: {a['title']}\n"
+            f"     Summary: {a['balanced_summary']}\n"
+            f"     Why it matters: {a['why_it_matters']}\n"
+            f"     Sources: {urls_str}\n\n"
+        )
+
+    if demoted_articles:
+        logging.info(
+            "Demoted %d low-score approved article(s) to Quick Hits: %s",
+            len(demoted_articles),
+            [a.get("title", "")[:50] for a in demoted_articles],
+        )
+
+    # Step 4b: Fetch high-confidence pending articles as Quick Hits candidates.
+    # Threshold: all three confidence scores >= 4, status = pending (not human-reviewed),
+    # title populated (processed by the pipeline), for today.
+    quick_hits_context = ""
+    try:
+        qh_result = (
+            db.table("articles")
+            .select(
+                "id, topic, title, balanced_summary, why_it_matters, "
+                "score_importance, score_urgency, score_interest, "
+                "ai_confidence_factual, ai_confidence_on_topic, ai_confidence_source"
+            )
+            .eq("article_date", today_str)
+            .eq("status", "pending")
+            .gte("ai_confidence_factual", 4)
+            .gte("ai_confidence_on_topic", 4)
+            .gte("ai_confidence_source", 4)
+            .not_.is_("title", "null")
+            .execute()
+        )
+        # Sort by importance + urgency descending, cap at 15 candidates for Claude
+        qh_candidates = sorted(
+            qh_result.data,
+            key=lambda x: (x.get("score_importance") or 0) + (x.get("score_urgency") or 0),
+            reverse=True,
+        )[:15]
+        for i, a in enumerate(qh_candidates):
+            quick_hits_context += (
+                f"[QH{i+1}] Topic: {a['topic']}\n"
+                f"       Title: {a['title']}\n"
+                f"       Summary: {a['balanced_summary']}\n\n"
+            )
+        if qh_candidates:
+            logging.info("Quick Hits candidates: %d high-confidence pending articles.", len(qh_candidates))
+    except Exception as exc:
+        logging.warning("Could not fetch quick hits candidates: %s", exc)
+
+    # Prepend any demoted approved articles to Quick Hits candidates
+    demoted_context = ""
+    for i, a in enumerate(demoted_articles):
+        demoted_context += (
+            f"[D{i+1}] Topic: {a['topic']}\n"
+            f"       Title: {a['title']}\n"
+            f"       Summary: {a['balanced_summary']}\n\n"
+        )
+    quick_hits_context = demoted_context + quick_hits_context
+
+    if not quick_hits_context.strip():
+        quick_hits_context = "(none available today)"
+
+    today_display = date.today().strftime("%A, %B %d, %Y")
+    today_short   = date.today().strftime("%A")
+
+    prompt = APPROVED_NEWSLETTER_PROMPT.format(
+        today=today_display,
+        today_short=today_short,
+        brief_body=brief_body,
+        articles_context=articles_context.strip(),
+        quick_hits_context=quick_hits_context.strip(),
+    )
+
+    # Step 5: Call Claude
+    print("🤖 Calling Claude API to format approved-articles newsletter…")
+
+    def _call():
+        return claude_client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=8096,
+            messages=[{"role": "user", "content": prompt}],
+        )
+
+    try:
+        message = with_retry(_call)
+    except Exception as exc:
+        logging.warning("Claude call failed in generate_newsletter_from_approved: %s", exc)
+        return None
+
+    raw = message.content[0].text.strip()
+    if raw.startswith("```"):
+        lines = raw.split("\n")
+        raw   = "\n".join(lines[1:])
+    if raw.endswith("```"):
+        raw = "\n".join(raw.split("\n")[:-1])
+    raw = raw.strip()
+
+    try:
+        newsletter = json.loads(raw)
+        assert "subject" in newsletter and "html" in newsletter
+        newsletter["subject"] = (
+            f"DING! Your {date.today().strftime('%A')} briefing is here \U0001f5de️"
+        )
+    except Exception:
+        logging.warning("Could not parse approved-newsletter JSON — falling back.")
+        return None
+
+    # Only stamp published_at when actually sending — draft runs are idempotent
+    if send_mode == "send":
+        now_iso     = datetime.now(timezone.utc).isoformat()
+        article_ids = [a["id"] for a in articles]
+        try:
+            db.table("approved_articles").update(
+                {"published_at": now_iso}
+            ).in_("id", article_ids).execute()
+            logging.info("Marked %d approved_articles as published.", len(article_ids))
+        except Exception as exc:
+            logging.warning("Could not mark approved_articles as published: %s", exc)
+    else:
+        logging.info("Draft mode — skipping published_at stamp.")
+
+    return newsletter
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     print(f"\n{'='*60}")
@@ -802,9 +1084,26 @@ def main():
     # Runs after build_news_context so a DB failure never blocks the newsletter.
     persist_fetched_articles(articles_by_section)
 
-    # Step 3: Generate newsletter
+    # Step 3: Generate newsletter — prefer approved-articles path when available
     print()
-    result  = generate_newsletter(claude_client, news_context, recent_headlines)
+    result = None
+    supabase_url = os.environ.get("SUPABASE_URL", "")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+    today_str    = date.today().isoformat()
+    if supabase_url and supabase_key:
+        try:
+            db = create_client(supabase_url, supabase_key)
+            result = generate_newsletter_from_approved(db, claude_client, today_str, send_mode=SEND_MODE)
+            if result:
+                print("✅ Using approved-articles newsletter (pipeline path).")
+        except Exception as exc:
+            logging.warning("Approved-articles path failed: %s — falling back.", exc)
+            result = None
+
+    if result is None:
+        print("📰 Falling back to single-call newsletter generation…")
+        result = generate_newsletter(claude_client, news_context, recent_headlines)
+
     html    = result["html"]
     subject = result["subject"]
     print(f"  Subject: {subject}")

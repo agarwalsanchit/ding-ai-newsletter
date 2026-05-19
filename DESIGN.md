@@ -3,8 +3,8 @@
 > Companion to `ARCHITECTURE.md` (which describes the current newsletter system).
 > This document describes the **new** system being built on top of it.
 >
-> Last updated: May 17, 2026 (Day 8 — product vision lock-in)
-> Status: backend spec stable; frontend product model added and locked.
+> Last updated: May 19, 2026 (Phase 2 backend complete)
+> Status: Phase 2 backend shipped. Frontend card-deck Phase 1 in progress.
 
 ---
 
@@ -186,32 +186,57 @@ This rule constrains all future feature decisions. When in doubt: closed wins ov
 
 ## 5. Pipeline flow (daily run)
 
+**Phase 2 implementation note**: Steps 1–7 run in `pipeline.py`; steps 8–10 run in `newsletter.py`. Human review (step 7b) runs locally via `review_cli.py` between the two scripts.
+
 ```
-1. Fetch              → 6 Tavily queries × up to 6 articles = ~36 raw articles
-2. URL dedup          → Python drops URL duplicates against last 7 days
-3. Score pre-filter   → Drop Tavily results below 0.4 relevance score
-4. Process            → 6 Sonnet calls (per-topic), each returns JSON array
-                        with source_indices, scores, ai_confidence,
-                        relationship_to_recent, summary, detail_summary,
-                        why_it_matters
-5. Persist            → for each AI-generated article:
-                          - "duplicate"  → status='auto_rejected'
-                          - "new" | "followup" + all ai_confidence==5 →
-                                            status='auto_approved',
-                                            copied to approved_articles
-                          - "new" | "followup" + any ai_confidence<5 →
-                                            status='pending'
-6. Brief generation   → 1 Sonnet call: read today's approved articles,
-                        generate brief card content for tomorrow morning
-                        readers; insert into daily_briefs table
-7. Human review       → CLI tool, safety gate + calibration
-8. Translate          → Phase 3: Hindi translation per approved article
-9. Publish            → newsletter reads from approved_articles;
-                        PWA reads from approved_articles + daily_briefs
-                        ORDER BY rank_score DESC LIMIT 10
+pipeline.py:
+1. Context           → Pull approved_articles (last 7 days) + history JSON
+                       as recent-coverage context for Claude duplicate detection
+2. Fetch             → 5 Tavily queries × up to 10 articles = ~50 raw articles
+                       (no dedicated Top News query — Top News is a computed flag)
+3. Persist           → URL dedup (2-day window) + Tavily score filter (≥0.4)
+                       + URL blocklist (video/boxscore/podcast pages)
+                       → articles table (status=pending)
+4. Idempotency       → Re-fetch only articles still status=pending today
+5. Process           → 5 Sonnet calls (per topic), each returns JSON array
+                       with source_indices, scores, ai_confidence,
+                       relationship_to_recent, balanced_summary, detail_summary,
+                       why_it_matters
+6. Route             → per article:
+                          - "duplicate"                → auto_rejected
+                          - all ai_confidence==5       → auto_approved + approved_articles
+                          - any ai_confidence<5        → pending (human review)
+7. Flag Top News     → pick highest (score_importance + score_urgency) article
+                       from today's approved + pending pool; update topic
+                       to "🚨 Top News" in both articles + approved_articles
+8. Brief generation  → 1 Sonnet call: read today's approved articles,
+                       generate brief card content; insert into daily_briefs
+
+[human review window — review_cli.py runs locally]
+7b. Safety gate      → 5 yes/no questions per pending article
+7c. Calibration      → optional AI score vs. human score comparison
+7d. Brief review     → single question on brief accuracy
+
+newsletter.py:
+9. Score demotion    → approved articles with importance<2 OR interest<2
+                       are demoted from full sections to Quick Hits pool
+10. Quick Hits pool  → demoted approved + high-confidence pending
+                       (all ai_confidence ≥ 4)
+11. Render           → 1 Sonnet layout call: formats approved content into
+                       HTML email template (no content invention)
+12. Send             → Brevo API (if send_mode=send); stamp published_at
+13. Archive          → docs/issues/YYYY-MM-DD.html + index.json
+14. Translate        → Phase 3: Hindi translation per approved article
+15. Publish          → newsletter reads from approved_articles;
+                       PWA reads from approved_articles + daily_briefs
+                       ORDER BY rank_score DESC LIMIT 10
 ```
 
-[NEW addition compared to prior draft] Step 6 — the daily brief is a separate Sonnet call after article processing completes. It runs against the set of approved (human OR auto-approved) articles for the day and produces a 2-3 sentence editorial intro plus a list of topic chips. This is the brief card.
+**Key architectural decisions captured here:**
+- Top News is computed from scores, not fetched from a dedicated Tavily query — a dedicated "breaking news" query reliably returned video pages and aggregator content, not articles.
+- Duplicate detection is authoritative: Claude receives approved_articles titles (what we actually published) as the ground truth, not just headlines from the JSON history file (which only updated on send).
+- "Followup" requires a materially new fact. More reporting on the same situation without new facts is classified as "duplicate" — when uncertain, choose duplicate.
+- Quick Hits draws from two pools (demoted approved + high-confidence pending) so high-quality articles that didn't pass human review can still surface in a lower-trust format.
 
 ### 5.1 Cross-topic feed ranking
 
@@ -477,19 +502,23 @@ Updated for new pipeline shape:
 - [x] **2.0** Verify Tavily output schema
 - [x] **2.1** Supabase schema migration (initial 6 tables)
 - [x] **2.2** `persist_fetched_articles` with URL dedup + Tavily score filter
-- [x] **2.3** URL pre-filter (folded into 2.2)
-- [ ] **2.4** Article processor: 6 Sonnet calls per topic with new prompt (includes `detail_summary`)
-- [ ] **2.4b** [NEW] Schema migration: add `detail_summary` to `approved_articles`; create `daily_briefs` table
-- [ ] **2.5** `source_indices` orchestration (folded into 2.4)
-- [ ] **2.6** Auto-approval routing
-- [ ] **2.7** `processing_log` writes around every Sonnet call
-- [ ] **2.7b** [NEW] Brief generator: 1 Sonnet call per day reading approved articles
-- [ ] **2.8** CLI safety-gate tool with the 5-question checklist + brief review
-- [ ] **2.9** CLI calibration tool
-- [ ] **2.10** End-to-end test
-- [ ] **2.11** Refactor newsletter to read from approved_articles
-- [ ] **2.12** Verify production newsletter still sends
-- [ ] **2.13** Phase 2 retrospective commit
+- [x] **2.3** URL pre-filter (folded into 2.2; expanded with 13-pattern blocklist for video/boxscore/podcast pages)
+- [x] **2.4** Article processor: 5 Sonnet calls per topic (pipeline split from newsletter; includes `detail_summary`; max_tokens=8192)
+- [x] **2.4b** Schema migration: `detail_summary` on `approved_articles`; `daily_briefs` table; `processing_log` table
+- [x] **2.5** `source_indices` orchestration (folded into 2.4; secondary articles marked `auto_rejected`)
+- [x] **2.6** Auto-approval routing (duplicate→auto_rejected; all-5-confidence→auto_approved; else pending)
+- [x] **2.7** `processing_log` writes around every Sonnet call (tokens, cost, latency)
+- [x] **2.7b** Brief generator: 1 Sonnet call per day from approved articles; upserts `daily_briefs`
+- [x] **2.7c** [NEW] `flag_top_news()`: computed Top News flag from highest importance+urgency article
+- [x] **2.7d** [NEW] Supabase-sourced duplicate context: approved_articles (last 7 days) as authoritative recent-coverage list
+- [x] **2.7e** [NEW] Score-based article demotion: importance<2 OR interest<2 → Quick Hits pool only
+- [x] **2.7f** [NEW] Two-pool Quick Hits: demoted approved + high-confidence pending (all ai_confidence≥4)
+- [x] **2.8** CLI safety-gate tool with the 5-question checklist + brief review (`review_cli.py`)
+- [x] **2.9** CLI calibration tool (with dedup: skips already-calibrated articles across sessions)
+- [x] **2.10** End-to-end test (pipeline.py → review_cli.py → newsletter.py verified in production)
+- [x] **2.11** Refactor newsletter to read from `approved_articles` (draft mode idempotent: no `published_at` stamp)
+- [x] **2.12** Verify production newsletter still sends
+- [x] **2.13** Phase 2 retrospective commit
 
 ## 14. Phase 2 frontend task list
 

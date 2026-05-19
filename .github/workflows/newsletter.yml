@@ -37,13 +37,22 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install anthropic tavily-python supabase python-dotenv requests
 
       - name: Sync subscribers from Google Sheet
         env:
           SIGNUP_SHEET_URL: ${{ secrets.SIGNUP_SHEET_URL }}
           UNSUBSCRIBE_SHEET_URL: ${{ secrets.UNSUBSCRIBE_SHEET_URL }}
         run: python sync_subscribers.py
+
+      - name: Run AI pipeline
+        env:
+          TZ: America/Los_Angeles
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python pipeline.py
 
       - name: Run newsletter engine
         env:
@@ -55,6 +64,8 @@ jobs:
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
           BREVO_SENDER_EMAIL: ${{ secrets.BREVO_SENDER_EMAIL }}
           BREVO_SENDER_NAME: ${{ secrets.BREVO_SENDER_NAME }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           # For scheduled runs, uses SEND_MODE secret.
           # For manual runs, uses the workflow_dispatch input.
           SEND_MODE: ${{ github.event.inputs.send_mode || secrets.SEND_MODE || 'draft' }}

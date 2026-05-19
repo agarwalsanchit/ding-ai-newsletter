@@ -9,7 +9,12 @@ function formatBriefDate(dateStr: string): string {
   return `${weekday}, ${monthName} ${day}`;
 }
 
-export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
+interface BriefCardProps {
+  brief: DailyBrief | null;
+  onOpenSettings: () => void;
+}
+
+export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
   const dateLabel = brief
     ? formatBriefDate(brief.brief_date)
     : new Date().toLocaleDateString('en-US', {
@@ -20,6 +25,40 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
 
   return (
     <Card>
+      {/* Gear icon — Phase 4 topic filter */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          zIndex: 10,
+        }}
+      >
+        <button
+          onClick={onOpenSettings}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'var(--subtle)',
+            padding: '8px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+          aria-label="Topic settings"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.4" />
+            <path
+              d="M9 1.5v1.2M9 15.3v1.2M1.5 9h1.2M15.3 9h1.2M3.6 3.6l.85.85M13.55 13.55l.85.85M14.4 3.6l-.85.85M4.45 13.55l-.85.85"
+              stroke="currentColor"
+              strokeWidth="1.4"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
       {/* Date */}
       <p
         style={{
@@ -57,7 +96,7 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
           marginBottom: '20px',
         }}
       >
-        {brief ? brief.brief_body : "Today\u2019s deck is loading\u2026"}
+        {brief ? brief.brief_body : ''}
       </p>
 
       {/* Transition line */}
@@ -80,7 +119,6 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
             display: 'flex',
             flexWrap: 'wrap',
             gap: '8px',
-            marginBottom: '0',
           }}
         >
           {brief.topic_chips.map((chip) => (
@@ -102,7 +140,7 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
         </div>
       )}
 
-      {/* Swipe up affordance — absolute at bottom, safe-area aware */}
+      {/* Swipe up affordance */}
       <div
         style={{
           position: 'absolute',
@@ -116,12 +154,7 @@ export default function BriefCard({ brief }: { brief: DailyBrief | null }) {
           color: 'var(--subtle)',
         }}
       >
-        <svg
-          width="20"
-          height="12"
-          viewBox="0 0 20 12"
-          fill="none"
-        >
+        <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
           <path
             d="M2 10L10 2L18 10"
             stroke="currentColor"

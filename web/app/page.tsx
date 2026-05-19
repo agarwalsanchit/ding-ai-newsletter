@@ -1,11 +1,11 @@
 import { supabase } from '@/lib/supabase';
-import { ApprovedArticle, DailyBrief } from '@/lib/types';
+import { ApprovedArticle, DailyBrief, Translation, TranslationMap } from '@/lib/types';
 import Deck from '@/components/deck/Deck';
 
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  // Fetch today's brief, falling back to the most recently generated one
+  // Fetch most recently approved brief (fallback to last generated if today's isn't ready)
   const { data: briefData } = await supabase
     .from('daily_briefs')
     .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   const brief = briefData as DailyBrief | null;
 
-  // Fetch top 10 published articles by rank_score
+  // Fetch top 10 approved articles by rank_score
   const { data: articlesData, error: articlesError } = await supabase
     .from('approved_articles')
     .select('*')
@@ -30,5 +30,23 @@ export default async function HomePage() {
 
   const articles = (articlesData ?? []) as ApprovedArticle[];
 
-  return <Deck brief={brief} articles={articles} />;
+  // Phase 2: fetch Hindi translations for the articles we're showing
+  let translations: TranslationMap = {};
+  if (articles.length > 0) {
+    const { data: translationsData } = await supabase
+      .from('translations')
+      .select(
+        'approved_article_id, language, title_translated, summary_translated, why_it_matters_translated, detail_summary_translated'
+      )
+      .in('approved_article_id', articles.map((a) => a.id))
+      .eq('language', 'hi');
+
+    if (translationsData) {
+      translations = Object.fromEntries(
+        (translationsData as Translation[]).map((t) => [t.approved_article_id, t])
+      );
+    }
+  }
+
+  return <Deck brief={brief} articles={articles} translations={translations} />;
 }

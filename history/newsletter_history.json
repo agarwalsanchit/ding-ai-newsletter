@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-05-11",
-    "headlines": [
-      "US-Brokered Ukraine Ceasefire on the Brink as Both Sides Trade Blame",
-      "EU Sanctions Russia Over Mass Abduction of Ukrainian Children",
-      "Asia Braces for Second Wave of Energy Shocks as Iran War Drags On",
-      "S&amp;P 500 and Nasdaq Set Fresh Records &#8212; Even as Iran Deal Hope Fades",
-      "Wall Street Veteran Raises S&amp;P 500 Target to 8,250 as &#8216;Melt-Up&#8217; Narrative Takes Hold",
-      "Hackers Are Now Using AI to Find and Exploit Vulnerabilities &#8212; at Scale",
-      "AI Is Remaking Legal Work &#8212; and the Rest of White-Collar Professions Are Watching",
-      "Arsenal Stay in Control of Premier League Title Race With Late Drama at West Ham",
-      "Cannes 2026 Gets Underway on the French Riviera"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-12",
     "headlines": [
       "Ukraine Ceasefire Teeters as Russia and Kyiv Trade Blame",
@@ -113,6 +98,20 @@
       "OpenAI Open-Sources Symphony, a New Standard for Autonomous Coding Agents",
       "Modena Car Attack Reignites Italy&#39;s Migration and Integration Debate",
       "More Than 80 Children Missing After Militant Attacks on Nigerian Schools"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-19",
+    "headlines": [
+      "Teenage Gunmen Kill 3 at San Diego Mosque in Suspected Hate Crime",
+      "Israel Intercepts Six More Gaza Flotilla Vessels Near Cyprus",
+      "Putin Declares Russia&#8212;China Ties at &#34;Unprecedented Level&#34; During Beijing Visit",
+      "U.S. Stocks Drift Lower as Markets Pull Back From Record Highs",
+      "Beijing Aerospace Startup AstronStone Pulls In CNY 500 Million in Fresh Funding",
+      "AI Cyberattackers Are Improving Faster Than Defenders Can Keep Pace",
+      "OpenAI Open-Sources Symphony to Standardize How Coding Agents Work Together",
+      "Researchers Argue AI Doctors Should Be Judged on Patient Outcomes, Not Test Scores"
     ],
     "sent": 13
   }

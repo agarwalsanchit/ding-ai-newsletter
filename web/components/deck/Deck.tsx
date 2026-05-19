@@ -10,6 +10,7 @@ import ArticleCard from './ArticleCard';
 import EndCard from './EndCard';
 import DetailView from './DetailView';
 import TopicSettings from './TopicSettings';
+import SplashScreen from './SplashScreen';
 
 const SWIPE_THRESHOLD = 80;
 const VELOCITY_THRESHOLD = 500;
@@ -46,6 +47,13 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
   const [direction, setDirection] = useState<1 | -1>(1);
   const [detailArticle, setDetailArticle] = useState<ApprovedArticle | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+
+  // Splash: show once per browser session
+  const [showSplash, setShowSplash] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const seen = sessionStorage.getItem('ding_splash_seen');
+    return !seen;
+  });
 
   // Phase 2: language
   const { lang, toggle: toggleLang } = useLanguage();
@@ -89,8 +97,12 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
     [currentIndex, detailArticle, settingsOpen, goTo]
   );
 
-  const openDetail  = useCallback((a: ApprovedArticle) => setDetailArticle(a), []);
-  const closeDetail = useCallback(() => setDetailArticle(null), []);
+  const openDetail    = useCallback((a: ApprovedArticle) => setDetailArticle(a), []);
+  const closeDetail   = useCallback(() => setDetailArticle(null), []);
+  const dismissSplash = useCallback(() => {
+    sessionStorage.setItem('ding_splash_seen', '1');
+    setShowSplash(false);
+  }, []);
 
   const renderCard = (index: number) => {
     if (index === 0) {
@@ -129,6 +141,8 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
 
   return (
     <>
+      {showSplash && <SplashScreen onDone={dismissSplash} />}
+
       <div style={{ position: 'relative', overflow: 'hidden', height: '100dvh', width: '100%' }}>
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div

@@ -59,15 +59,29 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
         </button>
       </div>
 
+      {/* Branding */}
+      <p
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '10px',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          color: 'var(--accent)',
+          marginBottom: '6px',
+        }}
+      >
+        DING News
+      </p>
+
       {/* Date */}
       <p
         style={{
           fontFamily: 'var(--font-mono)',
-          fontSize: '11px',
+          fontSize: '10px',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           color: 'var(--subtle)',
-          marginBottom: '24px',
+          marginBottom: '20px',
         }}
       >
         {dateLabel}
@@ -77,11 +91,11 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
       <h1
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: '32px',
+          fontSize: '28px',
           fontWeight: 600,
           lineHeight: 1.1,
           letterSpacing: '-0.02em',
-          marginBottom: '20px',
+          marginBottom: '16px',
         }}
       >
         {brief ? brief.editorial_opener : 'Good morning.'}
@@ -91,9 +105,10 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
       <p
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: '17px',
-          lineHeight: 1.55,
-          marginBottom: '20px',
+          fontSize: '16px',
+          lineHeight: 1.6,
+          color: 'var(--text)',
+          marginBottom: '16px',
         }}
       >
         {brief ? brief.brief_body : ''}
@@ -103,10 +118,10 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
       <p
         style={{
           fontFamily: 'var(--font-sans)',
-          fontSize: '15px',
-          lineHeight: 1.55,
+          fontSize: '14px',
+          lineHeight: 1.5,
           color: 'var(--muted)',
-          marginBottom: '32px',
+          marginBottom: '24px',
         }}
       >
         {brief ? brief.transition_line : ''}
@@ -118,7 +133,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '8px',
+            gap: '7px',
           }}
         >
           {brief.topic_chips.map((chip) => (
@@ -126,11 +141,11 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
               key={chip}
               style={{
                 fontFamily: 'var(--font-mono)',
-                fontSize: '10px',
-                letterSpacing: '0.08em',
-                color: 'var(--muted)',
+                fontSize: '9px',
+                letterSpacing: '0.07em',
+                color: 'var(--subtle)',
                 border: '1px solid var(--divider)',
-                padding: '4px 10px',
+                padding: '3px 9px',
                 borderRadius: '999px',
               }}
             >

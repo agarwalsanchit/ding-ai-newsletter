@@ -140,6 +140,10 @@ export default function ArticleCard({
             lineHeight: 1.5,
             color: 'var(--text)',
             marginBottom: '16px',
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 5,
+            overflow: 'hidden',
           }}
         >
           {summary}

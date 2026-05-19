@@ -109,6 +109,10 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           lineHeight: 1.6,
           color: 'var(--text)',
           marginBottom: '16px',
+          display: '-webkit-box',
+          WebkitBoxOrient: 'vertical',
+          WebkitLineClamp: 6,
+          overflow: 'hidden',
         }}
       >
         {brief ? brief.brief_body : ''}

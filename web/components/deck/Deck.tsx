@@ -160,7 +160,7 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
             }}
             whileDrag={{ scale: 0.98 }}
             onDragEnd={handleDragEnd}
-            style={{ position: 'absolute', inset: 0, height: '100dvh', width: '100%' }}
+            style={{ position: 'absolute', inset: 0, height: '100dvh', width: '100%', touchAction: 'none' }}
           >
             {renderCard(currentIndex)}
           </motion.div>

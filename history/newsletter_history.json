@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-05-12",
-    "headlines": [
-      "Ukraine Ceasefire Teeters as Russia and Kyiv Trade Blame",
-      "Iran&#8212;US Impasse Deepens Ahead of Trump&#8217;s China Trip",
-      "April CPI Hits 3.8% &#8212; Highest Since May 2023",
-      "eBay Swats Away GameStop&#8217;s $56 Billion Takeover Bid",
-      "Spring Housing Market Is Officially a Bust",
-      "AI VC Funding in Q1 2026 Surpassed All of 2025 &#8212; in a Single Quarter",
-      "Hackers Cut a Deal on Stolen Canvas Data as Finals Season Burns",
-      "AI Startup Targets the $300B Unfilled Prescription Problem"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-13",
     "headlines": [
       "Trump and Xi Meet in Beijing as Trade, Taiwan, and Iran All Land on the Table",
@@ -114,5 +100,20 @@
       "US Stocks Pull Back Further From Record Highs"
     ],
     "sent": 0
+  },
+  {
+    "date": "2026-05-20",
+    "headlines": [
+      "Putin and Xi Declare Ties &#8220;Unprecedented&#8221; &#8212; But the World Is Watching",
+      "EU Strings $8 Billion in Ukraine Aid to Tax Reform Demands",
+      "All Eyes on Nvidia as Dow Slips and Bond Selloff Cools",
+      "Trump&#39;s Rickshaws Roll Through New Delhi Ahead of America&#39;s 250th",
+      "AI Learns to Watch for Whales in San Francisco Bay",
+      "Nvidia Opens Singapore Research Hub as City&#8212;State Doubles Down on AI",
+      "Nature Publishes AI System That Writes Expert Scientific Software",
+      "Class of 2026 Enters a Job Market Their Parents Would Recognize &#8212; Painfully",
+      "Southern California Wildfire Threatens Thousands as Evacuations Expand"
+    ],
+    "sent": 13
   }
 ]

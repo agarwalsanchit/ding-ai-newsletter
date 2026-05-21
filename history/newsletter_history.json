@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-05-13",
-    "headlines": [
-      "Trump and Xi Meet in Beijing as Trade, Taiwan, and Iran All Land on the Table",
-      "Rickshaw Bomb Kills 9 in Pakistan Bazaar as Regional Violence Grinds On",
-      "Producer Prices Spike 6%, Heaping More Pain on a 3.8% CPI Already Stung by Iran War Energy Costs",
-      "eBay Sends GameStop&#8217;s $56 Billion Takeover Bid Back to the Bargain Bin",
-      "AI VC Funding in Q1 2026 Alone Eclipsed Every Dollar Invested in All of 2025",
-      "Hackers Strike a Deal to Delete Stolen Canvas Data as Students Exhale &#8212; Barely"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-14",
     "headlines": [
       "Trump&#8212;Xi Summit: Hormuz, Iran, and a Weapons Rumor Change the Stakes",
@@ -115,5 +103,18 @@
       "Southern California Wildfire Threatens Thousands as Evacuations Expand"
     ],
     "sent": 13
+  },
+  {
+    "date": "2026-05-21",
+    "headlines": [
+      "Ukraine Drones Strike Deep Inside Russia as Long-Range Campaign Intensifies",
+      "BRICS Summit in New Delhi Draws Global Attention as Xi and Putin Expected to Attend",
+      "Hormuz, Blockades, and Energy Leverage: The Geopolitical Flashpoints Defining May",
+      "Nvidia Posts Another Blowout &#8212; Markets Respond With a Shrug",
+      "Australia Fines X $465,000 for Online Safety Breach After Three-Year Battle",
+      "White House AI Executive Order Expected Imminently &#8212; Here&#8217;s What to Watch For",
+      "AI Is Becoming a Political Finance Machine Ahead of the Midterms"
+    ],
+    "sent": 0
   }
 ]

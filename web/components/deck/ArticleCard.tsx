@@ -198,23 +198,23 @@ export default function ArticleCard({
           pointerEvents: 'none',
         }}
       >
+        <div
+          style={{
+            width: '1px',
+            height: '20px',
+            background: 'var(--subtle)',
+            margin: '0 auto 4px',
+          }}
+        />
         <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
           <path
-            d="M2 10L10 2L18 10"
+            d="M2 2L10 10L18 2"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-        <div
-          style={{
-            width: '1px',
-            height: '20px',
-            background: 'var(--subtle)',
-            margin: '4px auto 0',
-          }}
-        />
       </div>
     </div>
   );

@@ -455,12 +455,13 @@ def process_topic(claude_client, db, topic: str, articles: list,
         conf_source   = item.get("ai_confidence_source", 1)
 
         # Routing logic (DESIGN.md Decision F / Decision O)
-        # Threshold: all three confidence axes >= 4 (confidence > 3).
-        # 5/5/5 was too strict in practice — many accurate articles scored 4 on
-        # one axis (e.g., sports factual confidence). Deck caps at 10 by rank_score.
+        # Threshold: all three confidence axes >= 3.
+        # 5/5/5 was too strict; >= 4 still too few articles in practice.
+        # >= 3 is the floor — below this, Claude is signalling genuine doubt.
+        # Deck caps at 10 by rank_score so low-scoring articles sort to the back.
         if relationship == "duplicate":
             status = "auto_rejected"
-        elif conf_factual >= 4 and conf_on_topic >= 4 and conf_source >= 4:
+        elif conf_factual >= 3 and conf_on_topic >= 3 and conf_source >= 3:
             status = "auto_approved"
         else:
             status = "pending"
@@ -723,7 +724,7 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
     ai_confidence = brief.get("ai_confidence", 0)
     now_iso = datetime.now(timezone.utc).isoformat()
 
-    # Brief routing: confidence >= 4 → auto-approve (matches article threshold)
+    # Brief routing: confidence >= 3 → auto-approve (matches article threshold)
     upsert_row = {
         "brief_date":       today_str,
         "editorial_opener": brief.get("editorial_opener"),
@@ -731,8 +732,8 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
         "transition_line":  brief.get("transition_line"),
         "topic_chips":      brief.get("topic_chips", []),
         "ai_confidence":    ai_confidence,
-        "approved_at":      now_iso if ai_confidence >= 4 else None,
-        "approved_by":      "ai_auto" if ai_confidence >= 4 else None,
+        "approved_at":      now_iso if ai_confidence >= 3 else None,
+        "approved_by":      "ai_auto" if ai_confidence >= 3 else None,
     }
 
     try:
@@ -740,7 +741,7 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
             upsert_row,
             on_conflict="brief_date",
         ).execute()
-        status = "auto-approved" if ai_confidence >= 4 else "pending human review"
+        status = "auto-approved" if ai_confidence >= 3 else "pending human review"
         logging.info("Brief for %s saved (%s).", today_str, status)
         return True
     except Exception as exc:

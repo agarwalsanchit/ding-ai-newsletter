@@ -31,10 +31,41 @@ export default function EndCard() {
           fontFamily: 'var(--font-sans)',
           fontSize: '17px',
           color: 'var(--muted)',
+          marginBottom: '56px',
         }}
       >
         See you tomorrow morning.
       </p>
+
+      {/* Branding */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+        {/* Wordmark */}
+        <p
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '22px',
+            fontWeight: 700,
+            letterSpacing: '0.18em',
+            color: 'var(--accent)',
+          }}
+        >
+          DING
+        </p>
+        {/* Divider */}
+        <div style={{ width: '24px', height: '1px', background: 'var(--divider)' }} />
+        {/* Tagline */}
+        <p
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '9px',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: 'var(--subtle)',
+          }}
+        >
+          Morning Signal · AI-curated
+        </p>
+      </div>
     </div>
   );
 }

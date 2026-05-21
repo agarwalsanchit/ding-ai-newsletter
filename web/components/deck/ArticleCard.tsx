@@ -165,40 +165,56 @@ export default function ArticleCard({
           </p>
         </div>
 
-        {/* Tap-to-expand affordance — inline below content, no overlap */}
-        <div
+        {/* Tap-to-expand label — inline below text, taps open detail view */}
+        <p
           onClick={onOpenDetail}
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '28px',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
             color: 'var(--subtle)',
+            marginTop: '24px',
             cursor: 'pointer',
             flexShrink: 0,
           }}
         >
-          <p
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              marginBottom: '6px',
-            }}
-          >
-            {showHindi ? 'अधिक पढ़ें' : 'Tap to expand'}
-          </p>
-          <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
-            <path
-              d="M2 2L10 10L18 2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+          {showHindi ? '↓ अधिक पढ़ें' : '↓ Tap to expand'}
+        </p>
+      </div>
+
+      {/* Swipe-up affordance — pinned to bottom, separate from tap target */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)',
+          color: 'var(--subtle)',
+          pointerEvents: 'none',
+        }}
+      >
+        <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+          <path
+            d="M2 10L10 2L18 10"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <div
+          style={{
+            width: '1px',
+            height: '20px',
+            background: 'var(--subtle)',
+            margin: '4px auto 0',
+          }}
+        />
       </div>
     </div>
   );

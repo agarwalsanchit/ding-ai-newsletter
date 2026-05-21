@@ -431,19 +431,15 @@ Rationale: showing stale articles from previous days creates a misleading signal
 
 Timezone note: `article_date` is stamped in Pacific time (GH Actions runs with `TZ=America/Los_Angeles`). The PWA must use the same timezone (`Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' })`) to compute "today" — otherwise articles fetched at 11 PM PT appear on tomorrow's date in UTC.
 
-### Decision O — High-confidence pending articles surface in PWA without human review [NEW]
+### Decision O — Auto-approve articles with confidence ≥ 4; PWA also surfaces remaining high-confidence pending [UPDATED]
 
-The PWA queries two sources for its article pool:
-1. `approved_articles WHERE article_date = today` — human or auto-approved
-2. `articles WHERE status = 'pending' AND ai_confidence_factual >= 4 AND ai_confidence_on_topic >= 4 AND ai_confidence_source >= 4 AND article_date = today` — high-confidence pending (no human review)
+**Auto-approval threshold**: all three ai_confidence axes ≥ 4 (changed from the original 5/5/5). The 5/5/5 threshold was too strict — many accurate articles scored 4 on one axis (sports factual confidence is structurally low because Claude can't self-verify scores). Confidence > 3 on all axes is a reliable quality signal across topics.
 
-These are merged, sorted by rank_score, and capped at 10.
+The pipeline inserts auto-approved articles directly into `approved_articles`. The deck is capped at 10 by rank_score both in `page.tsx` (LIMIT 10) and in the brief generator (LIMIT 10, so the brief accurately describes what the reader will see).
 
-Rationale: without this, the deck showed yesterday's articles until a human ran `review_cli.py` — which could be hours after the pipeline ran. High-confidence pending articles (all three ai_confidence axes ≥ 4) have demonstrated AI quality sufficient for the newsletter's Quick Hits pool; showing them directly in the deck is a reasonable trust extension given the PWA's low-stakes context.
+The PWA also queries high-confidence pending articles (those that passed the ≥ 4 threshold but somehow landed as `pending` — e.g., re-runs where the article was already processed) via RLS policy on the `articles` table. This is a safety net, not the primary path.
 
-Access is controlled via Supabase RLS: a specific policy on the `articles` table allows the anon key to read only rows that satisfy the confidence thresholds. The pipeline uses the service role key (bypasses RLS) and is unaffected.
-
-Tradeoff accepted: articles surfaced this way may not have been human-reviewed. They carry `approved_by: 'ai_auto'` in the frontend's representation but this is not currently surfaced to readers. If reader-facing quality concerns emerge, the threshold should be raised (≥5 on all axes = auto_approved territory) rather than reverting to human-review-only.
+**flag_top_news() fix**: only flags `auto_approved` or `approved` articles — not `pending` ones. Previously the function queried all three statuses, which could corrupt the db_mapping used by the idempotency check (pending articles with "🚨 Top News" as their topic would be mis-bucketed on the next run). Now only articles that have cleared the quality gate get the Top News label.
 
 ### Decision L — Card-deck UX with swipe navigation [NEW]
 

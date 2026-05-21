@@ -454,10 +454,13 @@ def process_topic(claude_client, db, topic: str, articles: list,
         conf_on_topic = item.get("ai_confidence_on_topic", 1)
         conf_source   = item.get("ai_confidence_source", 1)
 
-        # Routing logic (DESIGN.md Decision F)
+        # Routing logic (DESIGN.md Decision F / Decision O)
+        # Threshold: all three confidence axes >= 4 (confidence > 3).
+        # 5/5/5 was too strict in practice — many accurate articles scored 4 on
+        # one axis (e.g., sports factual confidence). Deck caps at 10 by rank_score.
         if relationship == "duplicate":
             status = "auto_rejected"
-        elif conf_factual == 5 and conf_on_topic == 5 and conf_source == 5:
+        elif conf_factual >= 4 and conf_on_topic >= 4 and conf_source >= 4:
             status = "auto_approved"
         else:
             status = "pending"
@@ -554,7 +557,7 @@ def flag_top_news(db, today_str: str) -> None:
             db.table("articles")
             .select("id, topic, title, score_importance, score_urgency, status")
             .eq("article_date", today_str)
-            .in_("status", ["pending", "auto_approved", "approved"])
+            .in_("status", ["auto_approved", "approved"])
             .not_.is_("score_importance", "null")
             .execute()
         )
@@ -643,6 +646,7 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
             .select("id, topic, title, balanced_summary, why_it_matters, score_importance, score_urgency, score_interest")
             .eq("article_date", today_str)
             .order("rank_score", desc=True)
+            .limit(10)
             .execute()
         )
     except Exception as exc:
@@ -719,7 +723,7 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
     ai_confidence = brief.get("ai_confidence", 0)
     now_iso = datetime.now(timezone.utc).isoformat()
 
-    # Brief routing: confidence 5 → auto-approve
+    # Brief routing: confidence >= 4 → auto-approve (matches article threshold)
     upsert_row = {
         "brief_date":       today_str,
         "editorial_opener": brief.get("editorial_opener"),
@@ -727,8 +731,8 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
         "transition_line":  brief.get("transition_line"),
         "topic_chips":      brief.get("topic_chips", []),
         "ai_confidence":    ai_confidence,
-        "approved_at":      now_iso if ai_confidence == 5 else None,
-        "approved_by":      "ai_auto" if ai_confidence == 5 else None,
+        "approved_at":      now_iso if ai_confidence >= 4 else None,
+        "approved_by":      "ai_auto" if ai_confidence >= 4 else None,
     }
 
     try:

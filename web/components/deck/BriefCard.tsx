@@ -11,10 +11,12 @@ function formatBriefDate(dateStr: string): string {
 
 interface BriefCardProps {
   brief: DailyBrief | null;
+  articleCount: number;
   onOpenSettings: () => void;
 }
 
-export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
+export default function BriefCard({ brief, articleCount, onOpenSettings }: BriefCardProps) {
+  const isEmpty = articleCount === 0;
   const dateLabel = brief
     ? formatBriefDate(brief.brief_date)
     : new Date().toLocaleDateString('en-US', {
@@ -101,62 +103,72 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
         {brief ? brief.editorial_opener : 'Good morning.'}
       </h1>
 
-      {/* Brief body */}
-      <p
-        style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '16px',
-          lineHeight: 1.6,
-          color: 'var(--text)',
-          marginBottom: '12px',
-        }}
-      >
-        {brief ? brief.brief_body : ''}
-      </p>
-
-      {/* Transition line */}
-      <p
-        style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: '14px',
-          lineHeight: 1.5,
-          color: 'var(--muted)',
-          marginBottom: '16px',
-        }}
-      >
-        {brief ? brief.transition_line : ''}
-      </p>
-
-      {/* Topic chips */}
-      {brief && brief.topic_chips.length > 0 && (
-        <div
+      {isEmpty ? (
+        /* No articles yet today */
+        <p
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '7px',
+            fontFamily: 'var(--font-sans)',
+            fontSize: '16px',
+            lineHeight: 1.6,
+            color: 'var(--muted)',
           }}
         >
-          {brief.topic_chips.map((chip) => (
-            <span
-              key={chip}
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '9px',
-                letterSpacing: '0.07em',
-                color: 'var(--subtle)',
-                border: '1px solid var(--divider)',
-                padding: '3px 9px',
-                borderRadius: '999px',
-              }}
-            >
-              {chip}
-            </span>
-          ))}
-        </div>
+          Today&apos;s deck isn&apos;t ready yet.{'\n'}Check back after 8 AM Pacific.
+        </p>
+      ) : (
+        <>
+          {/* Brief body */}
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '16px',
+              lineHeight: 1.6,
+              color: 'var(--text)',
+              marginBottom: '12px',
+            }}
+          >
+            {brief ? brief.brief_body : ''}
+          </p>
+
+          {/* Transition line */}
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '14px',
+              lineHeight: 1.5,
+              color: 'var(--muted)',
+              marginBottom: '16px',
+            }}
+          >
+            {brief ? brief.transition_line : `${articleCount} stories ahead. Let’s get into it.`}
+          </p>
+
+          {/* Topic chips */}
+          {brief && brief.topic_chips.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
+              {brief.topic_chips.map((chip) => (
+                <span
+                  key={chip}
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '9px',
+                    letterSpacing: '0.07em',
+                    color: 'var(--subtle)',
+                    border: '1px solid var(--divider)',
+                    padding: '3px 9px',
+                    borderRadius: '999px',
+                  }}
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
-      {/* Swipe up affordance */}
-      <div
+      {/* Swipe up affordance — hidden when no articles */}
+      {!isEmpty && <div
         style={{
           position: 'absolute',
           bottom: 0,
@@ -186,7 +198,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
             margin: '4px auto 0',
           }}
         />
-      </div>
+      </div>}
     </Card>
   );
 }

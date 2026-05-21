@@ -5,49 +5,28 @@ import Deck from '@/components/deck/Deck';
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  // Fetch most recently approved brief (fallback to last generated if today's isn't ready)
+  // Always show today's content only. Vercel runs in UTC; pipeline stamps
+  // article_date from Pacific time (TZ=America/Los_Angeles in GH Actions).
+  // Use the pipeline's timezone so dates align.
+  const today = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Los_Angeles',
+  }).format(new Date()); // → "YYYY-MM-DD"
+
+  // Fetch today's approved brief (null if not yet generated/approved)
   const { data: briefData } = await supabase
     .from('daily_briefs')
     .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
     .not('approved_at', 'is', null)
-    .order('brief_date', { ascending: false })
-    .limit(1)
+    .eq('brief_date', today)
     .maybeSingle();
 
   const brief = briefData as DailyBrief | null;
 
-  // Most recent date with approved articles
-  const { data: latestApproved } = await supabase
-    .from('approved_articles')
-    .select('article_date')
-    .order('article_date', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  // Most recent date with high-confidence pending articles (ai_confidence >= 4 on all axes)
-  const { data: latestPending } = await supabase
-    .from('articles')
-    .select('article_date')
-    .eq('status', 'pending')
-    .gte('ai_confidence_factual', 4)
-    .gte('ai_confidence_on_topic', 4)
-    .gte('ai_confidence_source', 4)
-    .not('title', 'is', null)
-    .order('article_date', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  // Use whichever date is more recent
-  const approvedDate = latestApproved?.article_date ?? '';
-  const pendingDate  = latestPending?.article_date  ?? '';
-  const deckDate = (pendingDate > approvedDate ? pendingDate : approvedDate)
-    || new Date().toISOString().slice(0, 10);
-
-  // Fetch approved articles for deckDate
+  // Fetch today's approved articles
   const { data: approvedData, error: articlesError } = await supabase
     .from('approved_articles')
     .select('*')
-    .eq('article_date', deckDate)
+    .eq('article_date', today)
     .order('rank_score', { ascending: false })
     .limit(10);
 
@@ -57,21 +36,21 @@ export default async function HomePage() {
 
   const approvedArticles = (approvedData ?? []) as ApprovedArticle[];
 
-  // Fetch high-confidence pending articles for deckDate
+  // Fetch today's high-confidence pending articles (ai_confidence >= 4 on all axes)
   const { data: pendingData } = await supabase
     .from('articles')
     .select(
       'id, topic, article_date, title, article_brief, balanced_summary, detail_summary, ' +
       'why_it_matters, score_importance, score_urgency, score_interest, source_urls'
     )
-    .eq('article_date', deckDate)
+    .eq('article_date', today)
     .eq('status', 'pending')
     .gte('ai_confidence_factual', 4)
     .gte('ai_confidence_on_topic', 4)
     .gte('ai_confidence_source', 4)
     .not('title', 'is', null);
 
-  // Exclude articles already in approved_articles (approved after pipeline ran)
+  // Exclude articles already promoted to approved_articles
   const approvedArticleIds = new Set(approvedArticles.map((a) => a.article_id));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

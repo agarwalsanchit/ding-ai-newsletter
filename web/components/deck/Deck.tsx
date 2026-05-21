@@ -106,7 +106,7 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
 
   const renderCard = (index: number) => {
     if (index === 0) {
-      return <BriefCard brief={brief} onOpenSettings={() => setSettingsOpen(true)} />;
+      return <BriefCard brief={brief} articleCount={visibleArticles.length} onOpenSettings={() => setSettingsOpen(true)} />;
     }
     if (index <= visibleArticles.length) {
       const article = visibleArticles[index - 1];

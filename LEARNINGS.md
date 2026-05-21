@@ -1,6 +1,6 @@
 # DING.AI — Core Learnings & Competitive Differentiation
 
-> Written after Phase 2 backend shipped (May 19, 2026).
+> Updated May 21, 2026 (Phase 2 frontend shipped; PWA live on Vercel).
 > These are the non-obvious lessons learned building a production AI news pipeline from scratch.
 
 ---
@@ -120,6 +120,64 @@ This means the pipeline can be debugged, tuned, and eventually improved by its o
 
 ---
 
+---
+
+## 9. RLS Blocks the Anon Key — Always Test Access Separately From the Service Role
+
+The `articles` table has Row Level Security enabled in Supabase. The pipeline uses the service-role key, which bypasses RLS. The PWA uses the anon key, which is subject to RLS. These look identical in code — both use the Supabase JS client — but return completely different data.
+
+When we tried to surface high-confidence pending articles in the PWA, the query returned `[]`. The pipeline had written articles to the DB; they existed. But the anon key had no SELECT policy on `articles`, so Supabase silently returned an empty array rather than an error.
+
+Fix: add a Supabase RLS policy (`CREATE POLICY "anon_read_high_confidence_pending" ON articles FOR SELECT TO anon USING (...)`) and save it as a migration so it's reproducible.
+
+**Lesson:** Whenever you add a new table query to the frontend, test it explicitly with the anon key (or Supabase's "Row Level Security" tab in the dashboard) before deploying. Do not assume the service-role-based pipeline tests cover the frontend access path.
+
+---
+
+## 10. GitHub Actions Cron Is Not Reliable for Time-Sensitive Runs
+
+The scheduled workflow (`0 15 * * *` = 8 AM PDT) sometimes doesn't fire at the scheduled time. On GitHub's free/hobby tier, cron jobs can be delayed by 30 minutes to several hours, especially during periods of high load or platform issues.
+
+For a daily news product, a delayed pipeline means an empty deck at the start of users' morning routine — exactly when they're most likely to open the app.
+
+**Lesson:** Build manual trigger capability into every time-sensitive workflow (`workflow_dispatch` input). Treat the cron as a default, not a guarantee. If the product needs the pipeline to have run by 9 AM, either accept occasional empty states (current approach) or add a monitoring check that alerts when the pipeline hasn't run by a specific time.
+
+---
+
+## 11. flag_top_news() Corrupts Unprocessed Articles — A Data Integrity Bug
+
+`flag_top_news()` runs after every pipeline execution and picks the highest `score_importance + score_urgency` article from the day's approved + pending pool, then relabels its `topic` field to "🚨 Top News" in both the `articles` and `approved_articles` tables.
+
+The bug: if the pipeline ran partially (e.g., only 3 of 5 sections processed), `flag_top_news()` may relabel an article from a section that wasn't processed in the current run. That article still has `status=pending` but now has `topic="🚨 Top News"` — which no longer matches any Tavily section key. In subsequent pipeline runs, the idempotency check finds the article already has `processed_at` set (or not, depending on when it was flagged), but either way the article won't be correctly reprocessed.
+
+Effect observed on May 21: two articles appeared with topic "🚨 Top News" while unprocessed, blocking them from being picked up by any subsequent Claude call.
+
+**Lesson:** Any function that modifies shared state (article topics) based on computed rankings must be bounded: only flag articles that were successfully processed in the current run, not all pending articles for the day. Better yet, make Top News a derived flag (a computed column or a query-time decoration) rather than a stored topic mutation.
+
+---
+
+## 12. Confidence Threshold ≥ 4 Is Too Strict for Factual Sports Content
+
+The RLS policy and Quick Hits pool both use `ai_confidence_factual >= 4` as a gate. Sports match results — factually simple, verifiable events — reliably score `ai_confidence_factual = 2` from Claude. Claude marks low factual confidence because it cannot verify box scores against external sources in its context.
+
+Effect: a La Liga match article that was accurately summarized was blocked from appearing in the PWA deck due to a factual confidence score of 2, despite having `ai_confidence_on_topic = 5` and `ai_confidence_source = 5`.
+
+**Lesson:** The confidence threshold was designed for general news (geopolitics, finance) where factual errors are hard to detect and high-stakes. Sports results are a special case: they're factually simple but structurally hard for Claude to self-verify. Options: (a) lower the global factual threshold to ≥ 3; (b) apply topic-aware thresholds (sports: factual ≥ 2); (c) accept that sports articles will sometimes be blocked by the threshold. This tradeoff hasn't been resolved.
+
+---
+
+## 13. Today-Only Date Requires Matching Timezones Across Pipeline and Frontend
+
+The pipeline stamps `article_date` using Python's `date.today()` which resolves to Pacific time in GitHub Actions (`TZ: America/Los_Angeles`). The PWA computes "today" in Next.js server components running on Vercel, where the server runs in UTC.
+
+If the PWA uses `new Date().toISOString().slice(0, 10)` for "today," it will be a UTC date. An article fetched at 11 PM Pacific on May 20 is stamped `article_date = 2026-05-20`, but the UTC date at that moment is `2026-05-21`. The PWA would show that article under May 21, or miss it entirely if querying for May 20.
+
+Fix: `Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date())` in `page.tsx` — explicitly formats today's date in Pacific time, matching the pipeline's timezone assumption.
+
+**Lesson:** Any system where two components compute "today" independently must agree on timezone. Document the timezone convention at the schema level, not just in code comments.
+
+---
+
 ## What to Watch For
 
 - **Sports content quality varies by time of day.** Wire service articles about matches take a few hours to appear in Tavily's index. If the pipeline runs immediately after a match ends, only boxscores may be available. Running at 8 AM Pacific catches the prior evening's results from European and Asian sports.
@@ -127,3 +185,7 @@ This means the pipeline can be debugged, tuned, and eventually improved by its o
 - **Dedup context grows stale after extended breaks.** If the pipeline hasn't run for 3+ days, the `approved_articles` context window (7 days) may not cover the gap fully. The JSON history file provides a fallback but is less reliable.
 
 - **Auto-approval rate will drift.** As the pipeline processes more days, Claude may adapt its confidence calibration. Periodically check what fraction of articles are auto-approved vs. pending — if the auto-approval rate climbs above 50%, the confidence threshold may need tightening.
+
+- **Confidence threshold calibration needed for sports.** See Learning 12. `ai_confidence_factual >= 4` consistently blocks accurate sports articles. Revisit before the next major pipeline change.
+
+- **flag_top_news() bug still unresolved.** See Learning 11. Partial pipeline runs leave "🚨 Top News" labels on unprocessed articles. Until fixed, manually check `articles` for topic="🚨 Top News" after any partial pipeline run.

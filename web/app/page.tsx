@@ -16,19 +16,35 @@ export default async function HomePage() {
 
   const brief = briefData as DailyBrief | null;
 
-  // Find the most recent date that has approved articles, then fetch those.
-  // Decoupled from the brief date so new articles surface even when today's
-  // brief hasn't been approved yet.
-  const { data: latestRow } = await supabase
+  // Most recent date with approved articles
+  const { data: latestApproved } = await supabase
     .from('approved_articles')
     .select('article_date')
     .order('article_date', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  const deckDate = latestRow?.article_date ?? new Date().toISOString().slice(0, 10);
+  // Most recent date with high-confidence pending articles (ai_confidence >= 4 on all axes)
+  const { data: latestPending } = await supabase
+    .from('articles')
+    .select('article_date')
+    .eq('status', 'pending')
+    .gte('ai_confidence_factual', 4)
+    .gte('ai_confidence_on_topic', 4)
+    .gte('ai_confidence_source', 4)
+    .not('title', 'is', null)
+    .order('article_date', { ascending: false })
+    .limit(1)
+    .maybeSingle();
 
-  const { data: articlesData, error: articlesError } = await supabase
+  // Use whichever date is more recent
+  const approvedDate = latestApproved?.article_date ?? '';
+  const pendingDate  = latestPending?.article_date  ?? '';
+  const deckDate = (pendingDate > approvedDate ? pendingDate : approvedDate)
+    || new Date().toISOString().slice(0, 10);
+
+  // Fetch approved articles for deckDate
+  const { data: approvedData, error: articlesError } = await supabase
     .from('approved_articles')
     .select('*')
     .eq('article_date', deckDate)
@@ -39,17 +55,69 @@ export default async function HomePage() {
     console.error('[DING] Failed to fetch approved_articles:', articlesError);
   }
 
-  const articles = (articlesData ?? []) as ApprovedArticle[];
+  const approvedArticles = (approvedData ?? []) as ApprovedArticle[];
 
-  // Phase 2: fetch Hindi translations for the articles we're showing
+  // Fetch high-confidence pending articles for deckDate
+  const { data: pendingData } = await supabase
+    .from('articles')
+    .select(
+      'id, topic, article_date, title, article_brief, balanced_summary, detail_summary, ' +
+      'why_it_matters, score_importance, score_urgency, score_interest, source_urls'
+    )
+    .eq('article_date', deckDate)
+    .eq('status', 'pending')
+    .gte('ai_confidence_factual', 4)
+    .gte('ai_confidence_on_topic', 4)
+    .gte('ai_confidence_source', 4)
+    .not('title', 'is', null);
+
+  // Exclude articles already in approved_articles (approved after pipeline ran)
+  const approvedArticleIds = new Set(approvedArticles.map((a) => a.article_id));
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pendingArticles: ApprovedArticle[] = ((pendingData ?? []) as any[])
+    .filter((p) => !approvedArticleIds.has(p.id))
+    .map((p) => {
+      const imp = p.score_importance ?? 3;
+      const urg = p.score_urgency   ?? 3;
+      const int = p.score_interest  ?? 3;
+      return {
+        id:               p.id,
+        article_id:       p.id,
+        topic:            p.topic,
+        article_date:     p.article_date,
+        title:            p.title,
+        article_brief:    p.article_brief   ?? null,
+        balanced_summary: p.balanced_summary ?? '',
+        detail_summary:   p.detail_summary   ?? null,
+        why_it_matters:   p.why_it_matters   ?? '',
+        score_importance: imp,
+        score_urgency:    urg,
+        score_interest:   int,
+        rank_score:       imp * 2 + urg + int,
+        source_urls:      p.source_urls ?? [],
+        approved_at:      '',
+        approved_by:      'ai_auto' as const,
+        published_at:     null,
+        left_perspective:  null,
+        right_perspective: null,
+      };
+    });
+
+  // Merge approved + high-confidence pending, sort by rank_score, cap at 10
+  const articles = [...approvedArticles, ...pendingArticles]
+    .sort((a, b) => b.rank_score - a.rank_score)
+    .slice(0, 10);
+
+  // Translations only exist for approved articles
   let translations: TranslationMap = {};
-  if (articles.length > 0) {
+  if (approvedArticles.length > 0) {
     const { data: translationsData } = await supabase
       .from('translations')
       .select(
         'approved_article_id, language, title_translated, summary_translated, why_it_matters_translated, detail_summary_translated'
       )
-      .in('approved_article_id', articles.map((a) => a.id))
+      .in('approved_article_id', approvedArticles.map((a) => a.id))
       .eq('language', 'hi');
 
     if (translationsData) {

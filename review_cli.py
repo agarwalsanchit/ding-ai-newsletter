@@ -98,7 +98,7 @@ def run_safety_gate(db, article: dict) -> None:
         try:
             row_data = (
                 db.table("articles")
-                .select("article_date, topic, title, balanced_summary, detail_summary, why_it_matters, "
+                .select("article_date, topic, title, article_brief, balanced_summary, detail_summary, why_it_matters, "
                         "score_importance, score_urgency, score_interest, source_urls")
                 .eq("id", article_id)
                 .execute()
@@ -113,6 +113,7 @@ def run_safety_gate(db, article: dict) -> None:
             "topic":           a_row.get("topic", article.get("topic")),
             "article_date":    a_row.get("article_date", date.today().isoformat()),
             "title":           a_row.get("title", article.get("title")),
+            "article_brief":   a_row.get("article_brief"),
             "balanced_summary": a_row.get("balanced_summary", article.get("balanced_summary")),
             "detail_summary":  a_row.get("detail_summary"),
             "why_it_matters":  a_row.get("why_it_matters", article.get("why_it_matters")),

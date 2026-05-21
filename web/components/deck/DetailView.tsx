@@ -222,21 +222,36 @@ export default function DetailView({
               </p>
 
               {/* Why it matters */}
-              <p
+              <div
                 style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '15px',
-                  fontStyle: 'italic',
-                  lineHeight: 1.55,
-                  color: 'var(--text)',
+                  borderLeft: '2px solid var(--accent)',
+                  paddingLeft: '14px',
                   marginBottom: hasPerspectives ? '32px' : '0',
                 }}
               >
-                <span style={{ fontStyle: 'normal', color: 'var(--muted)' }}>
-                  {showHindi ? 'यह क्यों मायने रखता है: ' : 'Why it matters: '}
-                </span>
-                {wim}
-              </p>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '10px',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: 'var(--accent)',
+                    marginBottom: '6px',
+                  }}
+                >
+                  {showHindi ? 'यह क्यों मायने रखता है' : 'Why it matters'}
+                </p>
+                <p
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '15px',
+                    lineHeight: 1.55,
+                    color: 'var(--text)',
+                  }}
+                >
+                  {wim}
+                </p>
+              </div>
 
               {/* Phase 3: Perspectives */}
               {hasPerspectives && (

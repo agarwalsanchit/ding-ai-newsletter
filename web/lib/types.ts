@@ -15,6 +15,7 @@ export type ApprovedArticle = {
   approved_by: 'human' | 'ai_auto';
   published_at: string | null;
   detail_summary: string | null;
+  article_brief: string | null;
   // Phase 3 — perspectives (null until backend generates them)
   left_perspective: string | null;
   right_perspective: string | null;

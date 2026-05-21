@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-const HOLD_MS  = 2600; // how long the splash shows before auto-fading
-const FADE_MS  = 600;  // exit fade duration
+const HOLD_MS  = 4500; // how long the splash shows before auto-fading
+const FADE_MS  = 800;  // exit fade duration
 
 interface Props {
   onDone: () => void;
@@ -53,7 +53,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.div
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.55, ease: [0.34, 1.1, 0.64, 1] }}
+            transition={{ duration: 0.7, ease: [0.34, 1.1, 0.64, 1] }}
           >
             <Image
               src="/icon-192x192.png"
@@ -69,7 +69,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.h1
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.35, ease: 'easeOut' }}
+            transition={{ duration: 0.55, delay: 0.45, ease: 'easeOut' }}
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: '34px',
@@ -88,7 +88,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.9 }}
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '11px',
@@ -105,7 +105,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.1 }}
+            transition={{ duration: 0.55, delay: 1.4 }}
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: '14px',
@@ -125,7 +125,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1.8 }}
+            transition={{ duration: 0.4, delay: 2.4 }}
             style={{
               position: 'absolute',
               bottom: 'calc(env(safe-area-inset-bottom, 0px) + 32px)',

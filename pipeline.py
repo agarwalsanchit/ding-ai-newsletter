@@ -76,6 +76,7 @@ Rules:
 - Reference input articles ONLY by their 0-based index (source_indices). Never restate content; indices are validated by the pipeline.
 - Merge multiple input articles that cover the same event into one output object.
 - Do NOT invent facts not present in the input articles.
+- article_brief: 40–60 words. Card-face brief — the first thing a reader sees. Key facts only: who/what/when/where. No "why it matters," no background context. First sentence carries the most important fact. Must fit one mobile screen without truncation.
 - balanced_summary: 100–120 words, card-facing, factual and balanced. A reader should understand the event in 30 seconds.
 - detail_summary: 300–400 words, detail-view-facing. Same tone and source-grounding as balanced_summary but more depth: additional named entities, concrete numbers, background context. Do NOT add claims not in the sources.
 - why_it_matters: 1–2 sentences on the real-world consequence. Specific, not generic.
@@ -341,6 +342,7 @@ Return a JSON array. Each element:
 {{
   "source_indices": [0],
   "title": "...",
+  "article_brief": "...",
   "balanced_summary": "...",
   "detail_summary": "...",
   "why_it_matters": "...",
@@ -463,6 +465,7 @@ def process_topic(claude_client, db, topic: str, articles: list,
         # Build update payload for primary article
         update_payload = {
             "title":                  item.get("title"),
+            "article_brief":          item.get("article_brief"),
             "balanced_summary":       item.get("balanced_summary"),
             "detail_summary":         item.get("detail_summary"),
             "why_it_matters":         item.get("why_it_matters"),
@@ -503,6 +506,7 @@ def process_topic(claude_client, db, topic: str, articles: list,
                 "topic":           topic,
                 "article_date":    article_date_str,
                 "title":           item.get("title"),
+                "article_brief":   item.get("article_brief"),
                 "balanced_summary": item.get("balanced_summary"),
                 "detail_summary":  item.get("detail_summary"),
                 "why_it_matters":  item.get("why_it_matters"),

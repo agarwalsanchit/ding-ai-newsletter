@@ -1,6 +1,5 @@
 import { ApprovedArticle, Translation } from '@/lib/types';
 import { Language } from '@/lib/hooks/useLanguage';
-import Card from './Card';
 import LanguageToggle from './LanguageToggle';
 
 function formatArticleDate(dateStr: string): string {
@@ -40,168 +39,167 @@ export default function ArticleCard({
   const hasTranslation = !!translation?.title_translated;
   const showHindi = lang === 'hi' && hasTranslation;
 
-  const title   = showHindi ? translation!.title_translated!        : article.title;
-  const summary = showHindi ? (translation!.summary_translated ?? article.balanced_summary) : article.balanced_summary;
-  const wim     = showHindi ? (translation!.why_it_matters_translated ?? article.why_it_matters) : article.why_it_matters;
+  const title = showHindi ? translation!.title_translated! : article.title;
+  // Card face uses article_brief (short); Hindi falls back to summary_translated
+  const summary = showHindi
+    ? (translation!.summary_translated ?? article.article_brief ?? article.balanced_summary)
+    : (article.article_brief ?? article.balanced_summary);
 
-  // Phase 3: perspectives indicator
   const hasPerspectives = !!(article.left_perspective && article.right_perspective);
 
   return (
-    <Card>
-      {/* Metadata row */}
+    <div
+      style={{
+        position: 'relative',
+        height: '100dvh',
+        width: '100%',
+        overflow: 'hidden',
+        backgroundColor: 'var(--bg)',
+        color: 'var(--text)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginBottom: '16px',
-        }}
-      >
-        <p
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: 'var(--muted)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            flexWrap: 'wrap',
-          }}
-        >
-          <span>{stripEmoji(article.topic)}</span>
-          <span>·</span>
-          <span>{formatArticleDate(article.article_date)}</span>
-          {article.source_urls[0] && (
-            <>
-              <span>·</span>
-              <a
-                href={article.source_urls[0]}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  color: 'var(--muted)',
-                  textDecoration: 'none',
-                  borderBottom: '1px solid var(--divider)',
-                }}
-              >
-                {extractDomain(article.source_urls[0])}
-              </a>
-            </>
-          )}
-          {/* Phase 3: perspectives dot */}
-          {hasPerspectives && (
-            <>
-              <span>·</span>
-              <span
-                style={{ color: 'var(--accent)', fontSize: '9px', letterSpacing: '0.1em' }}
-                title="Multiple perspectives available"
-              >
-                L · R
-              </span>
-            </>
-          )}
-        </p>
-
-        {/* Phase 2: language toggle — only if translation exists */}
-        {hasTranslation && (
-          <LanguageToggle lang={lang} onToggle={onToggleLang} />
-        )}
-      </div>
-
-      {/* Tappable body */}
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={onOpenDetail}
-        onKeyDown={(e) => e.key === 'Enter' && onOpenDetail()}
-        style={{ cursor: 'pointer' }}
-      >
-        <h2
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(20px, 5vw, 26px)',
-            fontWeight: 600,
-            lineHeight: 1.15,
-            letterSpacing: '-0.02em',
-            marginBottom: '20px',
-          }}
-        >
-          {title}
-        </h2>
-
-        <p
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '15px',
-            lineHeight: 1.5,
-            color: 'var(--text)',
-            marginBottom: '16px',
-            display: '-webkit-box',
-            WebkitBoxOrient: 'vertical',
-            WebkitLineClamp: 5,
-            overflow: 'hidden',
-          }}
-        >
-          {summary}
-        </p>
-
-        <p
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '15px',
-            fontStyle: 'italic',
-            lineHeight: 1.5,
-            color: 'var(--text)',
-          }}
-        >
-          <span style={{ fontStyle: 'normal', color: 'var(--muted)' }}>
-            {showHindi ? 'यह क्यों मायने रखता है: ' : 'Why it matters: '}
-          </span>
-          {wim}
-        </p>
-      </div>
-
-      {/* Tap-to-detail affordance */}
-      <div
-        onClick={onOpenDetail}
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          width: '100%',
+          maxWidth: '640px',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)',
-          color: 'var(--subtle)',
-          cursor: 'pointer',
+          height: '100%',
+          padding: 'calc(env(safe-area-inset-top, 0px) + 44px) 28px max(env(safe-area-inset-bottom, 0px), 28px)',
+          overflow: 'hidden',
         }}
       >
-        <p
+        {/* Metadata row */}
+        <div
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginBottom: '6px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '16px',
+            flexShrink: 0,
           }}
         >
-          {showHindi ? 'अधिक पढ़ें' : 'Tap to read more'}
-        </p>
-        <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
-          <path
-            d="M2 2L10 10L18 2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          <p
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '11px',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--muted)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              flexWrap: 'wrap',
+            }}
+          >
+            <span>{stripEmoji(article.topic)}</span>
+            <span>·</span>
+            <span>{formatArticleDate(article.article_date)}</span>
+            {article.source_urls[0] && (
+              <>
+                <span>·</span>
+                <a
+                  href={article.source_urls[0]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    color: 'var(--muted)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--divider)',
+                  }}
+                >
+                  {extractDomain(article.source_urls[0])}
+                </a>
+              </>
+            )}
+            {hasPerspectives && (
+              <>
+                <span>·</span>
+                <span
+                  style={{ color: 'var(--accent)', fontSize: '9px', letterSpacing: '0.1em' }}
+                  title="Multiple perspectives available"
+                >
+                  L · R
+                </span>
+              </>
+            )}
+          </p>
+
+          {hasTranslation && <LanguageToggle lang={lang} onToggle={onToggleLang} />}
+        </div>
+
+        {/* Tappable body */}
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={onOpenDetail}
+          onKeyDown={(e) => e.key === 'Enter' && onOpenDetail()}
+          style={{ cursor: 'pointer', flexShrink: 0 }}
+        >
+          <h2
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: 'clamp(20px, 5vw, 26px)',
+              fontWeight: 600,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              marginBottom: '18px',
+            }}
+          >
+            {title}
+          </h2>
+
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '15px',
+              lineHeight: 1.55,
+              color: 'var(--text)',
+            }}
+          >
+            {summary}
+          </p>
+        </div>
+
+        {/* Tap-to-expand affordance — inline below content, no overlap */}
+        <div
+          onClick={onOpenDetail}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginTop: '28px',
+            color: 'var(--subtle)',
+            cursor: 'pointer',
+            flexShrink: 0,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '10px',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              marginBottom: '6px',
+            }}
+          >
+            {showHindi ? 'अधिक पढ़ें' : 'Tap to expand'}
+          </p>
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
+            <path
+              d="M2 2L10 10L18 2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
       </div>
-    </Card>
+    </div>
   );
 }

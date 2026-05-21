@@ -81,7 +81,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
           color: 'var(--subtle)',
-          marginBottom: '20px',
+          marginBottom: '14px',
         }}
       >
         {dateLabel}
@@ -95,7 +95,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           fontWeight: 600,
           lineHeight: 1.1,
           letterSpacing: '-0.02em',
-          marginBottom: '16px',
+          marginBottom: '12px',
         }}
       >
         {brief ? brief.editorial_opener : 'Good morning.'}
@@ -108,11 +108,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           fontSize: '16px',
           lineHeight: 1.6,
           color: 'var(--text)',
-          marginBottom: '16px',
-          display: '-webkit-box',
-          WebkitBoxOrient: 'vertical',
-          WebkitLineClamp: 6,
-          overflow: 'hidden',
+          marginBottom: '12px',
         }}
       >
         {brief ? brief.brief_body : ''}
@@ -125,7 +121,7 @@ export default function BriefCard({ brief, onOpenSettings }: BriefCardProps) {
           fontSize: '14px',
           lineHeight: 1.5,
           color: 'var(--muted)',
-          marginBottom: '24px',
+          marginBottom: '16px',
         }}
       >
         {brief ? brief.transition_line : ''}

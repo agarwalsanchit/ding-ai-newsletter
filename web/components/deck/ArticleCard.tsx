@@ -143,7 +143,7 @@ export default function ArticleCard({
           <h2
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(26px, 7vw, 36px)',
+              fontSize: 'clamp(30px, 8vw, 44px)',
               fontWeight: 600,
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
@@ -156,7 +156,7 @@ export default function ArticleCard({
           <p
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: '19px',
+              fontSize: '21px',
               lineHeight: 1.55,
               color: 'var(--text)',
             }}

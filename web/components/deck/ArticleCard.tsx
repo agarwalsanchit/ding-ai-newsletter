@@ -198,14 +198,6 @@ export default function ArticleCard({
           pointerEvents: 'none',
         }}
       >
-        <div
-          style={{
-            width: '1px',
-            height: '20px',
-            background: 'var(--subtle)',
-            margin: '0 auto 4px',
-          }}
-        />
         <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
           <path
             d="M2 2L10 10L18 2"

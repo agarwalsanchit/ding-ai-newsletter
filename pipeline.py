@@ -740,7 +740,7 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
             upsert_row,
             on_conflict="brief_date",
         ).execute()
-        status = "auto-approved" if ai_confidence == 5 else "pending human review"
+        status = "auto-approved" if ai_confidence >= 4 else "pending human review"
         logging.info("Brief for %s saved (%s).", today_str, status)
         return True
     except Exception as exc:

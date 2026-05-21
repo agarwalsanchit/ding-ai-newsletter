@@ -10,11 +10,12 @@ on:
   workflow_dispatch:
     inputs:
       send_mode:
-        description: "'draft' saves HTML only, 'send' emails all subscribers"
+        description: "'pipeline_only' refreshes app only (no newsletter), 'draft' saves HTML, 'send' emails subscribers"
         required: false
-        default: "draft"
+        default: "pipeline_only"
         type: choice
         options:
+          - pipeline_only
           - draft
           - send
 
@@ -55,6 +56,7 @@ jobs:
         run: python pipeline.py
 
       - name: Run newsletter engine
+        if: ${{ github.event.inputs.send_mode != 'pipeline_only' }}
         env:
           TZ: America/Los_Angeles
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

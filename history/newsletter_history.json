@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-05-14",
-    "headlines": [
-      "Trump&#8212;Xi Summit: Hormuz, Iran, and a Weapons Rumor Change the Stakes",
-      "Hungary Breaks With Orb&#225;n&#39;s Russia Softness, Summons Ambassador After Drone Strike",
-      "US Aid Cuts Leave Somalia Exposed as Deadly Drought Deepens",
-      "AI Shatters Every Cybersecurity Benchmark &#8212; and Palo Alto Says Autonomous Attacks Are Weeks Away",
-      "Google I/O 2026: Gemini Gets Bigger, Smarter Glasses Are Coming, and Android Gets a Full AI Overhaul",
-      "Rents Fall for the 33rd Straight Month &#8212; and Relief Isn&#39;t Done Yet",
-      "Anthropic Hits $30B Run-Rate as AI&#39;s Biggest Players Outgrow What Venture Can Fund",
-      "Higher Ed&#39;s Center Is Collapsing &#8212; and AI Is Widening the Gulf",
-      "Taylor Swift, Beyonc&#233;, and Chaka Khan Join the National Recording Registry"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-15",
     "headlines": [
       "Friday Selloff Erases the Week&#8217;s Glow as Oil Rattles Bonds",
@@ -111,6 +96,20 @@
       "Xi and Putin Meet in Beijing, Declare Ties at Record High",
       "AI &#39;Sabotage&#39; Threat and Competitiveness Anxieties Dominate European Research Agenda",
       "South Africa Nominates Five Universities for Presidential PhD Programme Amid Funding Shortfall"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-22",
+    "headlines": [
+      "Wall Street Cruises Toward Eight Straight Winning Weeks as Bond Pressure Eases",
+      "Nvidia Gets a &#34;Yawn&#34; &#8212; Then the Rally Resumes Anyway",
+      "Est&#233;e Lauder and Puig Perfume Marriage Called Off",
+      "Iran War Uncertainty Keeps Oil Markets on Edge, Asia Rattled",
+      "Ukraine Steps Up Deep-Strike Campaign, Hitting Russian Refinery",
+      "Quad Foreign Ministers Set to Convene in New Delhi",
+      "Trump Pumps the Brakes on White House AI Executive Order",
+      "Google&#8217;s AI Mode Ads Arrive&#8212;and Brands Are Nervous"
     ],
     "sent": 13
   }

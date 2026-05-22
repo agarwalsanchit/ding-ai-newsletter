@@ -211,7 +211,13 @@ Key fields added since initial schema:
 
 File: `.github/workflows/newsletter.yml`
 
-Runs at `0 15 * * *` (8:00 AM PDT / 15:00 UTC). Can be triggered manually with a `send_mode` input (`draft` | `send`).
+Runs at `0 15 * * *` (8:00 AM PDT / 15:00 UTC). Can be triggered manually with a `send_mode` input:
+
+| send_mode | Effect |
+|---|---|
+| `pipeline_only` | Runs pipeline.py only — fetches + processes articles, updates Supabase. Skips newsletter.py entirely. **Default for manual triggers.** Use this to refresh the PWA without sending email. |
+| `draft` | Runs pipeline.py + newsletter.py. Renders HTML email but does not send. |
+| `send` | Runs pipeline.py + newsletter.py. Sends email to all subscribers. Used by the scheduled run. |
 
 ```
 Steps:

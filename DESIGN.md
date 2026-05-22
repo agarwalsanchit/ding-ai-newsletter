@@ -3,7 +3,7 @@
 > Companion to `ARCHITECTURE.md` (which describes the current newsletter system).
 > This document describes the **new** system being built on top of it.
 >
-> Last updated: May 21, 2026 (Phase 2 frontend complete)
+> Last updated: May 21, 2026 (pipeline threshold tuning + UI polish)
 > Status: Phase 2 backend + frontend shipped. Topic filtering (Phase 4) shipped. PWA live on Vercel.
 
 ---
@@ -71,17 +71,21 @@ Card anatomy, top to bottom:
 
 ```
 Metadata line:    [Topic name in muted mono]  ·  [Date]  ·  [Source domain]
-Headline:         Inter, ~26-28px, weight 600, line-height 1.15
+Headline:         Inter, clamp(30px, 8vw, 44px), weight 600, line-height 1.1
 Article brief:    40-60 word card-face brief (article_brief field). Key facts only:
                   who/what/when/where. No "Why it matters," no background context.
                   First sentence carries the most important fact. Written to fit one
                   mobile screen without truncation. Falls back to balanced_summary
                   for articles processed before the article_brief field was added.
-Affordance hint:  "Tap to expand" in --subtle color, inline directly below the text.
-                  Not absolute positioned — no overlap with content.
+                  Font: 21px, line-height 1.55.
+↓ Tap to expand:  Mono label, 10px, inline below the brief text. Tapping opens the
+                  detail view. Distinct from the swipe indicator — this is a tap CTA.
+[bottom edge]  ↓  Down-pointing chevron pinned absolutely to the card bottom.
+                  Signals "swipe up for next story." pointer-events: none so it
+                  doesn't interfere with drag handling.
 ```
 
-"Why it matters" is NOT shown on the card face. It appears only in the detail view (see 2.4). The card is glanceable — one fact per screen, tap for depth.
+"Why it matters" is NOT shown on the card face. It appears only in the detail view (see 2.4). The two affordances are intentionally separated: tap target in the content area, navigation hint at the edge.
 
 ### 2.4 Detail view (one tap deeper)
 
@@ -108,15 +112,18 @@ Tapping the source domain (in the metadata line on the card OR on the detail vie
 
 ### 2.6 End card
 
-Reached after the last article card. Single message:
+Reached after the last article card:
 
 ```
 That's the signal for today.
 See you tomorrow morning.
-[Optional: cost-of-attention nicety, e.g., "Took you 7 minutes."]
+
+DING
+────
+Morning Signal · AI-curated
 ```
 
-No "load more," no related-articles, no engagement hooks. Closed-ended is the point.
+The DING wordmark appears in `var(--accent)`, mono font, 22px. A thin divider separates it from the tagline. No "load more," no related-articles, no engagement hooks. Closed-ended is the point.
 
 ### 2.7 Navigation gestures
 
@@ -431,15 +438,20 @@ Rationale: showing stale articles from previous days creates a misleading signal
 
 Timezone note: `article_date` is stamped in Pacific time (GH Actions runs with `TZ=America/Los_Angeles`). The PWA must use the same timezone (`Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' })`) to compute "today" — otherwise articles fetched at 11 PM PT appear on tomorrow's date in UTC.
 
-### Decision O — Auto-approve articles with confidence ≥ 4; PWA also surfaces remaining high-confidence pending [UPDATED]
+### Decision O — Auto-approve articles with confidence ≥ 3; PWA also surfaces remaining high-confidence pending [UPDATED]
 
-**Auto-approval threshold**: all three ai_confidence axes ≥ 4 (changed from the original 5/5/5). The 5/5/5 threshold was too strict — many accurate articles scored 4 on one axis (sports factual confidence is structurally low because Claude can't self-verify scores). Confidence > 3 on all axes is a reliable quality signal across topics.
+**Auto-approval threshold**: all three ai_confidence axes ≥ 3. Calibrated through three iterations in production:
+- Original 5/5/5: too strict — zero articles approved in practice
+- ≥ 4: better, but sports and niche topics still blocked (La Liga factual=2; other articles factual=3)
+- ≥ 3: produces 7–10 articles per day in practice; below 3 Claude is signalling genuine doubt about facts, topic fit, or source credibility
 
-The pipeline inserts auto-approved articles directly into `approved_articles`. The deck is capped at 10 by rank_score both in `page.tsx` (LIMIT 10) and in the brief generator (LIMIT 10, so the brief accurately describes what the reader will see).
+The DB has a corresponding CHECK constraint (`articles_check1`) enforcing the same threshold. **The Python code and DB constraint must be updated together** — the DB constraint is the authoritative gate; changing only Python silently fails at write time.
 
-The PWA also queries high-confidence pending articles (those that passed the ≥ 4 threshold but somehow landed as `pending` — e.g., re-runs where the article was already processed) via RLS policy on the `articles` table. This is a safety net, not the primary path.
+The pipeline inserts auto-approved articles directly into `approved_articles`. The deck is capped at 10 by rank_score both in `page.tsx` (LIMIT 10) and in the brief generator (LIMIT 10, so the brief count matches what the reader sees).
 
-**flag_top_news() fix**: only flags `auto_approved` or `approved` articles — not `pending` ones. Previously the function queried all three statuses, which could corrupt the db_mapping used by the idempotency check (pending articles with "🚨 Top News" as their topic would be mis-bucketed on the next run). Now only articles that have cleared the quality gate get the Top News label.
+The PWA also queries high-confidence pending articles via RLS policy on the `articles` table (safety net for articles that were processed but somehow not auto-approved in the current run).
+
+**flag_top_news() fix**: only flags `auto_approved` or `approved` articles — not `pending` ones. Previously the function queried all three statuses, which could corrupt the db_mapping URL lookup used by the idempotency check (pending articles with "🚨 Top News" as their topic would be mis-bucketed on the next run).
 
 ### Decision L — Card-deck UX with swipe navigation [NEW]
 

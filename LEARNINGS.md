@@ -156,13 +156,17 @@ Effect observed on May 21: two articles appeared with topic "🚨 Top News" whil
 
 ---
 
-## 12. Confidence Threshold ≥ 4 Is Too Strict for Factual Sports Content
+## 12. Confidence Threshold Calibration: ≥ 3 Is the Practical Floor
 
-The RLS policy and Quick Hits pool both use `ai_confidence_factual >= 4` as a gate. Sports match results — factually simple, verifiable events — reliably score `ai_confidence_factual = 2` from Claude. Claude marks low factual confidence because it cannot verify box scores against external sources in its context.
+The auto-approval threshold was calibrated through three iterations in production on May 21:
 
-Effect: a La Liga match article that was accurately summarized was blocked from appearing in the PWA deck due to a factual confidence score of 2, despite having `ai_confidence_on_topic = 5` and `ai_confidence_source = 5`.
+- **5/5/5** (original): Zero articles auto-approved. Claude reliably scores factual confidence at 4 for sports, 3–4 for niche topics. The all-5 bar is a near-impossible standard for real news.
+- **≥ 4**: Only 4 articles approved. Sports (La Liga f=2) and society articles (f=3) blocked despite being accurate.
+- **≥ 3**: 7 articles on the first calibrated day. Below 3, Claude is signalling genuine doubt — f=2 means it cannot verify the facts at all; f=3 means it has concerns but the source is credible.
 
-**Lesson:** The confidence threshold was designed for general news (geopolitics, finance) where factual errors are hard to detect and high-stakes. Sports results are a special case: they're factually simple but structurally hard for Claude to self-verify. Options: (a) lower the global factual threshold to ≥ 3; (b) apply topic-aware thresholds (sports: factual ≥ 2); (c) accept that sports articles will sometimes be blocked by the threshold. This tradeoff hasn't been resolved.
+The DB also has a `CHECK` constraint (`articles_check1`) that enforces the same threshold. Both must be updated together (see Learning 14).
+
+**Lesson:** Calibrate confidence thresholds against real production output, not theory. One day of pipeline output reveals more than any upfront reasoning. The right threshold is the one that gives the target article count while still filtering genuinely low-confidence content.
 
 ---
 
@@ -175,6 +179,16 @@ If the PWA uses `new Date().toISOString().slice(0, 10)` for "today," it will be 
 Fix: `Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(new Date())` in `page.tsx` — explicitly formats today's date in Pacific time, matching the pipeline's timezone assumption.
 
 **Lesson:** Any system where two components compute "today" independently must agree on timezone. Document the timezone convention at the schema level, not just in code comments.
+
+---
+
+## 14. DB Constraints Are Silent Gatekeepers — Update Them With the Code
+
+When we lowered the auto-approval threshold in `pipeline.py` from `== 5` to `>= 4`, the change appeared to work but articles still weren't being auto-approved. The reason: a `CHECK` constraint on the `articles` table (`articles_check1`) enforced `status = 'auto_approved' → confidence == 5` at the DB level. Supabase silently returned a `23514` constraint violation error which the pipeline's exception handler swallowed, leaving articles in `pending` status.
+
+The Python code change alone was never enough. The DB constraint is the authoritative gate.
+
+**Lesson:** Any time you change a threshold or routing rule in application code, grep for the same value in DB migrations. If it appears in a `CHECK` constraint, update both together in the same commit. Write migrations for all DB changes — even manual ones applied via `psql` — so the source of truth for schema state is the migration files, not your memory.
 
 ---
 

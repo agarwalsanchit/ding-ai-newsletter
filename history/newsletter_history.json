@@ -1,35 +1,5 @@
 [
   {
-    "date": "2026-05-15",
-    "headlines": [
-      "Friday Selloff Erases the Week&#8217;s Glow as Oil Rattles Bonds",
-      "&#34;It&#8217;s the AI&#34; &#8212; Companies Keep Citing Automation When Announcing Layoffs",
-      "Trump Says Xi Offered to Help &#8212; But Help With What, Exactly?",
-      "Hungary Summons Russian Ambassador After Drone Strike Hits Transcarpathia",
-      "US Aid Cuts Leave Somalia Dangerously Exposed as Drought Deepens",
-      "Google I/O 2026: A Full Year of AI Moves, Capped by Gemini 3.1 Pro",
-      "Floating AI Data Centers: The Ocean Is the New Server Room",
-      "India Raises Fuel Prices as Global Energy Crisis Bites",
-      "Cuba&#8217;s Art Scene Is Fading &#8212; and Its Artists Are Taking to the Streets"
-    ],
-    "sent": 13
-  },
-  {
-    "date": "2026-05-16",
-    "headlines": [
-      "Israel Says It Killed the Commander Behind October 7",
-      "Xi Jinping to Make U.S. State Visit This Fall",
-      "Iran War Fractures BRICS &#8212; Again",
-      "Oil Fears Wipe Out the Week&#39;s Market Gains in Friday Selloff",
-      "India Raises Fuel Prices as Energy Crisis Squeezes Emerging Economies",
-      "$4 Billion Bet on Self-Improving AI Draws Top Researchers",
-      "&#34;AI Integrators&#34; Storm Capitol Hill, Seeking a Seat at the Policy Table",
-      "Hearts One Point From Making Scottish Football History",
-      "PGA Championship Round Three: Scheffler Chasing, McIlroy in the Hunt"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-17",
     "headlines": [
       "Putin Heads to Beijing Days After Trump, as Xi Plays Both Sides",
@@ -110,6 +80,17 @@
       "Quad Foreign Ministers Set to Convene in New Delhi",
       "Trump Pumps the Brakes on White House AI Executive Order",
       "Google&#8217;s AI Mode Ads Arrive&#8212;and Brands Are Nervous"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-24",
+    "headlines": [
+      "Russia Pounds Kyiv with Missiles and Drones, Injuring 10",
+      "Nvidia Posts $81.6B Quarter, Anthropic Eyes $10.9B Revenue as AI&#39;s &#39;Everything Changed&#39; Moment Arrives",
+      "Crystal Palace vs Arsenal: Premier League Season Finale Preview",
+      "Jofra Archer&#39;s All-Round Performance Fires Rajasthan Royals Into IPL 2026 Playoffs",
+      "Vietnam&#39;s Dien May Xanh Cleared for $545 Million IPO"
     ],
     "sent": 13
   }

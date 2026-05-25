@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-05-17",
-    "headlines": [
-      "Putin Heads to Beijing Days After Trump, as Xi Plays Both Sides",
-      "Israel Says It Killed the Commander Behind October 7 &#8212; New Details Emerge",
-      "Russia&#8217;s Economy Is Straining &#8212; But Putin Is Spinning the Numbers",
-      "A $4 Billion Bet on AI That Builds Itself &#8212; And Top Researchers Are Signing On",
-      "Ukraine&#8217;s Garage-Built Robot Army Is Rewriting the Rules of Warfare",
-      "Oil Jitters Knock Global Markets Off Record Highs",
-      "Pershing Square Swaps Alphabet for Microsoft as Big Money Rotates in Big Tech",
-      "Hearts Are One Point From Shattering 41 Years of Scottish Football History",
-      "John Travolta Gets a Surprise Honorary Palm&#233; d&#8217;Or at Cannes"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-18",
     "headlines": [
       "WHO Declares Global Emergency as Ebola Spreads Across Congo and Uganda",
@@ -91,6 +76,15 @@
       "Crystal Palace vs Arsenal: Premier League Season Finale Preview",
       "Jofra Archer&#39;s All-Round Performance Fires Rajasthan Royals Into IPL 2026 Playoffs",
       "Vietnam&#39;s Dien May Xanh Cleared for $545 Million IPO"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-25",
+    "headlines": [
+      "Russia Launches Year&#39;s Biggest Missile Attack on Ukraine; Belarus Tensions Mount",
+      "US and Iran Edge Toward Nuclear Deal as Trump Cites Progress but Flags Remaining Gaps",
+      "VT Markets Adds 39 US Stocks and ETFs, Expanding Into AI, Space, and Energy"
     ],
     "sent": 13
   }

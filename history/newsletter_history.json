@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-05-18",
-    "headlines": [
-      "WHO Declares Global Emergency as Ebola Spreads Across Congo and Uganda",
-      "Turkish Flotilla Hours From Israel as Netanyahu Convenes Security Talks",
-      "Robert Gates: Iran Controls Hormuz and China&#39;s Taiwan Window May Be Narrowing",
-      "NextEra to Swallow Dominion Energy in $67 Billion Mega-Deal",
-      "Futures Slip as Oil Climbs and Trump Warns Iran &#8212; Again",
-      "$4 Billion Bet on Self-Improving AI Lands Top Researchers",
-      "AI Cyberattackers Are Getting Better, Faster &#8212; and the Gap Is Widening",
-      "OpenAI Open-Sources Symphony, a New Standard for Autonomous Coding Agents",
-      "Modena Car Attack Reignites Italy&#39;s Migration and Integration Debate",
-      "More Than 80 Children Missing After Militant Attacks on Nigerian Schools"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-19",
     "headlines": [
       "Russia Conducts Nuclear Force Drills as Ukraine Escalates Long- and Mid-Range Strikes",
@@ -85,6 +69,17 @@
       "Russia Launches Year&#39;s Biggest Missile Attack on Ukraine; Belarus Tensions Mount",
       "US and Iran Edge Toward Nuclear Deal as Trump Cites Progress but Flags Remaining Gaps",
       "VT Markets Adds 39 US Stocks and ETFs, Expanding Into AI, Space, and Energy"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-26",
+    "headlines": [
+      "Asian Markets Mixed as US Strikes in Southern Iran Rattle Oil Prices",
+      "North Korea Fires Ballistic Missile and Other Weapons Into the Sea",
+      "Quad Ministers Meet in New Delhi, Announce Port Project and Critical Minerals Pact",
+      "AI Natives Enter the Workforce as Companies Race to Build AI-Competent Teams",
+      "Unilever Deploys AI Across R&amp;D to Sharpen Edge in Competitive Beauty Market"
     ],
     "sent": 13
   }

@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-05-19",
-    "headlines": [
-      "Russia Conducts Nuclear Force Drills as Ukraine Escalates Long- and Mid-Range Strikes",
-      "Israeli Navy Intercepts Six More Flotilla Vessels Bound for Gaza",
-      "Putin Declares Russia-China Ties at &#39;Unprecedented Level&#39; Ahead of Beijing Visit",
-      "Global Shares Trade Mixed as Oil Price Volatility Drags Down Asian Markets",
-      "Migrant Mandatory Detention Policy Heads Toward Supreme Court Showdown",
-      "AI Mispronounces and Forgets Names at Glendale College Graduation, President Booed",
-      "AI and Automation Gain Ground in Australian On-Farm Decision-Making",
-      "US Stocks Pull Back Further From Record Highs"
-    ],
-    "sent": 0
-  },
-  {
     "date": "2026-05-20",
     "headlines": [
       "Putin and Xi Declare Ties &#8220;Unprecedented&#8221; &#8212; But the World Is Watching",
@@ -80,6 +66,18 @@
       "Quad Ministers Meet in New Delhi, Announce Port Project and Critical Minerals Pact",
       "AI Natives Enter the Workforce as Companies Race to Build AI-Competent Teams",
       "Unilever Deploys AI Across R&amp;D to Sharpen Edge in Competitive Beauty Market"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-27",
+    "headlines": [
+      "Israel Says It Killed New Hamas Military Chief in Gaza",
+      "DeepMind&#39;s Demis Hassabis Says AI Could Make a Postgrad as Productive as an Entire Lab",
+      "Enterprise Technology Association Launches AIReadyAmerica.org to Close AI Skills Gap",
+      "SecurityWeek to Host 2026 AI Risk Summit August 11&#8211;12 in Half Moon Bay, California",
+      "Wall Street Holds Near Records as Oil Falls; Goldman Raises S&amp;P 500 Target to 8,000",
+      "Israel&#39;s School System Under Strain After Years of COVID, War, and Division"
     ],
     "sent": 13
   }

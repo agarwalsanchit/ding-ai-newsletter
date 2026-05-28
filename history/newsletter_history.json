@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-05-20",
-    "headlines": [
-      "Putin and Xi Declare Ties &#8220;Unprecedented&#8221; &#8212; But the World Is Watching",
-      "EU Strings $8 Billion in Ukraine Aid to Tax Reform Demands",
-      "All Eyes on Nvidia as Dow Slips and Bond Selloff Cools",
-      "Trump&#39;s Rickshaws Roll Through New Delhi Ahead of America&#39;s 250th",
-      "AI Learns to Watch for Whales in San Francisco Bay",
-      "Nvidia Opens Singapore Research Hub as City&#8212;State Doubles Down on AI",
-      "Nature Publishes AI System That Writes Expert Scientific Software",
-      "Class of 2026 Enters a Job Market Their Parents Would Recognize &#8212; Painfully",
-      "Southern California Wildfire Threatens Thousands as Evacuations Expand"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-21",
     "headlines": [
       "Anthropic Co-Founder Predicts AI Will Win a Nobel Prize Within a Year",
@@ -78,6 +63,16 @@
       "SecurityWeek to Host 2026 AI Risk Summit August 11&#8211;12 in Half Moon Bay, California",
       "Wall Street Holds Near Records as Oil Falls; Goldman Raises S&amp;P 500 Target to 8,000",
       "Israel&#39;s School System Under Strain After Years of COVID, War, and Division"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-28",
+    "headlines": [
+      "S&amp;P 500 and Nasdaq Hit New All-Time Highs as Inflation Data Comes in Softer Than Expected",
+      "Zelenskyy Presses US for More Patriot Missiles During Sweden Visit",
+      "Japanese Robotics Developers Showcase Humanoids at Tokyo Summit, Aiming to Rival China",
+      "Cubs End 10-Game Losing Streak with 10-4 Win Over Pirates, Powered by Ian Happ&#39;s 5 RBIs"
     ],
     "sent": 13
   }

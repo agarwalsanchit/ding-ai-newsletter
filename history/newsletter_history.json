@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-05-21",
-    "headlines": [
-      "Anthropic Co-Founder Predicts AI Will Win a Nobel Prize Within a Year",
-      "Xi and Putin Meet in Beijing, Declare Ties at Record High",
-      "AI &#39;Sabotage&#39; Threat and Competitiveness Anxieties Dominate European Research Agenda",
-      "South Africa Nominates Five Universities for Presidential PhD Programme Amid Funding Shortfall"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-22",
     "headlines": [
       "Wall Street Cruises Toward Eight Straight Winning Weeks as Bond Pressure Eases",
@@ -73,6 +63,15 @@
       "Zelenskyy Presses US for More Patriot Missiles During Sweden Visit",
       "Japanese Robotics Developers Showcase Humanoids at Tokyo Summit, Aiming to Rival China",
       "Cubs End 10-Game Losing Streak with 10-4 Win Over Pirates, Powered by Ian Happ&#39;s 5 RBIs"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-29",
+    "headlines": [
+      "Putin Signals Escalation as Ukraine Stalemate Deepens; Zelensky Warns of Large-Scale Russian Attack",
+      "Shangri-La Dialogue Opens in Singapore with China and US Reliability Dominating the Agenda",
+      "AI Deployment Accelerates Across Finance and Retail in May 2026, From BBVA-OpenAI to Humanoid Robots and Agentic Coaches"
     ],
     "sent": 13
   }

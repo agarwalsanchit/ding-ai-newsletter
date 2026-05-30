@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-05-22",
-    "headlines": [
-      "Wall Street Cruises Toward Eight Straight Winning Weeks as Bond Pressure Eases",
-      "Nvidia Gets a &#34;Yawn&#34; &#8212; Then the Rally Resumes Anyway",
-      "Est&#233;e Lauder and Puig Perfume Marriage Called Off",
-      "Iran War Uncertainty Keeps Oil Markets on Edge, Asia Rattled",
-      "Ukraine Steps Up Deep-Strike Campaign, Hitting Russian Refinery",
-      "Quad Foreign Ministers Set to Convene in New Delhi",
-      "Trump Pumps the Brakes on White House AI Executive Order",
-      "Google&#8217;s AI Mode Ads Arrive&#8212;and Brands Are Nervous"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-24",
     "headlines": [
       "Russia Pounds Kyiv with Missiles and Drones, Injuring 10",
@@ -72,6 +58,15 @@
       "Putin Signals Escalation as Ukraine Stalemate Deepens; Zelensky Warns of Large-Scale Russian Attack",
       "Shangri-La Dialogue Opens in Singapore with China and US Reliability Dominating the Agenda",
       "AI Deployment Accelerates Across Finance and Retail in May 2026, From BBVA-OpenAI to Humanoid Robots and Agentic Coaches"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-05-30",
+    "headlines": [
+      "AUKUS Trilateral Pact Advances Unmanned Undersea Vehicle Development, Pentagon Chief Confirms",
+      "The Atlantic: Autonomous AI Agents Are Eroding Humans&#39; Sense of Control Online",
+      "Berkshire Hathaway Trails S&amp;P 500 by Its Largest Gap of 2026; BNSF Railroad Merger Review Paused"
     ],
     "sent": 13
   }

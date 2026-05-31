@@ -640,12 +640,17 @@ Input articles for {date}:
 
 
 def generate_brief(claude_client, db, today_str: str) -> bool:
-    """Generate the daily brief from today's approved articles. Returns True on success."""
+    """Generate the daily brief from the deck's approved articles. Returns True on success.
+
+    Uses the same today+yesterday window as the deck (page.tsx) and the
+    newsletter, so the brief summarizes exactly the stories a reader will see.
+    """
+    window_start = (date.today() - timedelta(days=1)).isoformat()
     try:
         approved = (
             db.table("approved_articles")
             .select("id, topic, title, balanced_summary, why_it_matters, score_importance, score_urgency, score_interest")
-            .eq("article_date", today_str)
+            .gte("article_date", window_start)
             .order("rank_score", desc=True)
             .limit(10)
             .execute()

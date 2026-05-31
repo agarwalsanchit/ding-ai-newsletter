@@ -5,28 +5,34 @@ import Deck from '@/components/deck/Deck';
 export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  // Always show today's content only. Vercel runs in UTC; pipeline stamps
-  // article_date from Pacific time (TZ=America/Los_Angeles in GH Actions).
-  // Use the pipeline's timezone so dates align.
-  const today = new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/Los_Angeles',
-  }).format(new Date()); // → "YYYY-MM-DD"
+  // "Morning brief" window: today + yesterday (Pacific). DING is a daily
+  // curated brief, not a realtime feed — most stories fetched at 8 AM PT were
+  // published the previous day, so a today-only filter hid almost everything
+  // (article_date is stamped from the story's publish date). A 2-day window
+  // surfaces well-curated day-1 news and is resilient to late pipeline runs.
+  // Vercel runs in UTC; pipeline stamps article_date in Pacific
+  // (TZ=America/Los_Angeles in GH Actions), so we compute dates in that zone.
+  const fmtPacific = (d: Date) =>
+    new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(d); // → "YYYY-MM-DD"
+  const windowStart = fmtPacific(new Date(Date.now() - 24 * 60 * 60 * 1000)); // yesterday (PT)
 
-  // Fetch today's approved brief (null if not yet generated/approved)
+  // Fetch the most recent approved brief in the window (today's if it exists,
+  // otherwise yesterday's — so a late/missing run still opens with a brief).
   const { data: briefData } = await supabase
     .from('daily_briefs')
     .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
     .not('approved_at', 'is', null)
-    .eq('brief_date', today)
-    .maybeSingle();
+    .gte('brief_date', windowStart)
+    .order('brief_date', { ascending: false })
+    .limit(1);
 
-  const brief = briefData as DailyBrief | null;
+  const brief = ((briefData?.[0] ?? null) as DailyBrief | null);
 
-  // Fetch today's approved articles
+  // Fetch approved articles in the window (today + yesterday)
   const { data: approvedData, error: articlesError } = await supabase
     .from('approved_articles')
     .select('*')
-    .eq('article_date', today)
+    .gte('article_date', windowStart)
     .order('rank_score', { ascending: false })
     .limit(10);
 
@@ -43,7 +49,7 @@ export default async function HomePage() {
       'id, topic, article_date, title, article_brief, balanced_summary, detail_summary, ' +
       'why_it_matters, score_importance, score_urgency, score_interest, source_urls'
     )
-    .eq('article_date', today)
+    .gte('article_date', windowStart)
     .eq('status', 'pending')
     .gte('ai_confidence_factual', 4)
     .gte('ai_confidence_on_topic', 4)

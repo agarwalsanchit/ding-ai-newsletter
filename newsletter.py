@@ -176,6 +176,137 @@ def build_news_context(articles_by_section: dict) -> str:
             context += f"- **{title}** ({pub_date})\n  {snippet}\n  Source: {url}\n"
     return context
 
+# ── Supabase persistence ──────────────────────────────────────────────────────
+def persist_fetched_articles(articles_by_section: dict) -> list:
+    """Insert one pending article row per Tavily result into the articles table.
+
+    articles_by_section shape (from search_news / main Step 2):
+        {
+            "🚨 Top News": [
+                {
+                    "url":            "https://reuters.com/...",
+                    "title":          "...",
+                    "content":        "...",   # up to ~1000 chars
+                    "published_date": "Tue, 12 May 2026 18:07:50 GMT",  # RFC 2822
+                    "score":          0.47,    # Tavily relevance, not stored
+                },
+                ...  # up to 6 per section
+            ],
+            "🌍 Geopolitics & World Affairs": [...],
+            ...  # 6 sections total
+        }
+
+    Returns a list of inserted article UUIDs (strings). Articles skipped by
+    URL dedup are not included. DB errors per-article are logged and skipped —
+    we never let a persistence failure break the newsletter send.
+    """
+    supabase_url = os.environ.get("SUPABASE_URL", "")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+    if not supabase_url or not supabase_key:
+        logging.warning("SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not set — skipping persistence.")
+        return []
+
+    db = create_client(supabase_url, supabase_key)
+
+    # ── Build URL dedup set: URLs we fetched in the last 7 days ─────────────────
+    # Use fetched_at (when WE saw the article), not article_date (when it was
+    # originally published). A republished old article would have an old
+    # article_date and escape a date-based window; fetched_at catches it.
+    # fetched_at is timestamptz so the cutoff must be a full ISO timestamp.
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+    try:
+        # TODO: scales to ~2K rows by day 60. Move to a SQL function with
+        # `SELECT DISTINCT unnest(source_urls) WHERE fetched_at > $1` if slow.
+        # Fine at beta scale.
+        existing = db.table("articles").select("source_urls").gte("fetched_at", cutoff).execute()
+        seen_urls: set = set()
+        for row in existing.data:
+            for url in (row.get("source_urls") or []):
+                seen_urls.add(url)
+        logging.info("Dedup set: %d URLs seen in last 7 days.", len(seen_urls))
+    except Exception as exc:
+        logging.error("Failed to fetch existing URLs for dedup: %s — skipping dedup.", exc)
+        seen_urls = set()
+
+    # ── Cache source_id lookups: topic label → uuid ────────────────────────────
+    source_id_cache: dict = {}
+
+    def get_source_id(topic: str):
+        if topic in source_id_cache:
+            return source_id_cache[topic]
+        try:
+            result = db.table("sources").select("id").eq("topic", topic).execute()
+            if result.data:
+                source_id_cache[topic] = result.data[0]["id"]
+                return source_id_cache[topic]
+            logging.warning("No sources row found for topic %r — articles will be skipped.", topic)
+            return None
+        except Exception as exc:
+            logging.error("Failed to look up source_id for topic %r: %s", topic, exc)
+            return None
+
+    # ── Insert ─────────────────────────────────────────────────────────────────
+    inserted_ids: list = []
+    total = deduped = errors = 0
+
+    for topic, articles in articles_by_section.items():
+        source_id = get_source_id(topic)
+        for article in articles:
+            total += 1
+            url = article.get("url", "")
+
+            # Tavily score floor: skip low-relevance results (video listings,
+            # aggregator pages, etc.) before touching the DB.
+            if article.get("score", 1.0) < 0.4:
+                logging.info("  SKIP (low score %.2f): %s", article.get("score", 0), url)
+                deduped += 1
+                continue
+
+            # URL dedup
+            if url in seen_urls:
+                logging.info("  SKIP (dedup): %s", url)
+                deduped += 1
+                continue
+
+            # Parse RFC 2822 published_date → date
+            raw_date = article.get("published_date", "")
+            try:
+                article_date = parsedate_to_datetime(raw_date).date().isoformat()
+            except Exception:
+                article_date = date.today().isoformat()
+                logging.warning("  Could not parse date %r for %s — using today.", raw_date, url)
+
+            row = {
+                "source_id":   source_id,
+                "source_urls": [url],
+                "topic":       topic,
+                "article_date": article_date,
+                "status":      "pending",
+                # All Claude-generated fields (title, balanced_summary, etc.) are
+                # NULL at fetch time — they are populated in Phase 2 Step 2.4.
+            }
+
+            if source_id is None:
+                logging.warning("  SKIP (no source_id): %s", url)
+                errors += 1
+                continue
+
+            try:
+                result = db.table("articles").insert(row).execute()
+                new_id = result.data[0]["id"]
+                inserted_ids.append(new_id)
+                seen_urls.add(url)  # skip if same URL appears in another topic's results this run
+                logging.info("  INSERT %s → %s", url[:80], new_id)
+            except Exception as exc:
+                logging.error("  FAIL inserting %s: %s", url, exc)
+                errors += 1
+
+    logging.info(
+        "persist_fetched_articles: %d total | %d inserted | %d deduped | %d errors",
+        total, len(inserted_ids), deduped, errors,
+    )
+    return inserted_ids
+
 
 # ── Newsletter generation ─────────────────────────────────────────────────────
 NEWSLETTER_PROMPT = """You are the DING.AI newsletter engine. Today is {today}.
@@ -725,16 +856,7 @@ def generate_newsletter_from_approved(db, claude_client, today_str: str, send_mo
     Returns dict with 'subject' and 'html' keys, or None if not enough approved
     articles exist (caller should fall back to generate_newsletter()).
     """
-    # Morning-brief window: today + yesterday. article_date is the story's
-    # publish date, and most stories fetched at 8 AM PT were published the day
-    # before — a today-only filter starved the email (and the app), forcing the
-    # emergency one-shot fallback to fire every day. The 2-day window lets the
-    # pipeline path actually carry the newsletter, matching the deck (page.tsx).
-    window_start = (date.today() - timedelta(days=1)).isoformat()
-
-    # Step 1: Read approved articles in the window, ordered by rank_score DESC.
-    # published_at IS NULL keeps the send idempotent — stories emailed yesterday
-    # are not re-sent today even though they remain in the window.
+    # Step 1: Read approved articles for today, ordered by rank_score DESC
     try:
         result = (
             db.table("approved_articles")
@@ -743,7 +865,7 @@ def generate_newsletter_from_approved(db, claude_client, today_str: str, send_mo
                 "score_importance, score_urgency, score_interest, "
                 "rank_score, source_urls, article_date"
             )
-            .gte("article_date", window_start)
+            .eq("article_date", today_str)
             .is_("published_at", "null")
             .order("rank_score", desc=True)
             .limit(10)
@@ -768,10 +890,8 @@ def generate_newsletter_from_approved(db, claude_client, today_str: str, send_mo
         brief_result = (
             db.table("daily_briefs")
             .select("brief_body")
-            .gte("brief_date", window_start)
+            .eq("brief_date", today_str)
             .not_.is_("approved_at", "null")
-            .order("brief_date", desc=True)
-            .limit(1)
             .execute()
         )
         if brief_result.data:
@@ -818,7 +938,7 @@ def generate_newsletter_from_approved(db, claude_client, today_str: str, send_mo
                 "score_importance, score_urgency, score_interest, "
                 "ai_confidence_factual, ai_confidence_on_topic, ai_confidence_source"
             )
-            .gte("article_date", window_start)
+            .eq("article_date", today_str)
             .eq("status", "pending")
             .gte("ai_confidence_factual", 4)
             .gte("ai_confidence_on_topic", 4)
@@ -938,23 +1058,33 @@ def main():
         print(f"❌ Missing required environment variables: {', '.join(missing)}")
         sys.exit(1)
 
-    # Init Claude client. Tavily is only needed for the emergency parachute
-    # below, so it is created lazily inside that branch.
+    # Init clients
     claude_client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+    tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
 
-    # Step 1: Load history (used only by the emergency one-shot parachute)
+    # Step 1: Load history
     print("📂 Loading headline history…")
     history          = load_history()
     recent_headlines = get_recent_headlines(history)
     print(f"  Found {len(recent_headlines)} recent headlines for deduplication")
 
-    # Step 2: Render from the pipeline's approved articles.
-    # pipeline.py is the single fetch+process pipeline. newsletter.py no longer
-    # fetches or persists news of its own — doing so created a second, divergent
-    # pipeline that quietly took over (the approved path almost never had enough
-    # today-dated articles, so the one-shot fell through every day). Now the
-    # email lays out exactly what pipeline.py approved, so the email and the app
-    # deck show the same stories.
+    # Step 2: Fetch news
+    print("\n🔍 Fetching news via Tavily…")
+    articles_by_section: dict = {}
+    today_month_year = date.today().strftime("%B %Y")
+    for section_name, query in SECTIONS:
+        full_query = f"{query} {today_month_year}"
+        print(f"  Searching: {section_name}…")
+        articles_by_section[section_name] = search_news(tavily_client, full_query)
+        print(f"  → {len(articles_by_section[section_name])} articles found")
+
+    news_context = build_news_context(articles_by_section)
+
+    # Step 2b: Persist fetched articles to Supabase (Phase 2.2)
+    # Runs after build_news_context so a DB failure never blocks the newsletter.
+    persist_fetched_articles(articles_by_section)
+
+    # Step 3: Generate newsletter — prefer approved-articles path when available
     print()
     result = None
     supabase_url = os.environ.get("SUPABASE_URL", "")
@@ -967,26 +1097,11 @@ def main():
             if result:
                 print("✅ Using approved-articles newsletter (pipeline path).")
         except Exception as exc:
-            logging.warning("Approved-articles path failed: %s", exc)
+            logging.warning("Approved-articles path failed: %s — falling back.", exc)
             result = None
-    else:
-        logging.warning("SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY not set — cannot use pipeline path.")
 
-    # Emergency parachute: only if the pipeline produced nothing usable today.
-    # This is the legacy one-shot generator (fetch + write in a single Claude
-    # call). It should fire rarely; if it fires regularly, pipeline.py isn't
-    # populating approved_articles and that is the real problem to fix.
     if result is None:
-        print("⚠️  No usable pipeline content — running EMERGENCY one-shot newsletter.")
-        tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
-        articles_by_section: dict = {}
-        today_month_year = date.today().strftime("%B %Y")
-        print("🔍 Emergency fetch via Tavily…")
-        for section_name, query in SECTIONS:
-            full_query = f"{query} {today_month_year}"
-            articles_by_section[section_name] = search_news(tavily_client, full_query)
-            print(f"  {section_name}: {len(articles_by_section[section_name])} articles")
-        news_context = build_news_context(articles_by_section)
+        print("📰 Falling back to single-call newsletter generation…")
         result = generate_newsletter(claude_client, news_context, recent_headlines)
 
     html    = result["html"]

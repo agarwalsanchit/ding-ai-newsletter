@@ -89,10 +89,43 @@ export default async function HomePage() {
       };
     });
 
-  // Merge approved + high-confidence pending, sort by rank_score, cap at 10
-  const articles = [...approvedArticles, ...pendingArticles]
-    .sort((a, b) => b.rank_score - a.rank_score)
-    .slice(0, 10);
+  // Merge approved + high-confidence pending, then build the deck with topic
+  // diversity. A flat rank_score top-10 lets a prolific category (finance
+  // produces many high-urgency stories daily) crowd out single big events in
+  // quieter-scoring categories (e.g. a Champions League final scores high on
+  // interest but only moderate on global "importance", which is double-weighted
+  // in rank_score). So we cap each topic on a first pass, then backfill by rank
+  // to fill the deck — no single topic floods it, but we never under-fill.
+  const DECK_SIZE = 10;
+  const PER_TOPIC_CAP = 2;
+  const ranked = [...approvedArticles, ...pendingArticles].sort(
+    (a, b) => b.rank_score - a.rank_score
+  );
+
+  const deck: ApprovedArticle[] = [];
+  const perTopicCount = new Map<string, number>();
+  const leftovers: ApprovedArticle[] = [];
+
+  // Pass 1: take up to PER_TOPIC_CAP of each topic, in rank order.
+  for (const a of ranked) {
+    const key = a.topic ?? 'untagged';
+    const n = perTopicCount.get(key) ?? 0;
+    if (n < PER_TOPIC_CAP && deck.length < DECK_SIZE) {
+      deck.push(a);
+      perTopicCount.set(key, n + 1);
+    } else {
+      leftovers.push(a);
+    }
+  }
+
+  // Pass 2: backfill remaining slots with the next-highest-ranked regardless of
+  // topic, so a slow news day with few topics still fills the deck.
+  for (const a of leftovers) {
+    if (deck.length >= DECK_SIZE) break;
+    deck.push(a);
+  }
+
+  const articles = deck;
 
   // Translations only exist for approved articles
   let translations: TranslationMap = {};

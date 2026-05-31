@@ -39,7 +39,7 @@ SECTIONS = [
     ("🌍 Geopolitics & World Affairs", "geopolitics international conflict diplomacy world news today"),
     ("💼 Business & Finance",          "stock market economy business earnings finance news today"),
     ("🔬 Science & Technology",        "AI artificial intelligence science technology innovation research news today"),
-    ("🎾 Sports & Entertainment",      "Premier League La Liga IPL cricket NFL F1 tennis Grand Slam sports news results today site:apnews.com OR site:reuters.com OR site:bbc.com OR site:espn.com/story"),
+    ("🎾 Sports & Entertainment",      "Champions League UEFA final Premier League La Liga IPL cricket NBA NFL F1 tennis Grand Slam major sports result news today"),
     ("🏛 Society & Culture",           "society culture politics social trends education news today"),
 ]
 
@@ -59,7 +59,10 @@ BLOCKED_URL_PATTERNS = [
     "newsworthy-for-",          # WFAE newsworthy podcast
     "the-bulletin-may",         # Newsweek daily video bulletins
     "photo-gallery",            # AP photo galleries
-    "/espn/story/",             # ESPN live sport blogs (score-only)
+    # NOTE: /espn/story/ was removed from the blocklist — it is ESPN's primary
+    # article path (match reports, recaps), not just live score blogs, so
+    # blocking it dropped most legitimate sports coverage. Score-only pages are
+    # still caught by the boxscore/live-score/live_score patterns above.
 ]
 
 # Claude Sonnet 4.6 pricing (per million tokens)
@@ -620,7 +623,10 @@ Produce a JSON object with these fields:
   curator addressing a friend, not a wire service.
 
 - "transition_line": one short line that hands off to the article cards. \
-  Mention the count. Example: "8 stories ahead. Let's get into it."
+  Do NOT state a number of stories — the deck is assembled dynamically (it \
+  merges in late high-confidence stories), so any hard count you write will \
+  be wrong by the time the reader sees it. Write a count-free handoff. \
+  Examples: "Here's the day ahead." / "Let's get into it." / "Today's deck."
 
 - "topic_chips": array of topic names that appear in today's deck, in the \
   order they'll appear. No duplicates.

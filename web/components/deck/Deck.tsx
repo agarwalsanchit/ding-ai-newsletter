@@ -139,9 +139,37 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
     }),
   };
 
+  // Deck progress: 0 at the brief, 1 at the end card. Drives the top bar so the
+  // reader always knows how far through the morning deck they are.
+  const progress = totalCards > 1 ? currentIndex / (totalCards - 1) : 0;
+
   return (
     <>
       {showSplash && <SplashScreen onDone={dismissSplash} />}
+
+      {/* Top progress bar */}
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 'calc(env(safe-area-inset-top, 0px) + 3px)',
+          background: 'var(--divider)',
+          zIndex: 40,
+          pointerEvents: 'none',
+        }}
+      >
+        <div
+          style={{
+            height: '100%',
+            width: `${Math.round(progress * 100)}%`,
+            background: 'var(--accent)',
+            transition: 'width 0.38s cubic-bezier(0.25, 0.1, 0.25, 1)',
+          }}
+        />
+      </div>
 
       <div style={{ position: 'relative', overflow: 'hidden', height: '100dvh', width: '100%' }}>
         <AnimatePresence initial={false} custom={direction} mode="wait">

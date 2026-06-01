@@ -5,6 +5,7 @@ import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { ApprovedArticle, Translation } from '@/lib/types';
 import { Language } from '@/lib/hooks/useLanguage';
 import LanguageToggle from './LanguageToggle';
+import ShareButton from './ShareButton';
 
 function extractDomain(url: string): string {
   try {
@@ -133,6 +134,16 @@ export default function DetailView({
                   <LanguageToggle lang={lang} onToggle={onToggleLang} />
                 </div>
               )}
+              <div
+                style={{
+                  position: 'absolute',
+                  right: '44px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                }}
+              >
+                <ShareButton title={article.title} url={article.source_urls[0]} />
+              </div>
               <button
                 onClick={onClose}
                 style={{

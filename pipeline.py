@@ -33,6 +33,12 @@ TAVILY_API_KEY    = os.environ.get("TAVILY_API_KEY")
 SUPABASE_URL      = os.environ.get("SUPABASE_URL", "")
 SUPABASE_KEY      = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
 
+# Optional: on-demand revalidation of the PWA after a run. Set both to enable.
+#   REVALIDATE_URL    — e.g. https://your-app.vercel.app/api/revalidate
+#   REVALIDATE_SECRET — must match REVALIDATE_SECRET in the Vercel project env
+REVALIDATE_URL    = os.environ.get("REVALIDATE_URL", "")
+REVALIDATE_SECRET = os.environ.get("REVALIDATE_SECRET", "")
+
 HISTORY_FILE = "history/newsletter_history.json"
 
 SECTIONS = [
@@ -760,6 +766,32 @@ def generate_brief(claude_client, db, today_str: str) -> bool:
         return False
 
 
+# ── PWA revalidation ────────────────────────────────────────────────────────
+def ping_revalidate() -> None:
+    """Tell the PWA to refresh its cached home page now (on-demand ISR).
+
+    No-op unless REVALIDATE_URL and REVALIDATE_SECRET are both set. Best-effort:
+    any failure is logged and swallowed so it can never fail the pipeline.
+    """
+    if not (REVALIDATE_URL and REVALIDATE_SECRET):
+        logging.info("Revalidate skipped (REVALIDATE_URL/SECRET not set).")
+        return
+    import urllib.request
+    import urllib.error
+
+    req = urllib.request.Request(
+        REVALIDATE_URL,
+        data=b"",  # POST
+        headers={"x-revalidate-secret": REVALIDATE_SECRET},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            logging.info("Revalidate ping → HTTP %s", resp.status)
+    except Exception as exc:
+        logging.warning("Revalidate ping failed (non-fatal): %s", exc)
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     print(f"\n{'='*60}")
@@ -873,6 +905,10 @@ def main():
         print("  Brief generated successfully.")
     else:
         print("  Brief generation skipped or failed (check logs).")
+
+    # Step 8: Nudge the PWA to refresh its cached page now (no-op if unset).
+    print("\nRevalidating PWA…")
+    ping_revalidate()
 
     print(f"\n{'='*60}")
     print(f"  Pipeline complete for {today_str}")

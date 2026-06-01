@@ -1,6 +1,7 @@
 import { ApprovedArticle, Translation } from '@/lib/types';
 import { Language } from '@/lib/hooks/useLanguage';
 import LanguageToggle from './LanguageToggle';
+import ShareButton from './ShareButton';
 
 function formatArticleDate(dateStr: string): string {
   const [year, month, day] = dateStr.split('-').map(Number);
@@ -129,7 +130,10 @@ export default function ArticleCard({
             )}
           </p>
 
-          {hasTranslation && <LanguageToggle lang={lang} onToggle={onToggleLang} />}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+            {hasTranslation && <LanguageToggle lang={lang} onToggle={onToggleLang} />}
+            <ShareButton title={article.title} url={article.source_urls[0]} />
+          </div>
         </div>
 
         {/* Tappable body */}

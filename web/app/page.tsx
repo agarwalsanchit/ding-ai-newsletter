@@ -2,7 +2,14 @@ import { supabase } from '@/lib/supabase';
 import { ApprovedArticle, DailyBrief, Translation, TranslationMap } from '@/lib/types';
 import Deck from '@/components/deck/Deck';
 
-export const dynamic = 'force-dynamic';
+// ISR: the deck changes once a day (~8 AM PT), so we don't pay live-query
+// latency on every visit. Pages serve instantly from cache and Next refreshes
+// in the background at most every 15 min. The pipeline also pings
+// /api/revalidate at the end of its run, so a fresh deck appears the moment new
+// data lands rather than waiting for the timer. (windowStart is recomputed on
+// each revalidation, so the Pacific day-window stays correct within ~15 min of
+// midnight.)
+export const revalidate = 900;
 
 export default async function HomePage() {
   // "Morning brief" window: today + yesterday (Pacific). DING is a daily
@@ -16,45 +23,49 @@ export default async function HomePage() {
     new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' }).format(d); // → "YYYY-MM-DD"
   const windowStart = fmtPacific(new Date(Date.now() - 24 * 60 * 60 * 1000)); // yesterday (PT)
 
-  // Fetch the most recent approved brief in the window (today's if it exists,
-  // otherwise yesterday's — so a late/missing run still opens with a brief).
-  const { data: briefData } = await supabase
-    .from('daily_briefs')
-    .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
-    .not('approved_at', 'is', null)
-    .gte('brief_date', windowStart)
-    .order('brief_date', { ascending: false })
-    .limit(1);
+  // These three reads are independent, so fire them together — one round-trip
+  // of latency instead of three sequential awaits. (translations depends on the
+  // approved-article ids, so it stays after this.)
+  const [briefRes, approvedRes, pendingRes] = await Promise.all([
+    // Most recent approved brief in the window (today's if it exists, otherwise
+    // yesterday's — so a late/missing run still opens with a brief).
+    supabase
+      .from('daily_briefs')
+      .select('id, brief_date, editorial_opener, brief_body, transition_line, topic_chips, approved_at')
+      .not('approved_at', 'is', null)
+      .gte('brief_date', windowStart)
+      .order('brief_date', { ascending: false })
+      .limit(1),
+    // Approved articles in the window (today + yesterday).
+    supabase
+      .from('approved_articles')
+      .select('*')
+      .gte('article_date', windowStart)
+      .order('rank_score', { ascending: false })
+      .limit(10),
+    // High-confidence pending articles (ai_confidence >= 4 on all axes).
+    supabase
+      .from('articles')
+      .select(
+        'id, topic, article_date, title, article_brief, balanced_summary, detail_summary, ' +
+        'why_it_matters, score_importance, score_urgency, score_interest, source_urls'
+      )
+      .gte('article_date', windowStart)
+      .eq('status', 'pending')
+      .gte('ai_confidence_factual', 4)
+      .gte('ai_confidence_on_topic', 4)
+      .gte('ai_confidence_source', 4)
+      .not('title', 'is', null),
+  ]);
 
-  const brief = ((briefData?.[0] ?? null) as DailyBrief | null);
+  const brief = ((briefRes.data?.[0] ?? null) as DailyBrief | null);
 
-  // Fetch approved articles in the window (today + yesterday)
-  const { data: approvedData, error: articlesError } = await supabase
-    .from('approved_articles')
-    .select('*')
-    .gte('article_date', windowStart)
-    .order('rank_score', { ascending: false })
-    .limit(10);
-
-  if (articlesError) {
-    console.error('[DING] Failed to fetch approved_articles:', articlesError);
+  if (approvedRes.error) {
+    console.error('[DING] Failed to fetch approved_articles:', approvedRes.error);
   }
+  const approvedArticles = (approvedRes.data ?? []) as ApprovedArticle[];
 
-  const approvedArticles = (approvedData ?? []) as ApprovedArticle[];
-
-  // Fetch today's high-confidence pending articles (ai_confidence >= 4 on all axes)
-  const { data: pendingData } = await supabase
-    .from('articles')
-    .select(
-      'id, topic, article_date, title, article_brief, balanced_summary, detail_summary, ' +
-      'why_it_matters, score_importance, score_urgency, score_interest, source_urls'
-    )
-    .gte('article_date', windowStart)
-    .eq('status', 'pending')
-    .gte('ai_confidence_factual', 4)
-    .gte('ai_confidence_on_topic', 4)
-    .gte('ai_confidence_source', 4)
-    .not('title', 'is', null);
+  const pendingData = pendingRes.data;
 
   // Exclude articles already promoted to approved_articles
   const approvedArticleIds = new Set(approvedArticles.map((a) => a.article_id));

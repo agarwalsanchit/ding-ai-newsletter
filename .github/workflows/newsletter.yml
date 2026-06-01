@@ -53,6 +53,10 @@ jobs:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # On-demand ISR: ping the PWA to refresh the home page the moment the
+          # new deck lands (URL is public; only the secret is sensitive).
+          REVALIDATE_URL: https://ding-ai-newsletter.vercel.app/api/revalidate
+          REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
         run: python pipeline.py
 
       - name: Run newsletter engine

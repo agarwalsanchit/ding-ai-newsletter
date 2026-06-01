@@ -5,3 +5,10 @@ __pycache__/
 supabase.env
 .venv/
 *.csv
+
+# Editor / agent session dirs
+.claude/
+
+# Local dev scratch scripts (not part of the pipeline)
+inspect_tavily.py
+scripts:test_supabase.py

@@ -12,10 +12,11 @@ function formatBriefDate(dateStr: string): string {
 interface BriefCardProps {
   brief: DailyBrief | null;
   articleCount: number;
+  loadError?: boolean;
   onOpenSettings: () => void;
 }
 
-export default function BriefCard({ brief, articleCount, onOpenSettings }: BriefCardProps) {
+export default function BriefCard({ brief, articleCount, loadError = false, onOpenSettings }: BriefCardProps) {
   const isEmpty = articleCount === 0;
   const dateLabel = brief
     ? formatBriefDate(brief.brief_date)
@@ -104,17 +105,31 @@ export default function BriefCard({ brief, articleCount, onOpenSettings }: Brief
       </h1>
 
       {isEmpty ? (
-        /* No articles yet today */
-        <p
-          style={{
-            fontFamily: 'var(--font-sans)',
-            fontSize: '16px',
-            lineHeight: 1.6,
-            color: 'var(--muted)',
-          }}
-        >
-          Today&apos;s deck isn&apos;t ready yet.{'\n'}Check back after 8 AM Pacific.
-        </p>
+        loadError ? (
+          /* Fetch actually failed — distinct from a quiet news morning */
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '16px',
+              lineHeight: 1.6,
+              color: 'var(--muted)',
+            }}
+          >
+            Couldn&apos;t load today&apos;s deck.{'\n'}Pull down to refresh, or try again in a moment.
+          </p>
+        ) : (
+          /* No articles yet today */
+          <p
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '16px',
+              lineHeight: 1.6,
+              color: 'var(--muted)',
+            }}
+          >
+            Today&apos;s deck isn&apos;t ready yet.{'\n'}Check back after 8 AM Pacific.
+          </p>
+        )
       ) : (
         <>
           {/* Brief body */}

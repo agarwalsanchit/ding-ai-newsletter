@@ -138,6 +138,12 @@ export default async function HomePage() {
 
   const articles = deck;
 
+  // Distinguish a real fetch failure from a genuinely empty deck, so the brief
+  // card can show "couldn't load, retry" instead of the benign "not ready yet"
+  // when Supabase actually errored and left us with nothing to show.
+  const loadError =
+    !!(briefRes.error || approvedRes.error || pendingRes.error) && articles.length === 0;
+
   // Translations only exist for approved articles
   let translations: TranslationMap = {};
   if (approvedArticles.length > 0) {
@@ -156,5 +162,5 @@ export default async function HomePage() {
     }
   }
 
-  return <Deck brief={brief} articles={articles} translations={translations} />;
+  return <Deck brief={brief} articles={articles} translations={translations} loadError={loadError} />;
 }

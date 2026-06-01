@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { motion, AnimatePresence, PanInfo, useReducedMotion } from 'framer-motion';
 import { DailyBrief, ApprovedArticle, TranslationMap } from '@/lib/types';
 import { useLanguage } from '@/lib/hooks/useLanguage';
 import { useTopicPrefs } from '@/lib/hooks/useTopicPrefs';
@@ -19,6 +19,7 @@ interface DeckProps {
   brief: DailyBrief | null;
   articles: ApprovedArticle[];
   translations: TranslationMap;
+  loadError?: boolean;
 }
 
 function readHashIndex(): number {
@@ -28,7 +29,8 @@ function readHashIndex(): number {
   return parseInt(m[1], 10);
 }
 
-export default function Deck({ brief, articles, translations }: DeckProps) {
+export default function Deck({ brief, articles, translations, loadError = false }: DeckProps) {
+  const reduceMotion = useReducedMotion();
   // Phase 4: topic filtering
   const allTopics = useMemo(
     () => [...new Set(articles.map((a) => a.topic))],
@@ -97,8 +99,43 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
     [currentIndex, detailArticle, settingsOpen, goTo]
   );
 
-  const openDetail    = useCallback((a: ApprovedArticle) => setDetailArticle(a), []);
-  const closeDetail   = useCallback(() => setDetailArticle(null), []);
+  // Mirror overlay state into refs so the once-bound popstate handler always
+  // sees the latest values without re-subscribing.
+  const detailRef = useRef(detailArticle);
+  const settingsRef = useRef(settingsOpen);
+  useEffect(() => { detailRef.current = detailArticle; }, [detailArticle]);
+  useEffect(() => { settingsRef.current = settingsOpen; }, [settingsOpen]);
+
+  // Hardware/browser back button: close an open overlay instead of leaving the
+  // app. Opening an overlay pushes a history entry; back pops it and we close.
+  useEffect(() => {
+    const onPop = () => {
+      if (detailRef.current) setDetailArticle(null);
+      else if (settingsRef.current) setSettingsOpen(false);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  const openDetail = useCallback((a: ApprovedArticle) => {
+    window.history.pushState({ overlay: 'detail' }, '');
+    setDetailArticle(a);
+  }, []);
+  // Programmatic close (X, backdrop, swipe-down, Esc): pop the pushed entry so
+  // the history stack stays balanced. If we got here via the back button the
+  // entry is already gone, so just clear state.
+  const closeDetail = useCallback(() => {
+    if (window.history.state?.overlay === 'detail') window.history.back();
+    else setDetailArticle(null);
+  }, []);
+  const openSettings = useCallback(() => {
+    window.history.pushState({ overlay: 'settings' }, '');
+    setSettingsOpen(true);
+  }, []);
+  const closeSettings = useCallback(() => {
+    if (window.history.state?.overlay === 'settings') window.history.back();
+    else setSettingsOpen(false);
+  }, []);
   const dismissSplash = useCallback(() => {
     sessionStorage.setItem('ding_splash_seen', '1');
     setShowSplash(false);
@@ -106,7 +143,7 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
 
   const renderCard = (index: number) => {
     if (index === 0) {
-      return <BriefCard brief={brief} articleCount={visibleArticles.length} onOpenSettings={() => setSettingsOpen(true)} />;
+      return <BriefCard brief={brief} articleCount={visibleArticles.length} loadError={loadError} onOpenSettings={openSettings} />;
     }
     if (index <= visibleArticles.length) {
       const article = visibleArticles[index - 1];
@@ -123,21 +160,33 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
     return <EndCard />;
   };
 
-  const variants = {
-    enter: (dir: number) => ({ y: dir > 0 ? '100%' : '-100%' }),
-    center: {
-      y: 0,
-      transition: {
-        type: 'tween' as const,
-        duration: 0.38,
-        ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
-      },
-    },
-    exit: (dir: number) => ({
-      y: dir > 0 ? '-100%' : '100%',
-      transition: { type: 'tween' as const, duration: 0.15, ease: 'easeIn' as const },
-    }),
-  };
+  // Reduced-motion: cross-fade in place instead of sliding/springing.
+  const variants = reduceMotion
+    ? {
+        enter: () => ({ opacity: 0 }),
+        center: { opacity: 1, transition: { duration: 0.2 } },
+        exit: () => ({ opacity: 0, transition: { duration: 0.15 } }),
+      }
+    : {
+        enter: (dir: number) => ({ y: dir > 0 ? '100%' : '-100%' }),
+        center: {
+          y: 0,
+          transition: {
+            type: 'spring' as const,
+            stiffness: 340,
+            damping: 34,
+            mass: 0.85,
+          },
+        },
+        exit: (dir: number) => ({
+          y: dir > 0 ? '-100%' : '100%',
+          transition: {
+            type: 'tween' as const,
+            duration: 0.3,
+            ease: [0.4, 0, 0.2, 1] as [number, number, number, number],
+          },
+        }),
+      };
 
   // Deck progress: 0 at the brief, 1 at the end card. Drives the top bar so the
   // reader always knows how far through the morning deck they are.
@@ -172,7 +221,7 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
       </div>
 
       <div style={{ position: 'relative', overflow: 'hidden', height: '100dvh', width: '100%' }}>
-        <AnimatePresence initial={false} custom={direction} mode="wait">
+        <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentIndex}
             custom={direction}
@@ -211,7 +260,7 @@ export default function Deck({ brief, articles, translations }: DeckProps) {
         isSelected={isSelected}
         onToggle={toggleTopic}
         onSelectAll={selectAll}
-        onClose={() => setSettingsOpen(false)}
+        onClose={closeSettings}
         activeCount={activeCount}
       />
     </>

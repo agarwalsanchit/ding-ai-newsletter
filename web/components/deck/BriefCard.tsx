@@ -13,10 +13,19 @@ interface BriefCardProps {
   brief: DailyBrief | null;
   articleCount: number;
   loadError?: boolean;
+  topics?: string[];
+  onJumpToTopic?: (topic: string) => void;
   onOpenSettings: () => void;
 }
 
-export default function BriefCard({ brief, articleCount, loadError = false, onOpenSettings }: BriefCardProps) {
+export default function BriefCard({
+  brief,
+  articleCount,
+  loadError = false,
+  topics = [],
+  onJumpToTopic,
+  onOpenSettings,
+}: BriefCardProps) {
   const isEmpty = articleCount === 0;
   const dateLabel = brief
     ? formatBriefDate(brief.brief_date)
@@ -158,24 +167,28 @@ export default function BriefCard({ brief, articleCount, loadError = false, onOp
             {brief ? brief.transition_line : `${articleCount} stories ahead. Let’s get into it.`}
           </p>
 
-          {/* Topic chips */}
-          {brief && brief.topic_chips.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px' }}>
-              {brief.topic_chips.map((chip) => (
-                <span
-                  key={chip}
+          {/* Topic chips — tap to jump straight to that section */}
+          {topics.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {topics.map((topic) => (
+                <button
+                  key={topic}
+                  onClick={() => onJumpToTopic?.(topic)}
                   style={{
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '9px',
-                    letterSpacing: '0.07em',
-                    color: 'var(--subtle)',
+                    fontSize: '10px',
+                    letterSpacing: '0.05em',
+                    color: 'var(--muted)',
+                    background: 'none',
                     border: '1px solid var(--divider)',
-                    padding: '3px 9px',
+                    padding: '5px 11px',
                     borderRadius: '999px',
+                    cursor: 'pointer',
+                    WebkitTapHighlightColor: 'transparent',
                   }}
                 >
-                  {chip}
-                </span>
+                  {topic}
+                </button>
               ))}
             </div>
           )}

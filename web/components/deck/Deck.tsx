@@ -43,6 +43,20 @@ export default function Deck({ brief, articles, translations, loadError = false 
     [articles, isSelected]
   );
 
+  // Topics present in today's deck, in first-appearance order — drives the
+  // tappable chips on the brief card.
+  const deckTopics = useMemo(() => {
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const a of visibleArticles) {
+      if (!seen.has(a.topic)) {
+        seen.add(a.topic);
+        out.push(a.topic);
+      }
+    }
+    return out;
+  }, [visibleArticles]);
+
   const totalCards = 1 + visibleArticles.length + 1;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -87,6 +101,16 @@ export default function Deck({ brief, articles, translations, loadError = false 
       setCurrentIndex(next);
     },
     [currentIndex, totalCards]
+  );
+
+  // Tap a brief-card chip → jump to that topic's first story (card index is
+  // 1-based: card 0 is the brief, so article i lives at i + 1).
+  const jumpToTopic = useCallback(
+    (topic: string) => {
+      const idx = visibleArticles.findIndex((a) => a.topic === topic);
+      if (idx >= 0) goTo(idx + 1);
+    },
+    [visibleArticles, goTo]
   );
 
   const handleDragEnd = useCallback(
@@ -143,7 +167,7 @@ export default function Deck({ brief, articles, translations, loadError = false 
 
   const renderCard = (index: number) => {
     if (index === 0) {
-      return <BriefCard brief={brief} articleCount={visibleArticles.length} loadError={loadError} onOpenSettings={openSettings} />;
+      return <BriefCard brief={brief} articleCount={visibleArticles.length} loadError={loadError} topics={deckTopics} onJumpToTopic={jumpToTopic} onOpenSettings={openSettings} />;
     }
     if (index <= visibleArticles.length) {
       const article = visibleArticles[index - 1];

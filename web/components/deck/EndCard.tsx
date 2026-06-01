@@ -31,11 +31,29 @@ export default function EndCard() {
           fontFamily: 'var(--font-sans)',
           fontSize: '17px',
           color: 'var(--muted)',
-          marginBottom: '56px',
+          marginBottom: '28px',
         }}
       >
         See you tomorrow morning.
       </p>
+
+      {/* Beta feedback */}
+      <a
+        href="mailto:sanchitpurdue@gmail.com?subject=DING%20beta%20feedback"
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '11px',
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: 'var(--muted)',
+          textDecoration: 'none',
+          borderBottom: '1px solid var(--divider)',
+          paddingBottom: '2px',
+          marginBottom: '56px',
+        }}
+      >
+        Send feedback
+      </a>
 
       {/* Branding */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>

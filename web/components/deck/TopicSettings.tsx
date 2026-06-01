@@ -202,6 +202,24 @@ export default function TopicSettings({
                 );
               })}
             </div>
+
+            {/* Beta feedback */}
+            <a
+              href="mailto:sanchitpurdue@gmail.com?subject=DING%20beta%20feedback"
+              style={{
+                display: 'inline-block',
+                marginTop: '20px',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                letterSpacing: '0.06em',
+                color: 'var(--muted)',
+                textDecoration: 'none',
+                borderBottom: '1px solid var(--divider)',
+                paddingBottom: '2px',
+              }}
+            >
+              Send feedback
+            </a>
           </motion.div>
         </>
       )}

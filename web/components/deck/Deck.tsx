@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, PanInfo, useReducedMotion } from 'framer-motion';
+import { track } from '@vercel/analytics';
 import { DailyBrief, ApprovedArticle, TranslationMap } from '@/lib/types';
 import { useLanguage } from '@/lib/hooks/useLanguage';
 import { useTopicPrefs } from '@/lib/hooks/useTopicPrefs';
@@ -94,6 +95,13 @@ export default function Deck({ brief, articles, translations, loadError = false 
     window.history.replaceState(null, '', hash || window.location.pathname);
   }, [currentIndex]);
 
+  // Beta signal: did the reader make it all the way to the end card?
+  useEffect(() => {
+    if (totalCards > 1 && currentIndex === totalCards - 1) {
+      track('deck_complete');
+    }
+  }, [currentIndex, totalCards]);
+
   const goTo = useCallback(
     (next: number) => {
       if (next < 0 || next >= totalCards) return;
@@ -108,7 +116,10 @@ export default function Deck({ brief, articles, translations, loadError = false 
   const jumpToTopic = useCallback(
     (topic: string) => {
       const idx = visibleArticles.findIndex((a) => a.topic === topic);
-      if (idx >= 0) goTo(idx + 1);
+      if (idx >= 0) {
+        track('topic_jump', { topic });
+        goTo(idx + 1);
+      }
     },
     [visibleArticles, goTo]
   );
@@ -143,6 +154,7 @@ export default function Deck({ brief, articles, translations, loadError = false 
 
   const openDetail = useCallback((a: ApprovedArticle) => {
     window.history.pushState({ overlay: 'detail' }, '');
+    track('detail_open', { topic: a.topic });
     setDetailArticle(a);
   }, []);
   // Programmatic close (X, backdrop, swipe-down, Esc): pop the pushed entry so

@@ -49,7 +49,7 @@ This split was intentional:
   Claude (claude-       │     → 1 Claude call per section      │
   sonnet-4-6) ─────────▶│     → updates articles table         │
                         │     → inserts approved_articles if   │
-                        │       all-5 confidence               │
+                        │       conf ≥3 all axes               │
                         │  6. flag_top_news()                   │
                         │     → picks highest I+U article       │
                         │  7. generate_brief()                  │
@@ -96,7 +96,7 @@ Five Tavily queries per day (`search_depth="advanced"`, `days=2`, `topic="news"`
 | 🌍 Geopolitics & World Affairs | Generic topic terms |
 | 💼 Business & Finance | Generic topic terms |
 | 🔬 Science & Technology | Generic topic terms including AI/ML focus |
-| 🎾 Sports & Entertainment | Wire-service restricted: `site:apnews.com OR site:reuters.com OR site:bbc.com OR site:espn.com/story` to avoid boxscores/video pages |
+| 🎾 Sports & Entertainment | Keyword-rich query (Champions League, UEFA, Premier League, La Liga, IPL cricket, NBA, NFL, F1, tennis, Grand Slam). The old `site:` wire-service restriction was dropped — it hid legitimate match recaps; the URL blocklist still filters boxscores/live-score pages |
 | 🏛 Society & Culture | Generic topic terms |
 
 Top News is **not a Tavily query** — it is a computed flag (`flag_top_news()`) applied post-processing to the article with the highest `score_importance + score_urgency` across all sections.
@@ -122,8 +122,8 @@ fetched_at set, status=pending
    │  relationship_to_recent:            │
    │    "duplicate"  → auto_rejected     │
    │    "new"|"followup":                │
-   │      all confidence==5 → auto_approved │
-   │      any confidence<5  → pending    │
+   │      all 3 axes ≥ 3 → auto_approved │
+   │      any axis < 3   → pending       │
    └─────────────────────────────────────┘
          │
          ├─── auto_approved → copied to approved_articles (approved_by='ai_auto')
@@ -242,21 +242,21 @@ Human review (`review_cli.py`) is run locally, **between** pipeline.py and newsl
 
 A Next.js app deployed on Vercel (Hobby tier, free). Uses the Supabase JS client with RLS (anon key). Reads from `approved_articles`, `daily_briefs`, and high-confidence pending rows from `articles`.
 
-**Date logic**: "today" is computed as Pacific time using `Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' })` in Next.js server components. This matches the pipeline's timezone (`TZ: America/Los_Angeles` in GH Actions). Only articles with `article_date = today` are shown — no fallback to previous dates.
+**Date logic**: "today" is computed as Pacific time using `Intl.DateTimeFormat('en-CA', { timeZone: 'America/Los_Angeles' })` in Next.js server components. This matches the pipeline's timezone (`TZ: America/Los_Angeles` in GH Actions). Articles from a **two-day window** (today + yesterday, Pacific) are shown: most stories fetched at 8 AM PT were published the previous day, so a today-only filter hid almost everything — the window also tolerates a late or missed pipeline run.
 
 **Dual-source article query** (runs server-side in `page.tsx`):
-1. `approved_articles WHERE article_date = today ORDER BY rank_score DESC LIMIT 10` — human or ai-auto-approved
-2. `articles WHERE article_date = today AND status = 'pending' AND ai_confidence_factual >= 4 AND ai_confidence_on_topic >= 4 AND ai_confidence_source >= 4` — high-confidence pending (no human review; access via RLS policy)
+1. `approved_articles WHERE article_date >= yesterday ORDER BY rank_score DESC LIMIT 10` — human or ai-auto-approved (two-day window)
+2. `articles WHERE article_date >= yesterday AND status = 'pending' AND ai_confidence_factual >= 4 AND ai_confidence_on_topic >= 4 AND ai_confidence_source >= 4` — high-confidence pending in the two-day window (no human review; access via RLS policy)
 
-Both sources are merged, sorted by rank_score, and capped at 10. Articles already in `approved_articles` are de-duplicated out of the pending pool. Translations are only fetched for approved articles (the `translations` table is keyed on `approved_article_id`).
+Both sources are merged and de-duplicated (articles already in `approved_articles` are dropped from the pending pool), then the 10-card deck is built with a **topic-diversity cap**: a first pass takes up to `PER_TOPIC_CAP` (2) of each topic in rank order, and a second pass backfills any remaining slots by rank regardless of topic. This stops a prolific category (e.g. finance) from flooding the deck while still filling it on a slow news day. Translations are only fetched for approved articles (the `translations` table is keyed on `approved_article_id`).
 
 Card deck UX:
-- Card 1: Daily brief (from `daily_briefs WHERE brief_date = today AND approved_at IS NOT NULL`); shows empty state if no articles available
+- Card 1: Daily brief (most recent approved `daily_briefs` in the two-day window: `approved_at IS NOT NULL AND brief_date >= yesterday ORDER BY brief_date DESC LIMIT 1`); shows empty state if no articles, or an error state if the fetch failed
 - Cards 2–N: Articles sorted by `rank_score DESC LIMIT 10`; card text uses `article_brief ?? balanced_summary`
 - Detail view: `detail_summary` (300–400 words), "Why it matters" as accent callout, language toggle (EN/HI)
 - End card: closed-ended; no infinite scroll
-- Topic filter: settings panel lets user deselect topics; filtered out of visible deck
-- Splash screen: ~4.5s entry animation on first visit per browser session
+- Topic filter: settings panel lets user deselect topics; filtered out of visible deck. Brief-card topic chips are tappable and jump to that topic's first story
+- Splash screen: ~2.6s entry animation on first visit per browser session (tap to skip); respects `prefers-reduced-motion`
 
 **RLS policies relevant to the PWA (anon key)**:
 - `approved_articles`: no RLS — publicly readable

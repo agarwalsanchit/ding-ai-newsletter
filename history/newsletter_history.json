@@ -1,16 +1,5 @@
 [
   {
-    "date": "2026-05-24",
-    "headlines": [
-      "Russia Pounds Kyiv with Missiles and Drones, Injuring 10",
-      "Nvidia Posts $81.6B Quarter, Anthropic Eyes $10.9B Revenue as AI&#39;s &#39;Everything Changed&#39; Moment Arrives",
-      "Crystal Palace vs Arsenal: Premier League Season Finale Preview",
-      "Jofra Archer&#39;s All-Round Performance Fires Rajasthan Royals Into IPL 2026 Playoffs",
-      "Vietnam&#39;s Dien May Xanh Cleared for $545 Million IPO"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-25",
     "headlines": [
       "Russia Launches Year&#39;s Biggest Missile Attack on Ukraine; Belarus Tensions Mount",
@@ -80,6 +69,22 @@
       "Wall Street Closes Out a Blistering May with Ninth Straight Weekly Gain",
       "Royal Observatory Warns AI Could Make Humans Less Intelligent",
       "UK and France Sign Landmark Sci-Tech Pact on Disease and Women&#8217;s Health"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-01",
+    "headlines": [
+      "China Developing AI to Predict Political Dissent Before It Happens",
+      "Shangri-La Dialogue Concludes: Allies Warn Against Division, Hegseth Softens China Rhetoric",
+      "PSG Wins 2025/26 Champions League, Dominates Team of the Season; Hundreds Arrested in Paris Riots",
+      "OpenAI Merges ChatGPT, Codex, and API Into Single Super App; Meta&#39;s Bosworth in Spotlight",
+      "Genesis AI Unveils GENE-26.5 Model Claiming Human-Level Robotic Manipulation",
+      "S&amp;P 500 Posts Nine Straight Weekly Gains and Strong May, but Market Breadth Raises Fragility Warning",
+      "Week Ahead: Palo Alto Networks, CrowdStrike, and Broadcom Earnings Headline Busy Market Week",
+      "Dating Apps Weaponized by Russia and Ukraine for Espionage and Recruitment",
+      "CRS Updates Congress on Russia-Ukraine Peace Talks and U.S. Policy",
+      "Dressing in Imperial Chinese Costumes Is Booming at Beijing&#39;s Forbidden City"
     ],
     "sent": 13
   }

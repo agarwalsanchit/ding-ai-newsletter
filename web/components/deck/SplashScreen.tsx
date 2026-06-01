@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-const HOLD_MS  = 2600; // how long the splash shows before auto-fading
-const FADE_MS  = 600;  // exit fade duration
+const HOLD_MS  = 4500; // how long the splash shows before auto-fading
+const FADE_MS  = 800;  // exit fade duration
 
 interface Props {
   onDone: () => void;
@@ -88,7 +88,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.55 }}
+            transition={{ duration: 0.5, delay: 0.9 }}
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '11px',
@@ -105,7 +105,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.55, delay: 0.9 }}
+            transition={{ duration: 0.55, delay: 1.4 }}
             style={{
               fontFamily: 'var(--font-sans)',
               fontSize: '14px',
@@ -125,7 +125,7 @@ export default function SplashScreen({ onDone }: Props) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1.5 }}
+            transition={{ duration: 0.4, delay: 2.4 }}
             style={{
               position: 'absolute',
               bottom: 'calc(env(safe-area-inset-bottom, 0px) + 32px)',

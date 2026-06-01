@@ -256,7 +256,7 @@ Card deck UX:
 - Detail view: `detail_summary` (300–400 words), "Why it matters" as accent callout, language toggle (EN/HI)
 - End card: closed-ended; no infinite scroll
 - Topic filter: settings panel lets user deselect topics; filtered out of visible deck. Brief-card topic chips are tappable and jump to that topic's first story
-- Splash screen: ~2.6s entry animation on first visit per browser session (tap to skip); respects `prefers-reduced-motion`
+- Splash screen: ~4.5s entry animation on first visit per browser session (tap to skip); respects `prefers-reduced-motion`
 
 **RLS policies relevant to the PWA (anon key)**:
 - `approved_articles`: no RLS — publicly readable

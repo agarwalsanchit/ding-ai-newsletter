@@ -79,7 +79,7 @@ export default function ArticleCard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: '16px',
+            marginBottom: '20px',
             flexShrink: 0,
           }}
         >
@@ -87,7 +87,7 @@ export default function ArticleCard({
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '11px',
-              letterSpacing: '0.08em',
+              letterSpacing: '0.09em',
               textTransform: 'uppercase',
               color: 'var(--muted)',
               display: 'flex',
@@ -147,11 +147,11 @@ export default function ArticleCard({
           <h2
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(30px, 8vw, 44px)',
+              fontSize: 'clamp(23px, 6vw, 28px)',
               fontWeight: 600,
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-              marginBottom: '20px',
+              lineHeight: 1.22,
+              letterSpacing: '-0.015em',
+              marginBottom: '14px',
             }}
           >
             {title}
@@ -160,8 +160,8 @@ export default function ArticleCard({
           <p
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: '21px',
-              lineHeight: 1.55,
+              fontSize: '17px',
+              lineHeight: 1.62,
               color: 'var(--text)',
             }}
           >
@@ -178,7 +178,7 @@ export default function ArticleCard({
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
             color: 'var(--subtle)',
-            marginTop: '24px',
+            marginTop: '26px',
             cursor: 'pointer',
             flexShrink: 0,
           }}

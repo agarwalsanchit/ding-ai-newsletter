@@ -1,14 +1,5 @@
 [
   {
-    "date": "2026-05-25",
-    "headlines": [
-      "Russia Launches Year&#39;s Biggest Missile Attack on Ukraine; Belarus Tensions Mount",
-      "US and Iran Edge Toward Nuclear Deal as Trump Cites Progress but Flags Remaining Gaps",
-      "VT Markets Adds 39 US Stocks and ETFs, Expanding Into AI, Space, and Energy"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-26",
     "headlines": [
       "Asian Markets Mixed as US Strikes in Southern Iran Rattle Oil Prices",
@@ -85,6 +76,22 @@
       "Dating Apps Weaponized by Russia and Ukraine for Espionage and Recruitment",
       "CRS Updates Congress on Russia-Ukraine Peace Talks and U.S. Policy",
       "Dressing in Imperial Chinese Costumes Is Booming at Beijing&#39;s Forbidden City"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-02",
+    "headlines": [
+      "Trump Signs Executive Order Requiring National Security Vetting of Top AI Models",
+      "French Navy, Backed by UK, Intercepts Sanctioned Russian Tanker &#8212; Macron",
+      "Iran&#39;s Year-on-Year Inflation Reaches World War II-Era Levels Amid Economic Crisis",
+      "Russia Strikes Ukrainian Railways 541 Times in Q1 2026, Causing $178M in Damage",
+      "Silicon Valley and Europe Diverge on AI&#39;s Next Frontier: Physical AI and Industrial Deployment",
+      "New York Times Publisher Warns AI Companies Are Breaking the Law and Causing Harm",
+      "Dow and S&amp;P 500 Extend Longest Win Streaks of 2026; Nasdaq Wavers as Alphabet and Microsoft Slide",
+      "Malaysia Enforces Social Media Ban for Children Under 16",
+      "Pride Month 2026 Begins Amid Evolving LGBTQ+ Landscape",
+      "Florida Set for Eighth Execution of 2026 in Baby-Killing Case"
     ],
     "sent": 13
   }

@@ -1,16 +1,5 @@
 [
   {
-    "date": "2026-05-26",
-    "headlines": [
-      "Asian Markets Mixed as US Strikes in Southern Iran Rattle Oil Prices",
-      "North Korea Fires Ballistic Missile and Other Weapons Into the Sea",
-      "Quad Ministers Meet in New Delhi, Announce Port Project and Critical Minerals Pact",
-      "AI Natives Enter the Workforce as Companies Race to Build AI-Competent Teams",
-      "Unilever Deploys AI Across R&amp;D to Sharpen Edge in Competitive Beauty Market"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-27",
     "headlines": [
       "Israel Says It Killed New Hamas Military Chief in Gaza",
@@ -92,6 +81,20 @@
       "Malaysia Enforces Social Media Ban for Children Under 16",
       "Pride Month 2026 Begins Amid Evolving LGBTQ+ Landscape",
       "Florida Set for Eighth Execution of 2026 in Baby-Killing Case"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-03",
+    "headlines": [
+      "Tokyo&#39;s Nikkei 225 Tops 68,000 for First Time as Global Markets Continue Record Run",
+      "Middle East Conflict Drags on Global Travel and UN Seeks End to Israel-Hezbollah Fighting",
+      "Trump Administration to Ask U.S. AI Firms to Voluntarily Submit Models for Cybersecurity Testing",
+      "Mathematicians Urge Caution, Call AI Capabilities &#39;Overhyped&#39;",
+      "Skift Data and AI Summit 2026 Convenes in New York to Map AI&#39;s Integration Into Travel Industry",
+      "India Expected to Seek Better Terms in Upcoming Trade Negotiations with US and UK",
+      "Virgin Galactic Crashes 32% on Settlement Dilution Fears; AST SpaceMobile and Planet Labs Rally",
+      "New Zealand Town of Oamaru Hosts Steampunk Festival, Becomes Global Hub for Victorian Sci-Fi Culture"
     ],
     "sent": 13
   }

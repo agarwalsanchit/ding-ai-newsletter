@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-05-27",
-    "headlines": [
-      "Israel Says It Killed New Hamas Military Chief in Gaza",
-      "DeepMind&#39;s Demis Hassabis Says AI Could Make a Postgrad as Productive as an Entire Lab",
-      "Enterprise Technology Association Launches AIReadyAmerica.org to Close AI Skills Gap",
-      "SecurityWeek to Host 2026 AI Risk Summit August 11&#8211;12 in Half Moon Bay, California",
-      "Wall Street Holds Near Records as Oil Falls; Goldman Raises S&amp;P 500 Target to 8,000",
-      "Israel&#39;s School System Under Strain After Years of COVID, War, and Division"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-28",
     "headlines": [
       "S&amp;P 500 and Nasdaq Hit New All-Time Highs as Inflation Data Comes in Softer Than Expected",
@@ -95,6 +83,18 @@
       "India Expected to Seek Better Terms in Upcoming Trade Negotiations with US and UK",
       "Virgin Galactic Crashes 32% on Settlement Dilution Fears; AST SpaceMobile and Planet Labs Rally",
       "New Zealand Town of Oamaru Hosts Steampunk Festival, Becomes Global Hub for Victorian Sci-Fi Culture"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-04",
+    "headlines": [
+      "University of Toronto Researchers Build Self-Replicating AI Worm That Adapts Attacks on the Fly",
+      "Hong Kong Police Quickly Stop Artist Marking Tiananmen Anniversary with Street Performance",
+      "3-Year-Old Girl Dies After Bouncy Castle Swept Into Air by Strong Winds in Montreal",
+      "Fire at Sri Lankan Nursing Home Kills 12 People",
+      "AI and Chip Stocks Drag Nasdaq Lower on June 4; Oil Retreats on Israel-Lebanon Ceasefire",
+      "Pyxus International Reports 35% Revenue Jump in Q4 Fiscal 2026 on Stronger Leaf Tobacco Sales"
     ],
     "sent": 13
   }

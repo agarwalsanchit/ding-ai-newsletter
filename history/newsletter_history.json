@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-05-28",
-    "headlines": [
-      "S&amp;P 500 and Nasdaq Hit New All-Time Highs as Inflation Data Comes in Softer Than Expected",
-      "Zelenskyy Presses US for More Patriot Missiles During Sweden Visit",
-      "Japanese Robotics Developers Showcase Humanoids at Tokyo Summit, Aiming to Rival China",
-      "Cubs End 10-Game Losing Streak with 10-4 Win Over Pirates, Powered by Ian Happ&#39;s 5 RBIs"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-29",
     "headlines": [
       "Putin Signals Escalation as Ukraine Stalemate Deepens; Zelensky Warns of Large-Scale Russian Attack",
@@ -95,6 +85,21 @@
       "Fire at Sri Lankan Nursing Home Kills 12 People",
       "AI and Chip Stocks Drag Nasdaq Lower on June 4; Oil Retreats on Israel-Lebanon Ceasefire",
       "Pyxus International Reports 35% Revenue Jump in Q4 Fiscal 2026 on Stronger Leaf Tobacco Sales"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-05",
+    "headlines": [
+      "May Jobs Report Shows 172,000 New Jobs; Fed Rate Hike Back on Table as Markets Swing",
+      "Anthropic Warns AI May Soon Recursively Self-Improve, Calls for Global Caution",
+      "Open-Weight AI Model Powers Self-Spreading Enterprise Worm",
+      "As Ebola Spreads in Congo, Radio Station Fights Health Misinformation Amid Armed Conflict",
+      "Armed Clashes Erupt in Mogadishu Ahead of Planned Anti-Government Protests",
+      "Obama Presidential Museum Set to Open in Chicago This Month",
+      "Over 5,200 Mail Carriers Attacked by Dogs in 2026, USPS Issues Warning",
+      "Premier League 2026/27 Season Preview: Chelsea, Spurs Among Eight Storylines to Watch",
+      "Indian Badminton: Sindhu Falls to An Se Young; Hariharan-Arjun Reach Indonesia Open QF"
     ],
     "sent": 13
   }

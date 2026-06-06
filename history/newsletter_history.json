@@ -1,14 +1,5 @@
 [
   {
-    "date": "2026-05-29",
-    "headlines": [
-      "Putin Signals Escalation as Ukraine Stalemate Deepens; Zelensky Warns of Large-Scale Russian Attack",
-      "Shangri-La Dialogue Opens in Singapore with China and US Reliability Dominating the Agenda",
-      "AI Deployment Accelerates Across Finance and Retail in May 2026, From BBVA-OpenAI to Humanoid Robots and Agentic Coaches"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-30",
     "headlines": [
       "AUKUS Trilateral Pact Advances Unmanned Undersea Vehicle Development, Pentagon Chief Confirms",
@@ -100,6 +91,23 @@
       "Over 5,200 Mail Carriers Attacked by Dogs in 2026, USPS Issues Warning",
       "Premier League 2026/27 Season Preview: Chelsea, Spurs Among Eight Storylines to Watch",
       "Indian Badminton: Sindhu Falls to An Se Young; Hariharan-Arjun Reach Indonesia Open QF"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-06",
+    "headlines": [
+      "UN Pushes for End to Israel-Hezbollah Fighting as Conflict Weighs on Global Travel",
+      "Armed Clashes Shake Mogadishu Ahead of Anti-Government Protests",
+      "India Eyes Better Terms as US and UK Trade Talks Loom",
+      "May Jobs Report Adds 172,000 Positions &#8212; Fed Rate Hike Back on the Table",
+      "Nikkei 225 Breaches 68,000 for the First Time as Global Rally Rolls On",
+      "Virgin Galactic Craters 32% on Settlement Dilution Fears; Space Peers Rally",
+      "Anthropic Sounds Alarm: AI Could Soon Recursively Self-Improve",
+      "Self-Spreading AI Worm Built on Open-Weight Model Raises Cybersecurity Red Flags",
+      "Trump Administration Asks AI Firms to Voluntarily Submit Models for Cybersecurity Vetting",
+      "Obama Presidential Museum to Open Its Doors in Chicago This Month",
+      "Hong Kong Police Move Swiftly to Silence Tiananmen Anniversary Performance"
     ],
     "sent": 13
   }

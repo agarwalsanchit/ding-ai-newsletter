@@ -1,14 +1,5 @@
 [
   {
-    "date": "2026-05-30",
-    "headlines": [
-      "AUKUS Trilateral Pact Advances Unmanned Undersea Vehicle Development, Pentagon Chief Confirms",
-      "The Atlantic: Autonomous AI Agents Are Eroding Humans&#39; Sense of Control Online",
-      "Berkshire Hathaway Trails S&amp;P 500 by Its Largest Gap of 2026; BNSF Railroad Merger Review Paused"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-05-31",
     "headlines": [
       "PSG Beats Arsenal 4&#8211;3 on Penalties to Win the Champions League",
@@ -108,6 +99,20 @@
       "Trump Administration Asks AI Firms to Voluntarily Submit Models for Cybersecurity Vetting",
       "Obama Presidential Museum to Open Its Doors in Chicago This Month",
       "Hong Kong Police Move Swiftly to Silence Tiananmen Anniversary Performance"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-07",
+    "headlines": [
+      "AI Worms, Open Weights, and a Government Knock at the Door",
+      "Anthropic Raises the Stakes: Recursive Self-Improvement Could Be Near",
+      "172,000 Jobs and a Fed Rate Hike Back on the Menu",
+      "Nikkei Crosses 68,000 for the First Time in History",
+      "Mogadishu on Edge as Armed Clashes Precede Anti-Government Protests",
+      "UN Presses for End to Israel-Hezbollah Fighting as Global Travel Feels the Squeeze",
+      "Obama Presidential Museum Finally Opens Its Doors in Chicago",
+      "Hong Kong Police Silence Tiananmen Performance as Crackdown Continues"
     ],
     "sent": 13
   }

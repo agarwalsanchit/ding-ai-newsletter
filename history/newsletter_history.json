@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-05-31",
-    "headlines": [
-      "PSG Beats Arsenal 4&#8211;3 on Penalties to Win the Champions League",
-      "Claude Lemieux&#8217;s Family Donates His Brain to BU&#8217;s CTE Research Center",
-      "Allies Warn at Shangri-La: Western Division Is a Gift to Adversaries",
-      "Belarus Emerges as Potential Launchpad for a New Russian Offensive Into Ukraine",
-      "Wall Street Closes Out a Blistering May with Ninth Straight Weekly Gain",
-      "Royal Observatory Warns AI Could Make Humans Less Intelligent",
-      "UK and France Sign Landmark Sci-Tech Pact on Disease and Women&#8217;s Health"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-01",
     "headlines": [
       "China Developing AI to Predict Political Dissent Before It Happens",
@@ -113,6 +100,22 @@
       "UN Presses for End to Israel-Hezbollah Fighting as Global Travel Feels the Squeeze",
       "Obama Presidential Museum Finally Opens Its Doors in Chicago",
       "Hong Kong Police Silence Tiananmen Performance as Crackdown Continues"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-08",
+    "headlines": [
+      "Global Stocks Slide After Wall Street&#39;s Worst Day Since October; Oil Surges on Israel-Iran Fighting",
+      "Iran Signals End to Israel Attacks as Hormuz Closure Buckles Global Supply Chains; Oil Markets Volatile",
+      "France and Allies Plan Coordinated Sanctions on Israel Over West Bank Within Days",
+      "Ukraine Strikes Russian Oil Sites and Crimea; Russia Hits Kharkiv Storage Facility",
+      "UK Deputy PM Lammy Tells Vance He Was Wrong to Blame Immigration for Teen&#39;s Murder",
+      "Shooting Near West Bank Kills One, Wounds Six in Central Israel",
+      "SpaceX IPO Set for This Friday &#8212; Options Traders Eye Rotation Out of Tesla",
+      "AP-NORC Poll: Fewer Americans View Their Country as Exceptional Ahead of America 250 Celebrations",
+      "Trump Executive Order on AI Innovation and Cybersecurity Spurs Federal Action and Private Expansion",
+      "WSJ Analysis: AI Progress Will Be Slower Than Boosters Claim, Faster Than Skeptics Predict"
     ],
     "sent": 13
   }

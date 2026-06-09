@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-06-01",
-    "headlines": [
-      "China Developing AI to Predict Political Dissent Before It Happens",
-      "Shangri-La Dialogue Concludes: Allies Warn Against Division, Hegseth Softens China Rhetoric",
-      "PSG Wins 2025/26 Champions League, Dominates Team of the Season; Hundreds Arrested in Paris Riots",
-      "OpenAI Merges ChatGPT, Codex, and API Into Single Super App; Meta&#39;s Bosworth in Spotlight",
-      "Genesis AI Unveils GENE-26.5 Model Claiming Human-Level Robotic Manipulation",
-      "S&amp;P 500 Posts Nine Straight Weekly Gains and Strong May, but Market Breadth Raises Fragility Warning",
-      "Week Ahead: Palo Alto Networks, CrowdStrike, and Broadcom Earnings Headline Busy Market Week",
-      "Dating Apps Weaponized by Russia and Ukraine for Espionage and Recruitment",
-      "CRS Updates Congress on Russia-Ukraine Peace Talks and U.S. Policy",
-      "Dressing in Imperial Chinese Costumes Is Booming at Beijing&#39;s Forbidden City"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-02",
     "headlines": [
       "Trump Signs Executive Order Requiring National Security Vetting of Top AI Models",
@@ -116,6 +100,22 @@
       "AP-NORC Poll: Fewer Americans View Their Country as Exceptional Ahead of America 250 Celebrations",
       "Trump Executive Order on AI Innovation and Cybersecurity Spurs Federal Action and Private Expansion",
       "WSJ Analysis: AI Progress Will Be Slower Than Boosters Claim, Faster Than Skeptics Predict"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-09",
+    "headlines": [
+      "Global Conflicts Hit Post-WWII High in 2025, With 244,600 Killed &#8212; Swedish Study",
+      "Dow and S&amp;P 500 Erase Early Gains as Tech Tumbles; Oil Falls on Trump Iran Deal Optimism",
+      "Apple Unveils Revamped Siri AI and iOS 27 at WWDC 2026",
+      "Elon Musk Reveals Detailed Design of SpaceX AI Data Center Satellite",
+      "New Scientist: Anthropic&#39;s Recursive AI Warning Driven More by IPO Marketing Than Genuine Risk",
+      "Standard Bots Hits $1 Billion Valuation After $200M Series C Funding Round",
+      "Autonomous Drones Reshape Crop Data Collection at North Carolina Research Stations",
+      "AI Moves Deeper into Clinical Trials and Hospital Exam Rooms, Raising Questions of Trust",
+      "Serena Williams Eyes Doubles Return at Queen&#39;s Club, Won&#39;t Rule Out Singles Comeback",
+      "Cuba&#39;s Antique Cars Sit Idle as US Energy Blockade Deepens Fuel Crisis"
     ],
     "sent": 13
   }

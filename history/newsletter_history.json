@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-06-02",
-    "headlines": [
-      "Trump Signs Executive Order Requiring National Security Vetting of Top AI Models",
-      "French Navy, Backed by UK, Intercepts Sanctioned Russian Tanker &#8212; Macron",
-      "Iran&#39;s Year-on-Year Inflation Reaches World War II-Era Levels Amid Economic Crisis",
-      "Russia Strikes Ukrainian Railways 541 Times in Q1 2026, Causing $178M in Damage",
-      "Silicon Valley and Europe Diverge on AI&#39;s Next Frontier: Physical AI and Industrial Deployment",
-      "New York Times Publisher Warns AI Companies Are Breaking the Law and Causing Harm",
-      "Dow and S&amp;P 500 Extend Longest Win Streaks of 2026; Nasdaq Wavers as Alphabet and Microsoft Slide",
-      "Malaysia Enforces Social Media Ban for Children Under 16",
-      "Pride Month 2026 Begins Amid Evolving LGBTQ+ Landscape",
-      "Florida Set for Eighth Execution of 2026 in Baby-Killing Case"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-03",
     "headlines": [
       "Tokyo&#39;s Nikkei 225 Tops 68,000 for First Time as Global Markets Continue Record Run",
@@ -116,6 +100,22 @@
       "AI Moves Deeper into Clinical Trials and Hospital Exam Rooms, Raising Questions of Trust",
       "Serena Williams Eyes Doubles Return at Queen&#39;s Club, Won&#39;t Rule Out Singles Comeback",
       "Cuba&#39;s Antique Cars Sit Idle as US Energy Blockade Deepens Fuel Crisis"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-10",
+    "headlines": [
+      "Messi Scores on Return as World Cup 2026 Gets Underway",
+      "Three Mega AI IPOs Filed Confidentially as 2026 AI Landscape Crystallizes Around Four Tech Giants",
+      "Info-Tech Report: &#39;Uniquely Human&#39; Skills Will Define IT Workers in the AI Era",
+      "GENISOM AI Makes Global Debut at ICRA 2026 in Vienna with Full-Stack Embodied Robotics System",
+      "Nasdaq Swings Wildly as AI Jitters Spark Near-$1 Trillion Tech Sell-Off Before Partial Recovery",
+      "Crude Oil Volatility Disrupts India&#39;s Polyester Textile Supply Chain in 2026",
+      "Israel Accelerates Evictions and Demolitions in East Jerusalem",
+      "Peru Presidential Runoff Too Close to Call as Candidates in Razor-Thin Race",
+      "Pakistan Army MI-17 Helicopter Crashes in Kashmir, Killing All on Board",
+      "ESPN to Broadcast 2026 Special Olympics USA Games Live from Minneapolis Starting June 20"
     ],
     "sent": 13
   }

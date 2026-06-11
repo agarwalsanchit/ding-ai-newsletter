@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-06-03",
-    "headlines": [
-      "Tokyo&#39;s Nikkei 225 Tops 68,000 for First Time as Global Markets Continue Record Run",
-      "Middle East Conflict Drags on Global Travel and UN Seeks End to Israel-Hezbollah Fighting",
-      "Trump Administration to Ask U.S. AI Firms to Voluntarily Submit Models for Cybersecurity Testing",
-      "Mathematicians Urge Caution, Call AI Capabilities &#39;Overhyped&#39;",
-      "Skift Data and AI Summit 2026 Convenes in New York to Map AI&#39;s Integration Into Travel Industry",
-      "India Expected to Seek Better Terms in Upcoming Trade Negotiations with US and UK",
-      "Virgin Galactic Crashes 32% on Settlement Dilution Fears; AST SpaceMobile and Planet Labs Rally",
-      "New Zealand Town of Oamaru Hosts Steampunk Festival, Becomes Global Hub for Victorian Sci-Fi Culture"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-04",
     "headlines": [
       "University of Toronto Researchers Build Self-Replicating AI Worm That Adapts Attacks on the Fly",
@@ -116,6 +102,20 @@
       "Peru Presidential Runoff Too Close to Call as Candidates in Razor-Thin Race",
       "Pakistan Army MI-17 Helicopter Crashes in Kashmir, Killing All on Board",
       "ESPN to Broadcast 2026 Special Olympics USA Games Live from Minneapolis Starting June 20"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-11",
+    "headlines": [
+      "SpaceX IPO Debuts on Wall Street Thursday Night, Valuation Revised Downward",
+      "Wall Street Rebounds Thursday as AI Stocks Recover; Dow Rallied 400 Points",
+      "Oracle Beats Earnings But Stock Plunges After Hours",
+      "G7 Summit in Evian-les-Bains Set for June 15&#8211;17 with Iran, Ukraine, and Tight Security Dominating",
+      "Post-Cold War World Order Is Fraying as Global Cooperation Retreats",
+      "Christian Leaders Hold Emergency Summit in Jerusalem Over Global Rise in Antisemitism",
+      "Harris Poll: Energy Drinks Rebrand, &#34;Haunted&#34; Job Postings, and a Men&#39;s Grooming Boom",
+      "Enterprise AI Takes Center Stage at VivaTech 2026 in Paris"
     ],
     "sent": 13
   }

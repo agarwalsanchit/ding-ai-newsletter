@@ -1,17 +1,5 @@
 [
   {
-    "date": "2026-06-04",
-    "headlines": [
-      "University of Toronto Researchers Build Self-Replicating AI Worm That Adapts Attacks on the Fly",
-      "Hong Kong Police Quickly Stop Artist Marking Tiananmen Anniversary with Street Performance",
-      "3-Year-Old Girl Dies After Bouncy Castle Swept Into Air by Strong Winds in Montreal",
-      "Fire at Sri Lankan Nursing Home Kills 12 People",
-      "AI and Chip Stocks Drag Nasdaq Lower on June 4; Oil Retreats on Israel-Lebanon Ceasefire",
-      "Pyxus International Reports 35% Revenue Jump in Q4 Fiscal 2026 on Stronger Leaf Tobacco Sales"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-05",
     "headlines": [
       "May Jobs Report Shows 172,000 New Jobs; Fed Rate Hike Back on Table as Markets Swing",
@@ -116,6 +104,19 @@
       "Christian Leaders Hold Emergency Summit in Jerusalem Over Global Rise in Antisemitism",
       "Harris Poll: Energy Drinks Rebrand, &#34;Haunted&#34; Job Postings, and a Men&#39;s Grooming Boom",
       "Enterprise AI Takes Center Stage at VivaTech 2026 in Paris"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-12",
+    "headlines": [
+      "Global Markets Surge and Oil Tumbles 4% as Trump Claims Iran War Breakthrough",
+      "SpaceX IPO Prices at $135, Begins Trading Friday in Record Offering",
+      "BofA Gives Intel a Double Upgrade, Raises Price Target to $135",
+      "UN Reports Record 118 Million People Displaced by Conflict and Persecution in 2025",
+      "Russia Suffering Sustained Territorial Losses as Ukraine War Tide Shifts, Finnish President Says",
+      "KPMG AI Report Found to Contain Hallucinated Case Studies &#8212; A 2026 Snapshot of AI&#39;s Trust Problem",
+      "Indonesian Students Rally in Jakarta Against Fuel Price Hike and Military Role in Civilian Affairs"
     ],
     "sent": 13
   }

@@ -1,20 +1,5 @@
 [
   {
-    "date": "2026-06-05",
-    "headlines": [
-      "May Jobs Report Shows 172,000 New Jobs; Fed Rate Hike Back on Table as Markets Swing",
-      "Anthropic Warns AI May Soon Recursively Self-Improve, Calls for Global Caution",
-      "Open-Weight AI Model Powers Self-Spreading Enterprise Worm",
-      "As Ebola Spreads in Congo, Radio Station Fights Health Misinformation Amid Armed Conflict",
-      "Armed Clashes Erupt in Mogadishu Ahead of Planned Anti-Government Protests",
-      "Obama Presidential Museum Set to Open in Chicago This Month",
-      "Over 5,200 Mail Carriers Attacked by Dogs in 2026, USPS Issues Warning",
-      "Premier League 2026/27 Season Preview: Chelsea, Spurs Among Eight Storylines to Watch",
-      "Indian Badminton: Sindhu Falls to An Se Young; Hariharan-Arjun Reach Indonesia Open QF"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-06",
     "headlines": [
       "UN Pushes for End to Israel-Hezbollah Fighting as Conflict Weighs on Global Travel",
@@ -117,6 +102,19 @@
       "Russia Suffering Sustained Territorial Losses as Ukraine War Tide Shifts, Finnish President Says",
       "KPMG AI Report Found to Contain Hallucinated Case Studies &#8212; A 2026 Snapshot of AI&#39;s Trust Problem",
       "Indonesian Students Rally in Jakarta Against Fuel Price Hike and Military Role in Civilian Affairs"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-13",
+    "headlines": [
+      "Ukraine Strikes Crimea Fuel Supplies and Russian Oil Infrastructure, Sparking Peninsula Fuel Crisis",
+      "NATO Weighs Alternative European Defense Plans as US Eyes Other Conflicts",
+      "Folarin Balogun Scores Two Goals on World Cup Debut for the United States",
+      "South Australia Opens $10M Hub to Boost Vocational Education Workforce",
+      "Why Enormous Upcoming IPOs &#8212; SpaceX, OpenAI, Anthropic &#8212; Won&#39;t Sink the Stock Market",
+      "AI and Robots Set to Redefine Car Design and Automotive Factory Work",
+      "PV Sindhu Faces Akane Yamaguchi in Australian Open Badminton Semifinals on June 13"
     ],
     "sent": 13
   }

@@ -1,22 +1,5 @@
 [
   {
-    "date": "2026-06-06",
-    "headlines": [
-      "UN Pushes for End to Israel-Hezbollah Fighting as Conflict Weighs on Global Travel",
-      "Armed Clashes Shake Mogadishu Ahead of Anti-Government Protests",
-      "India Eyes Better Terms as US and UK Trade Talks Loom",
-      "May Jobs Report Adds 172,000 Positions &#8212; Fed Rate Hike Back on the Table",
-      "Nikkei 225 Breaches 68,000 for the First Time as Global Rally Rolls On",
-      "Virgin Galactic Craters 32% on Settlement Dilution Fears; Space Peers Rally",
-      "Anthropic Sounds Alarm: AI Could Soon Recursively Self-Improve",
-      "Self-Spreading AI Worm Built on Open-Weight Model Raises Cybersecurity Red Flags",
-      "Trump Administration Asks AI Firms to Voluntarily Submit Models for Cybersecurity Vetting",
-      "Obama Presidential Museum to Open Its Doors in Chicago This Month",
-      "Hong Kong Police Move Swiftly to Silence Tiananmen Anniversary Performance"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-07",
     "headlines": [
       "AI Worms, Open Weights, and a Government Knock at the Door",
@@ -115,6 +98,19 @@
       "Why Enormous Upcoming IPOs &#8212; SpaceX, OpenAI, Anthropic &#8212; Won&#39;t Sink the Stock Market",
       "AI and Robots Set to Redefine Car Design and Automotive Factory Work",
       "PV Sindhu Faces Akane Yamaguchi in Australian Open Badminton Semifinals on June 13"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-14",
+    "headlines": [
+      "Iran Confirms It Will Not Produce or Acquire Nuclear Weapons Ahead of Deal Signing",
+      "Russia Outpacing Western Interceptor Production as Missile and Drone Modernization Accelerates",
+      "Geneva Boards Up and Tightens Security Ahead of Anti-G7 Protests as Summit Approaches",
+      "OpenAI Faces Multistate Attorney General Probe Over User Harm as IPO Approaches",
+      "AI Tools Supercharging Deepfake Nude Generation, Fueling New Wave of Child Bullying",
+      "Massive Medline Warehouse Fire Burns Into Third Day in Tracy, California, Causing Unhealthy Air Quality",
+      "Coalition Sues to Block Kentucky&#39;s New 14.25% Tax on Prediction Markets"
     ],
     "sent": 13
   }

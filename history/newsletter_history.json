@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-06-07",
-    "headlines": [
-      "AI Worms, Open Weights, and a Government Knock at the Door",
-      "Anthropic Raises the Stakes: Recursive Self-Improvement Could Be Near",
-      "172,000 Jobs and a Fed Rate Hike Back on the Menu",
-      "Nikkei Crosses 68,000 for the First Time in History",
-      "Mogadishu on Edge as Armed Clashes Precede Anti-Government Protests",
-      "UN Presses for End to Israel-Hezbollah Fighting as Global Travel Feels the Squeeze",
-      "Obama Presidential Museum Finally Opens Its Doors in Chicago",
-      "Hong Kong Police Silence Tiananmen Performance as Crackdown Continues"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-08",
     "headlines": [
       "Global Stocks Slide After Wall Street&#39;s Worst Day Since October; Oil Surges on Israel-Iran Fighting",
@@ -111,6 +97,22 @@
       "AI Tools Supercharging Deepfake Nude Generation, Fueling New Wave of Child Bullying",
       "Massive Medline Warehouse Fire Burns Into Third Day in Tracy, California, Causing Unhealthy Air Quality",
       "Coalition Sues to Block Kentucky&#39;s New 14.25% Tax on Prediction Markets"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-15",
+    "headlines": [
+      "Iran Steps Back From the Bomb &#8212; Deal Signing Imminent",
+      "Ukraine&#39;s Crimea Strikes Deepen Russian Fuel Crisis on the Peninsula",
+      "G7 Summit Looms as Geneva Locks Down Against Protests",
+      "SpaceX Lifts Off on the Stock Market at $135 Per Share",
+      "BofA Gives Intel a Rare Double Upgrade, Eyes $135 Target",
+      "OpenAI Faces Multistate AG Probe as IPO Clock Ticks",
+      "KPMG&#39;s AI Report Caught Hallucinating Its Own Case Studies",
+      "AI Deepfake Tools Are Fueling a New Wave of Child Bullying",
+      "Robots and AI Are Redesigning How Cars Are Built &#8212; and Who Builds Them",
+      "Balogun Announces Himself to the World With a Brace on World Cup Debut"
     ],
     "sent": 13
   }

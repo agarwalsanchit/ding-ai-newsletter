@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-06-08",
-    "headlines": [
-      "Global Stocks Slide After Wall Street&#39;s Worst Day Since October; Oil Surges on Israel-Iran Fighting",
-      "Iran Signals End to Israel Attacks as Hormuz Closure Buckles Global Supply Chains; Oil Markets Volatile",
-      "France and Allies Plan Coordinated Sanctions on Israel Over West Bank Within Days",
-      "Ukraine Strikes Russian Oil Sites and Crimea; Russia Hits Kharkiv Storage Facility",
-      "UK Deputy PM Lammy Tells Vance He Was Wrong to Blame Immigration for Teen&#39;s Murder",
-      "Shooting Near West Bank Kills One, Wounds Six in Central Israel",
-      "SpaceX IPO Set for This Friday &#8212; Options Traders Eye Rotation Out of Tesla",
-      "AP-NORC Poll: Fewer Americans View Their Country as Exceptional Ahead of America 250 Celebrations",
-      "Trump Executive Order on AI Innovation and Cybersecurity Spurs Federal Action and Private Expansion",
-      "WSJ Analysis: AI Progress Will Be Slower Than Boosters Claim, Faster Than Skeptics Predict"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-09",
     "headlines": [
       "Global Conflicts Hit Post-WWII High in 2025, With 244,600 Killed &#8212; Swedish Study",
@@ -113,6 +97,19 @@
       "AI Deepfake Tools Are Fueling a New Wave of Child Bullying",
       "Robots and AI Are Redesigning How Cars Are Built &#8212; and Who Builds Them",
       "Balogun Announces Himself to the World With a Brace on World Cup Debut"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-16",
+    "headlines": [
+      "Russian Strike Sets Fire to Historic Kyiv Cathedral, Kills 5 in Kharkiv",
+      "UN: Drone Strikes Kill Over 1,000 Sudanese Civilians in First Five Months of 2026",
+      "US Stocks Mixed as Markets Await Fed Meeting; SpaceX Continues Post-IPO Rally",
+      "Chinese-Linked Hackers Spent Over a Year Stealing Data from US and Canadian Research Facilities",
+      "A Third of UK Insurers Admit Falling Behind on AI-Driven Personalisation",
+      "Oxford Reuters Institute: Young Adults Increasingly Get News From Social Media and Video",
+      "Japan Fans Continue Tradition of Cleaning Stadiums After World Cup Draw With Netherlands"
     ],
     "sent": 13
   }

@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-06-09",
-    "headlines": [
-      "Global Conflicts Hit Post-WWII High in 2025, With 244,600 Killed &#8212; Swedish Study",
-      "Dow and S&amp;P 500 Erase Early Gains as Tech Tumbles; Oil Falls on Trump Iran Deal Optimism",
-      "Apple Unveils Revamped Siri AI and iOS 27 at WWDC 2026",
-      "Elon Musk Reveals Detailed Design of SpaceX AI Data Center Satellite",
-      "New Scientist: Anthropic&#39;s Recursive AI Warning Driven More by IPO Marketing Than Genuine Risk",
-      "Standard Bots Hits $1 Billion Valuation After $200M Series C Funding Round",
-      "Autonomous Drones Reshape Crop Data Collection at North Carolina Research Stations",
-      "AI Moves Deeper into Clinical Trials and Hospital Exam Rooms, Raising Questions of Trust",
-      "Serena Williams Eyes Doubles Return at Queen&#39;s Club, Won&#39;t Rule Out Singles Comeback",
-      "Cuba&#39;s Antique Cars Sit Idle as US Energy Blockade Deepens Fuel Crisis"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-10",
     "headlines": [
       "Messi Scores on Return as World Cup 2026 Gets Underway",
@@ -110,6 +94,15 @@
       "A Third of UK Insurers Admit Falling Behind on AI-Driven Personalisation",
       "Oxford Reuters Institute: Young Adults Increasingly Get News From Social Media and Video",
       "Japan Fans Continue Tradition of Cleaning Stadiums After World Cup Draw With Netherlands"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-17",
+    "headlines": [
+      "Nvidia&#39;s Jensen Huang Bets AI Will Revive U.S. Manufacturing &#8212; Texas Factory Is the Test Case",
+      "Thailand-Cambodia Border Tensions: Six Warning Signals to Watch as 2026 Flareup Risk Grows",
+      "AI Boom Drives Convertible-Bond Market to Highest Volume Since COVID-19 Pandemic"
     ],
     "sent": 13
   }

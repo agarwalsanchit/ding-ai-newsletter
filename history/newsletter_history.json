@@ -1,21 +1,5 @@
 [
   {
-    "date": "2026-06-10",
-    "headlines": [
-      "Messi Scores on Return as World Cup 2026 Gets Underway",
-      "Three Mega AI IPOs Filed Confidentially as 2026 AI Landscape Crystallizes Around Four Tech Giants",
-      "Info-Tech Report: &#39;Uniquely Human&#39; Skills Will Define IT Workers in the AI Era",
-      "GENISOM AI Makes Global Debut at ICRA 2026 in Vienna with Full-Stack Embodied Robotics System",
-      "Nasdaq Swings Wildly as AI Jitters Spark Near-$1 Trillion Tech Sell-Off Before Partial Recovery",
-      "Crude Oil Volatility Disrupts India&#39;s Polyester Textile Supply Chain in 2026",
-      "Israel Accelerates Evictions and Demolitions in East Jerusalem",
-      "Peru Presidential Runoff Too Close to Call as Candidates in Razor-Thin Race",
-      "Pakistan Army MI-17 Helicopter Crashes in Kashmir, Killing All on Board",
-      "ESPN to Broadcast 2026 Special Olympics USA Games Live from Minneapolis Starting June 20"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-11",
     "headlines": [
       "SpaceX IPO Debuts on Wall Street Thursday Night, Valuation Revised Downward",
@@ -103,6 +87,14 @@
       "Nvidia&#39;s Jensen Huang Bets AI Will Revive U.S. Manufacturing &#8212; Texas Factory Is the Test Case",
       "Thailand-Cambodia Border Tensions: Six Warning Signals to Watch as 2026 Flareup Risk Grows",
       "AI Boom Drives Convertible-Bond Market to Highest Volume Since COVID-19 Pandemic"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-18",
+    "headlines": [
+      "Premier League 2026/27 Fixtures to Be Released on Friday 19 June at 10am BST",
+      "Michael Dell Overtakes Larry Ellison as World&#39;s Fifth-Richest Person After Dell Stock Surge"
     ],
     "sent": 13
   }

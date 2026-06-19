@@ -1,19 +1,5 @@
 [
   {
-    "date": "2026-06-11",
-    "headlines": [
-      "SpaceX IPO Debuts on Wall Street Thursday Night, Valuation Revised Downward",
-      "Wall Street Rebounds Thursday as AI Stocks Recover; Dow Rallied 400 Points",
-      "Oracle Beats Earnings But Stock Plunges After Hours",
-      "G7 Summit in Evian-les-Bains Set for June 15&#8211;17 with Iran, Ukraine, and Tight Security Dominating",
-      "Post-Cold War World Order Is Fraying as Global Cooperation Retreats",
-      "Christian Leaders Hold Emergency Summit in Jerusalem Over Global Rise in Antisemitism",
-      "Harris Poll: Energy Drinks Rebrand, &#34;Haunted&#34; Job Postings, and a Men&#39;s Grooming Boom",
-      "Enterprise AI Takes Center Stage at VivaTech 2026 in Paris"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-12",
     "headlines": [
       "Global Markets Surge and Oil Tumbles 4% as Trump Claims Iran War Breakthrough",
@@ -95,6 +81,17 @@
     "headlines": [
       "Premier League 2026/27 Fixtures to Be Released on Friday 19 June at 10am BST",
       "Michael Dell Overtakes Larry Ellison as World&#39;s Fifth-Richest Person After Dell Stock Surge"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-19",
+    "headlines": [
+      "EU Leaders Clash Over Outreach to Moscow at Brussels Summit as Ukraine War Continues",
+      "U.S. Stocks Post Second Straight Week of Gains as Fed Holds Rates and Iran Deal Lifts Sentiment",
+      "Greece Unveils Parthenon&#39;s Restored West Pediment in Most Complete Form Since 1801",
+      "South Korea&#39;s Science Ministry Acts to Ease Data Bottleneck Holding Back Self-Driving AI",
+      "Neeraj Chopra Opens 2026 Season at Doha Diamond League; Indian Badminton Players Advance in Macau Open"
     ],
     "sent": 13
   }

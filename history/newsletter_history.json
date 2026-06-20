@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-06-12",
-    "headlines": [
-      "Global Markets Surge and Oil Tumbles 4% as Trump Claims Iran War Breakthrough",
-      "SpaceX IPO Prices at $135, Begins Trading Friday in Record Offering",
-      "BofA Gives Intel a Double Upgrade, Raises Price Target to $135",
-      "UN Reports Record 118 Million People Displaced by Conflict and Persecution in 2025",
-      "Russia Suffering Sustained Territorial Losses as Ukraine War Tide Shifts, Finnish President Says",
-      "KPMG AI Report Found to Contain Hallucinated Case Studies &#8212; A 2026 Snapshot of AI&#39;s Trust Problem",
-      "Indonesian Students Rally in Jakarta Against Fuel Price Hike and Military Role in Civilian Affairs"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-13",
     "headlines": [
       "Ukraine Strikes Crimea Fuel Supplies and Russian Oil Infrastructure, Sparking Peninsula Fuel Crisis",
@@ -92,6 +79,18 @@
       "Greece Unveils Parthenon&#39;s Restored West Pediment in Most Complete Form Since 1801",
       "South Korea&#39;s Science Ministry Acts to Ease Data Bottleneck Holding Back Self-Driving AI",
       "Neeraj Chopra Opens 2026 Season at Doha Diamond League; Indian Badminton Players Advance in Macau Open"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-20",
+    "headlines": [
+      "AI Warfare Crosses a Threshold: Autonomous Drones Move From Support Role to Active Killing",
+      "Micron Earnings Eyed as Key Gauge of AI Stock Rally&#39;s Staying Power",
+      "Canadian Auto Parts Magnate Frank Stronach Found Guilty of Sexual Assault in Toronto Court",
+      "Dragon Boat Festival Connects Modern China to 2,000-Year-Old Cultural Traditions",
+      "First Quantum&#39;s Cobre Panama Mine Scores 88% in Independent Environmental Audit",
+      "Rosen Law Firm Launches Securities Investigations Into Disc Medicine and Elauwit Connection"
     ],
     "sent": 13
   }

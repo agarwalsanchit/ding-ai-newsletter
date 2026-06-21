@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-06-13",
-    "headlines": [
-      "Ukraine Strikes Crimea Fuel Supplies and Russian Oil Infrastructure, Sparking Peninsula Fuel Crisis",
-      "NATO Weighs Alternative European Defense Plans as US Eyes Other Conflicts",
-      "Folarin Balogun Scores Two Goals on World Cup Debut for the United States",
-      "South Australia Opens $10M Hub to Boost Vocational Education Workforce",
-      "Why Enormous Upcoming IPOs &#8212; SpaceX, OpenAI, Anthropic &#8212; Won&#39;t Sink the Stock Market",
-      "AI and Robots Set to Redefine Car Design and Automotive Factory Work",
-      "PV Sindhu Faces Akane Yamaguchi in Australian Open Badminton Semifinals on June 13"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-14",
     "headlines": [
       "Iran Confirms It Will Not Produce or Acquire Nuclear Weapons Ahead of Deal Signing",
@@ -91,6 +78,16 @@
       "Dragon Boat Festival Connects Modern China to 2,000-Year-Old Cultural Traditions",
       "First Quantum&#39;s Cobre Panama Mine Scores 88% in Independent Environmental Audit",
       "Rosen Law Firm Launches Securities Investigations Into Disc Medicine and Elauwit Connection"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-21",
+    "headlines": [
+      "UC Berkeley Professor Argues AI Development Is Moving Too Fast, Even at the Cost of Cancer Cures",
+      "Trump Blames Vandalism for Lincoln Memorial Reflecting Pool Problems, Offers No Evidence",
+      "U.S. Graduation Season Closes Amid Wave of Controversies Over Speeches, AI, and Booing",
+      "Today in History: June 21 &#8212; U.S. Constitution Ratified 238 Years Ago"
     ],
     "sent": 13
   }

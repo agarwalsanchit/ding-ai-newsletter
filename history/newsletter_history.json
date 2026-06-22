@@ -1,18 +1,5 @@
 [
   {
-    "date": "2026-06-14",
-    "headlines": [
-      "Iran Confirms It Will Not Produce or Acquire Nuclear Weapons Ahead of Deal Signing",
-      "Russia Outpacing Western Interceptor Production as Missile and Drone Modernization Accelerates",
-      "Geneva Boards Up and Tightens Security Ahead of Anti-G7 Protests as Summit Approaches",
-      "OpenAI Faces Multistate Attorney General Probe Over User Harm as IPO Approaches",
-      "AI Tools Supercharging Deepfake Nude Generation, Fueling New Wave of Child Bullying",
-      "Massive Medline Warehouse Fire Burns Into Third Day in Tracy, California, Causing Unhealthy Air Quality",
-      "Coalition Sues to Block Kentucky&#39;s New 14.25% Tax on Prediction Markets"
-    ],
-    "sent": 13
-  },
-  {
     "date": "2026-06-15",
     "headlines": [
       "Iran Steps Back From the Bomb &#8212; Deal Signing Imminent",
@@ -88,6 +75,22 @@
       "Trump Blames Vandalism for Lincoln Memorial Reflecting Pool Problems, Offers No Evidence",
       "U.S. Graduation Season Closes Amid Wave of Controversies Over Speeches, AI, and Booing",
       "Today in History: June 21 &#8212; U.S. Constitution Ratified 238 Years Ago"
+    ],
+    "sent": 13
+  },
+  {
+    "date": "2026-06-22",
+    "headlines": [
+      "France Braces for Week of Record-Breaking Heat as Red Alerts Spread",
+      "U.S. Oil Prices Drop Below $74 as Treasury Grants 60-Day Iran Oil Sales Window; Markets Split",
+      "Russian-Occupied Crimea Suspends Petrol Sales Amid Kyiv-Triggered Fuel Crisis",
+      "Brexit at Ten: Britain&#39;s Economic Struggles Fuel Renewed Discontent Over 2016 EU Exit",
+      "China&#39;s Dragon Boat Holiday Consumer Spending Rises 4%",
+      "Thomson Reuters Report: AI Implementation Gap Puts $143 Billion in U.S. Legal and Professional Services Revenue at Risk",
+      "Forbes: Thermodynamic Computing Startup Extropic Claims 10,000x GPU Energy Efficiency Gains, Targets 2026 Commercial Launch",
+      "Advita Ortho Presents AI-Generated Shoulder Digital Twins and Surgical Navigation Research at CAOS 2026",
+      "New York Post Ranks NYC Teams Most Likely to Win Next Championship After Knicks Title",
+      "Indian Sports Roundup: Rugby Premier League Season 2 and Junior World Shooting Championship Ongoing"
     ],
     "sent": 13
   }
